@@ -4,10 +4,11 @@
 
 package frc.robot.subsystems;
 
-import javax.management.ConstructorParameters;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -20,6 +21,7 @@ public class Drive extends SubsystemBase {
 
   private CANSparkMax leftFront, leftRear, rightFront, rightRear;
   private RelativeEncoder leftEncoder, rightEncoder;
+  private SparkMaxPIDController leftPID, rightPID;
   
   /** Creates a new Drive. */
   public Drive() {
@@ -37,6 +39,9 @@ public class Drive extends SubsystemBase {
 
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
+
+    leftPID = leftFront.getPIDController();
+    rightPID = rightFront.getPIDController();
 
   }
 
@@ -74,11 +79,11 @@ public class Drive extends SubsystemBase {
   // I am leaving out the code for the gyro ... is it necessasry?
   // why do the getEncoder functions multiply by revolutions to inches??
   public double getLeftEncoder() {
-    return leftEncoder.getPosition() * DriveConstants.REV_TO_IN_K;
+    return leftEncoder.getPosition();
   }
 
   public double getRightEncoder() {
-    return rightEncoder.getPosition() * DriveConstants.REV_TO_IN_K;
+    return rightEncoder.getPosition();
   }
 
   public double getRightDistance() {
@@ -102,18 +107,44 @@ public class Drive extends SubsystemBase {
     return rightEncoder.getVelocity();
   }
 
-  // // PID
-  // @Override
-  // public void pidSet() {
+  // PID
+
+  public void setSetPoint (double dist) {
+    leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+    rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+  }
+
+  public void setOutputRange (double minOutput, double maxOutput) {
+    leftPID.setOutputRange(minOutput, maxOutput);
+    rightPID.setOutputRange(minOutput, maxOutput);
+  }
+
+
+  // public void pidSet(double speed) {
   //   setRightSpeed(-speed);
   //   setLeftSpeed(speed);
   // }
 
-  // // SPARK MOTION CONTROL
-  // public void setkP(double kP) {
-  //   leftPID.setP(kP);
-  //   rightPID.setP(kP);
-  // }
+  // SPARK MOTION CONTROL
+  public void setkP(double kP) {
+    leftPID.setP(kP);
+    rightPID.setP(kP);
+  }
+  
+  public void setkI(double kI) {
+    leftPID.setP(kI);
+    rightPID.setP(kI);
+  }  
+  
+  public void setkD(double kD) {
+    leftPID.setP(kD);
+    rightPID.setP(kD);
+  }  
+  
+  public void setkF(double kF) {
+    leftPID.setP(kF);
+    rightPID.setP(kF);
+  }
 
   @Override
   public void periodic() {
