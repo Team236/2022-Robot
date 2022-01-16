@@ -56,7 +56,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     JoystickButton trigger = new JoystickButton(leftStick, ControllerConstants.TRIGGER);
-    trigger.whenPressed(driveStraight);
+    trigger.whileHeld(driveStraight);
   }
 
   /**

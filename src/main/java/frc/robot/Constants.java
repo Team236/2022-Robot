@@ -38,7 +38,7 @@ public final class Constants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
-        public static final double DIAMETER = 6.0;
+        public static final double DIAMETER = 6;
         public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
         public static final double GEAR_RATIO = 8.71;
 
@@ -47,16 +47,17 @@ public final class Constants {
 
         public static final boolean IS_DEADZONE = true;
 
-        public static double kP = 0.00;
-        public static double kI = 0.00;
-        public static double kD = 0.00;
-        public static double kF = 0.00;
+        public static double kP = 1; // 0.6 or lower
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kIz = 0;
+        public static double kF = 0.001;
 
-        public static final double SETPOINT = 10.0;
-        public static double MIN_OUTPUT = -1.0;
-        public static double MAX_OUTPUT = 1.0;
-        public static final double MARGIN = 3.0;
-        public static final double DISTANCE = 24.0;
+        // public static final double SETPOINT = 10.0;
+        public static double MIN_OUTPUT = -1;
+        public static double MAX_OUTPUT = 1;
+        public static final double MARGIN = 8;
+        public static final double DISTANCE = 30;
 
     }
 }

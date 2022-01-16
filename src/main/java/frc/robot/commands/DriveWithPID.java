@@ -19,7 +19,7 @@ public class DriveWithPID extends CommandBase {
   private double dist;
   private double margin;
   private double error;
-  private double kP, kI, kD, kF;
+  private double kP, kI, kD, kIz, kF;
 
   /** Creates a new DriveWithPID. */
   public DriveWithPID(Drive drive, double dist, double margin) {
@@ -33,6 +33,7 @@ public class DriveWithPID extends CommandBase {
     this.kP = Constants.DriveConstants.kP;
     this.kI = Constants.DriveConstants.kI;
     this.kD = Constants.DriveConstants.kD;
+    this.kIz = Constants.DriveConstants.kIz;
     this.kF = Constants.DriveConstants.kF;
   }
 
@@ -44,6 +45,7 @@ public class DriveWithPID extends CommandBase {
     drive.setkP(this.kP);
     drive.setkI(this.kI);
     drive.setkD(this.kD);
+    drive.setkIz(this.kIz);
     drive.setkF(this.kF);
   }
 
@@ -54,27 +56,34 @@ public class DriveWithPID extends CommandBase {
     drive.setOutputRange(DriveConstants.MIN_OUTPUT, DriveConstants.MAX_OUTPUT);
     drive.setSetPoint(dist);
 
-    error = Math.abs(dist - drive.getLeftEncoder());
+    error = Math.abs(dist - drive.getLeftDistance());
 
     SmartDashboard.putNumber("Drive Setpoint", dist);
     SmartDashboard.putNumber("Drive Error", error);
     SmartDashboard.putNumber("Drive L Encoder", drive.getLeftEncoder());
     SmartDashboard.putNumber("Drive R Encoder", drive.getRightEncoder());
+    SmartDashboard.putNumber("Drive L Distance", drive.getLeftDistance());
+    SmartDashboard.putNumber("Drive R Distance", drive.getRightDistance());
+    SmartDashboard.putNumber("kP", this.kP);
+    SmartDashboard.putNumber("setpoint", this.dist);
     
-   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putString("is interrupted", "interrupted " + interrupted);
+    SmartDashboard.putString("PID interrupted", "interrupted");
     drive.stop();
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean isDistMargin = error < margin;
-    
-    return isDistMargin;
+    // boolean isDistMargin = error < margin;
+    SmartDashboard.putString("Is Finished", "is finished");
+
+    return false;
   }
 }

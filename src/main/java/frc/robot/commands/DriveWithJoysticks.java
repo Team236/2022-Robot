@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
@@ -46,6 +47,10 @@ public class DriveWithJoysticks extends CommandBase {
       drive.setLeftSpeed(Math.pow(-leftStick.getY(), pow));
       drive.setRightSpeed(Math.pow(-rightStick.getY(), pow));
     }
+
+    SmartDashboard.putNumber("DWJ L Distance", drive.getLeftDistance());
+    SmartDashboard.putNumber("DWJ R Distance", drive.getRightDistance());
+
   }
 
   // Called once the command ends or is interrupted.

@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,22 +27,28 @@ public class Drive extends SubsystemBase {
   /** Creates a new Drive. */
   public Drive() {
 
+    // leftFront.restoreFactoryDefaults();
+    // rightFront.restoreFactoryDefaults();
+
     leftFront = new CANSparkMax(DriveConstants.ID_LEFT_FRONT, MotorType.kBrushless);
     leftRear = new CANSparkMax(DriveConstants.ID_LEFT_REAR, MotorType.kBrushless);
     rightFront = new CANSparkMax(DriveConstants.ID_RIGHT_FRONT, MotorType.kBrushless);
     rightRear = new CANSparkMax(DriveConstants.ID_RIGHT_REAR, MotorType.kBrushless);
-
+    
     leftFront.setInverted(false);
     rightFront.setInverted(true);
-
+    
     leftRear.follow(leftFront, false);
     rightRear.follow(rightFront, false);
+
+    leftPID = leftFront.getPIDController();
+    rightPID = rightFront.getPIDController();
 
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
 
-    leftPID = leftFront.getPIDController();
-    rightPID = rightFront.getPIDController();
+    leftPID.setFeedbackDevice(leftEncoder);
+    rightPID.setFeedbackDevice(rightEncoder);
 
   }
 
@@ -140,6 +147,11 @@ public class Drive extends SubsystemBase {
     leftPID.setP(kD);
     rightPID.setP(kD);
   }  
+
+  public void setkIz(double kIz) {
+    leftPID.setIZone(kIz);
+    rightPID.setIZone(kIz);
+  }
   
   public void setkF(double kF) {
     leftPID.setP(kF);
