@@ -47,9 +47,6 @@ public class Drive extends SubsystemBase {
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
 
-    leftPID.setFeedbackDevice(leftEncoder);
-    rightPID.setFeedbackDevice(rightEncoder);
-
   }
 
   public void setLeftSpeed(double speed) {
@@ -84,7 +81,8 @@ public class Drive extends SubsystemBase {
   }
   
   // I am leaving out the code for the gyro ... is it necessasry?
-  // why do the getEncoder functions multiply by revolutions to inches??
+
+  // getEncoder methods return encoder position in ROTATIONS of motor
   public double getLeftEncoder() {
     return leftEncoder.getPosition();
   }
@@ -93,6 +91,7 @@ public class Drive extends SubsystemBase {
     return rightEncoder.getPosition();
   }
 
+  // getDistance methods return encoder position in INCHES
   public double getRightDistance() {
     return getRightEncoder() * DriveConstants.REV_TO_IN_K;
   }
@@ -115,7 +114,7 @@ public class Drive extends SubsystemBase {
   }
 
   // PID
-
+  // sets PID setpoint to a value of revolutions given a distance in inches
   public void setSetPoint (double dist) {
     leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
     rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
@@ -126,12 +125,6 @@ public class Drive extends SubsystemBase {
     rightPID.setOutputRange(minOutput, maxOutput);
   }
 
-
-  // public void pidSet(double speed) {
-  //   setRightSpeed(-speed);
-  //   setLeftSpeed(speed);
-  // }
-
   // SPARK MOTION CONTROL
   public void setkP(double kP) {
     leftPID.setP(kP);
@@ -139,13 +132,13 @@ public class Drive extends SubsystemBase {
   }
   
   public void setkI(double kI) {
-    leftPID.setP(kI);
-    rightPID.setP(kI);
+    leftPID.setI(kI);
+    rightPID.setI(kI);
   }  
   
   public void setkD(double kD) {
-    leftPID.setP(kD);
-    rightPID.setP(kD);
+    leftPID.setD(kD);
+    rightPID.setD(kD);
   }  
 
   public void setkIz(double kIz) {
@@ -154,8 +147,8 @@ public class Drive extends SubsystemBase {
   }
   
   public void setkF(double kF) {
-    leftPID.setP(kF);
-    rightPID.setP(kF);
+    leftPID.setFF(kF);
+    rightPID.setFF(kF);
   }
 
   @Override

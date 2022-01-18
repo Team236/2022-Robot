@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import com.revrobotics.SparkMaxPIDController;
 
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -42,6 +41,7 @@ public class DriveWithPID extends CommandBase {
   public void initialize() {
     drive.resetEncoders();
 
+    // sets PIDF values to the values defined in DriveConstants
     drive.setkP(this.kP);
     drive.setkI(this.kI);
     drive.setkD(this.kD);
@@ -56,6 +56,7 @@ public class DriveWithPID extends CommandBase {
     drive.setOutputRange(DriveConstants.MIN_OUTPUT, DriveConstants.MAX_OUTPUT);
     drive.setSetPoint(dist);
 
+    // calculates error of robot position versus set point in inches
     error = Math.abs(dist - drive.getLeftDistance());
 
     SmartDashboard.putNumber("Drive Setpoint", dist);
@@ -72,8 +73,8 @@ public class DriveWithPID extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("is interrupted", "interrupted " + interrupted);
-    SmartDashboard.putString("PID interrupted", "interrupted");
+    // SmartDashboard.putString("is interrupted", "interrupted " + interrupted);
+    // SmartDashboard.putString("PID interrupted", "interrupted");
     drive.stop();
 
   }
@@ -81,9 +82,11 @@ public class DriveWithPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // boolean isDistMargin = error < margin;
-    SmartDashboard.putString("Is Finished", "is finished");
+    // ends command when the error is less than the margin
+    boolean isDistMargin = error < margin;
 
-    return false;
+    // SmartDashboard.putString("Is Finished", "is finished");
+
+    return isDistMargin;
   }
 }
