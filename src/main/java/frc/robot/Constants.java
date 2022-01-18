@@ -23,10 +23,41 @@ public final class Constants {
         public static final int USB_RIGHT_STICK = 1;
         public static final int USB_CONTROLLER = 2;
 
-        public static final int TRIGGER = 1;
-	    public static final int BUTTON_MIDDLE = 2;
-	    public static final int BUTTON_LEFT = 3;
-	    public static final int BUTTON_RIGHT = 4;
+        public static class Thrustmaster {
+            public static final int TRIGGER = 1;
+            public static final int BUTTON_MIDDLE = 2;
+            public static final int BUTTON_LEFT = 3;
+            public static final int BUTTON_RIGHT = 4;
+    
+            public static class AxesThrustmaster {
+                public static final int X = 0;
+                public static final int Y = 1;
+                public static final int Z = 2;
+                public static final int THROTTLE = 3;
+            }
+        }
+        
+        public static class LogitechF310 {
+            public static final int A = 1;
+            public static final int B = 2;
+            public static final int X = 3;
+            public static final int Y = 4;
+            public static final int LB = 5;
+            public static final int RB = 6;
+            public static final int BACK = 7;
+            public static final int START = 8;
+            public static final int LEFT_PRESS = 9;
+            public static final int RIGHT_PRESS = 10;
+            public class AxesController {
+                public static final int LEFT_X = 0;
+                public static final int LEFT_Y = 1;
+                public static final int LT = 2;
+                public static final int RT = 3;
+                public static final int RIGHT_X = 4;
+                public static final int RIGHT_Y = 5;
+            }
+        }
+        
 
     }
     public static class DriveConstants {
