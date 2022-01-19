@@ -154,7 +154,7 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Drive", getLeftEncoder());
-    SmartDashboard.putNumber("Right Drive", getRightEncoder());
+    SmartDashboard.putNumber("getLeftEncoder", getLeftEncoder());
+    SmartDashboard.putNumber("getRightEncoder", getRightEncoder());
   }
 }

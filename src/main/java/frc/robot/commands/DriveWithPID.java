@@ -56,25 +56,25 @@ public class DriveWithPID extends CommandBase {
     drive.setOutputRange(DriveConstants.MIN_OUTPUT, DriveConstants.MAX_OUTPUT);
     drive.setSetPoint(dist);
 
-    // calculates error of robot position versus set point in inches
+    // calculates error in inches
     error = Math.abs(dist - drive.getLeftDistance());
 
-    SmartDashboard.putNumber("Drive Setpoint", dist);
+    // SmartDashboard.putNumber("Drive Setpoint", dist);
     SmartDashboard.putNumber("Drive Error", error);
     SmartDashboard.putNumber("Drive L Encoder", drive.getLeftEncoder());
     SmartDashboard.putNumber("Drive R Encoder", drive.getRightEncoder());
     SmartDashboard.putNumber("Drive L Distance", drive.getLeftDistance());
     SmartDashboard.putNumber("Drive R Distance", drive.getRightDistance());
-    SmartDashboard.putNumber("kP", this.kP);
-    SmartDashboard.putNumber("setpoint", this.dist);
+    SmartDashboard.putNumber("Drive kP", this.kP);
+    SmartDashboard.putNumber("Drive setpoint", this.dist);
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // SmartDashboard.putString("is interrupted", "interrupted " + interrupted);
-    // SmartDashboard.putString("PID interrupted", "interrupted");
+    
+    System.out.println("DriveWithPID interrupted");
     drive.stop();
 
   }
