@@ -78,17 +78,17 @@ public final class Constants {
 
         public static final boolean IS_DEADZONE = true;
 
-        public static double kP = 1; // 0.6 or lower
+        // PID
+        public static double kP = 0.03;
         public static double kI = 0;
         public static double kD = 0;
         public static double kIz = 0;
-        public static double kF = 0.001;
+        public static double kF = 0;
 
-        // public static final double SETPOINT = 10.0;
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
-        public static final double MARGIN = 8;
-        public static final double DISTANCE = 30;
+        public static final double MARGIN = 3;
+        public static final double DISTANCE = 48;
 
     }
 }

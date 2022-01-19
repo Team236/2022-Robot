@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
+import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
 import frc.robot.subsystems.Drive;
@@ -38,6 +39,7 @@ public class RobotContainer {
     // DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveStraight = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -56,8 +58,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton trigger = new JoystickButton(leftStick, Thrustmaster.TRIGGER);
-    trigger.whileHeld(driveStraight);
+    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.TRIGGER);
+    leftTrigger.whenPressed(driveStraight);
+
+    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
+    rightTrigger.whileHeld(dashboardPID);
   }
 
   /**
