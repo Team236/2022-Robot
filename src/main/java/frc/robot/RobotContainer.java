@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.ControllerConstants.Thrustmaster;
+import frc.robot.Constants.MainControllerConstants;
+import frc.robot.Constants.MainControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
@@ -66,16 +66,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.TRIGGER);
+    JoystickButton leftTrigger = new JoystickButton(leftStick, MainControllerConstants.Thrustmaster.joyTRIGGER);
     leftTrigger.whenPressed(driveWithPID);
 
-    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
+    JoystickButton rightTrigger = new JoystickButton(rightStick, MainControllerConstants.Thrustmaster.joyTRIGGER);
     rightTrigger.whileHeld(dashboardPID);
 
-    JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    JoystickButton leftMiddle = new JoystickButton(leftStick, MainControllerConstants.Thrustmaster.joyBUTTON_MIDDLE);
     leftMiddle.whenPressed(solenoidForward);
 
-    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    JoystickButton rightMiddle = new JoystickButton(rightStick, MainControllerConstants.Thrustmaster.joyBUTTON_MIDDLE);
     rightMiddle.whenPressed(solenoidReverse);
   }
 
