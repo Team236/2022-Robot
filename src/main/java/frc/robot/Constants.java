@@ -4,7 +4,12 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -90,5 +95,12 @@ public final class Constants {
         public static final double MARGIN = 3;
         public static final double DISTANCE = 48;
 
+    }
+
+    public static class ColorSensorConstants {
+        public static final I2C.Port i2cPort = I2C.Port.kOnboard;
+
+        // public final Color BLUE = ColorMatch.makeColor(0.143, 0.427, 0.429);
+        // public final Color RED = ColorMatch.makeColor(0.343, 0.432, 0.223);
     }
 }
