@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorSensorV3.MainControl;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -11,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.MainControllerConstants;
-import frc.robot.Constants.MainControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
@@ -33,9 +34,9 @@ public class RobotContainer {
     private final Drive drive = new Drive();
 
   // **JOYSTICKS**
-   Joystick controller = new Joystick(ControllerConstants.USB_CONTROLLER);
-   Joystick leftStick = new Joystick(ControllerConstants.USB_LEFT_STICK);
-   Joystick rightStick = new Joystick(ControllerConstants.USB_RIGHT_STICK);
+   Joystick controller = new Joystick(MainControllerConstants.USB_CONTROLLER);
+   Joystick leftStick = new Joystick(MainControllerConstants.USB_LEFT_STICK);
+   Joystick rightStick = new Joystick(MainControllerConstants.USB_RIGHT_STICK);
 
   // **COMMANDS**
      
