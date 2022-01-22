@@ -19,9 +19,12 @@ public class DriveDistance extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
+    // addCommands(new DriveWithPID(drive, dist, margin));
+
     // possible auto routine: shoot ball, back up, intake ball, limelight, shoot ball
     // or : back up, intake ball, limelight, shoot 2 balls
 
-    addCommands(parallel(sequence(new DriveWithPID(drive, 48, 3).withTimeout(10)), new WaitCommand(3), new DriveWithPID(drive, 24, 3).withTimeout(10)));
+    super(sequence (new DriveWithPID(drive, 48, 3)), new WaitCommand(3), new DriveWithPID(drive, 24, 3).withTimeout(10));
+    // addCommands(parallel(sequence(new DriveWithPID(drive, 48, 3).withTimeout(10)), new WaitCommand(3), new DriveWithPID(drive, 24, 3).withTimeout(10)));
   }
 }

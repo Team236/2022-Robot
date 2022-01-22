@@ -15,9 +15,11 @@ import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
-import frc.robot.commands.SolenoidForward;
-import frc.robot.commands.SolenoidReverse;
+import frc.robot.commands.GetColorSensor;
+// import frc.robot.commands.SolenoidForward;
+// import frc.robot.commands.SolenoidReverse;
 import frc.robot.commands.Auto.DriveDistance;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 
 /**
@@ -29,13 +31,13 @@ import frc.robot.subsystems.Drive;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
+  Joystick controller = new Joystick(ControllerConstants.USB_CONTROLLER);
+  Joystick leftStick = new Joystick(ControllerConstants.USB_LEFT_STICK);
+  Joystick rightStick = new Joystick(ControllerConstants.USB_RIGHT_STICK);
+
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
-
-  // **JOYSTICKS**
-   Joystick controller = new Joystick(ControllerConstants.USB_CONTROLLER);
-   Joystick leftStick = new Joystick(ControllerConstants.USB_LEFT_STICK);
-   Joystick rightStick = new Joystick(ControllerConstants.USB_RIGHT_STICK);
+    private final ColorSensor colorSensor = new ColorSensor();
 
   // **COMMANDS**
      
@@ -46,8 +48,10 @@ public class RobotContainer {
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     // PNEUMATICS
-    private final SolenoidForward solenoidForward = new SolenoidForward();
-    private final SolenoidReverse solenoidReverse = new SolenoidReverse();
+    // private final SolenoidForward solenoidForward = new SolenoidForward();
+    // private final SolenoidReverse solenoidReverse = new SolenoidReverse();
+    // COLOR SENSOR
+    private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -73,10 +77,13 @@ public class RobotContainer {
     rightTrigger.whileHeld(dashboardPID);
 
     JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
-    leftMiddle.whenPressed(solenoidForward);
+    // leftMiddle.whenPressed(solenoidForward);
 
     JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
-    rightMiddle.whenPressed(solenoidReverse);
+    // rightMiddle.whenPressed(solenoidReverse);
+
+    JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.Y);
+    y.whileHeld(getColorSensor);
   }
 
   /**
