@@ -4,11 +4,13 @@
 
 package frc.robot.subsystems;
 
-import javax.management.ConstructorParameters;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,20 +22,27 @@ public class Drive extends SubsystemBase {
 
   private CANSparkMax leftFront, leftRear, rightFront, rightRear;
   private RelativeEncoder leftEncoder, rightEncoder;
+  private SparkMaxPIDController leftPID, rightPID;
   
   /** Creates a new Drive. */
   public Drive() {
+
+    // leftFront.restoreFactoryDefaults();
+    // rightFront.restoreFactoryDefaults();
 
     leftFront = new CANSparkMax(DriveConstants.ID_LEFT_FRONT, MotorType.kBrushless);
     leftRear = new CANSparkMax(DriveConstants.ID_LEFT_REAR, MotorType.kBrushless);
     rightFront = new CANSparkMax(DriveConstants.ID_RIGHT_FRONT, MotorType.kBrushless);
     rightRear = new CANSparkMax(DriveConstants.ID_RIGHT_REAR, MotorType.kBrushless);
-
+    
     leftFront.setInverted(false);
     rightFront.setInverted(true);
-
+    
     leftRear.follow(leftFront, false);
     rightRear.follow(rightFront, false);
+
+    leftPID = leftFront.getPIDController();
+    rightPID = rightFront.getPIDController();
 
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
@@ -72,15 +81,17 @@ public class Drive extends SubsystemBase {
   }
   
   // I am leaving out the code for the gyro ... is it necessasry?
-  // why do the getEncoder functions multiply by revolutions to inches??
+
+  // getEncoder methods return encoder position in ROTATIONS of motor
   public double getLeftEncoder() {
-    return leftEncoder.getPosition() * DriveConstants.REV_TO_IN_K;
+    return leftEncoder.getPosition();
   }
 
   public double getRightEncoder() {
-    return rightEncoder.getPosition() * DriveConstants.REV_TO_IN_K;
+    return rightEncoder.getPosition();
   }
 
+  // getDistance methods return encoder position in INCHES
   public double getRightDistance() {
     return getRightEncoder() * DriveConstants.REV_TO_IN_K;
   }
@@ -102,23 +113,48 @@ public class Drive extends SubsystemBase {
     return rightEncoder.getVelocity();
   }
 
-  // // PID
-  // @Override
-  // public void pidSet() {
-  //   setRightSpeed(-speed);
-  //   setLeftSpeed(speed);
-  // }
+  // PID
+  // sets PID setpoint to a value of revolutions given a distance in inches
+  public void setSetPoint (double dist) {
+    leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+    rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+  }
 
-  // // SPARK MOTION CONTROL
-  // public void setkP(double kP) {
-  //   leftPID.setP(kP);
-  //   rightPID.setP(kP);
-  // }
+  public void setOutputRange (double minOutput, double maxOutput) {
+    leftPID.setOutputRange(minOutput, maxOutput);
+    rightPID.setOutputRange(minOutput, maxOutput);
+  }
+
+  // SPARK MOTION CONTROL
+  public void setkP(double kP) {
+    leftPID.setP(kP);
+    rightPID.setP(kP);
+  }
+  
+  public void setkI(double kI) {
+    leftPID.setI(kI);
+    rightPID.setI(kI);
+  }  
+  
+  public void setkD(double kD) {
+    leftPID.setD(kD);
+    rightPID.setD(kD);
+  }  
+
+  public void setkIz(double kIz) {
+    leftPID.setIZone(kIz);
+    rightPID.setIZone(kIz);
+  }
+  
+  public void setkF(double kF) {
+    leftPID.setFF(kF);
+    rightPID.setFF(kF);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Drive", getLeftEncoder());
-    SmartDashboard.putNumber("Right Drive", getRightEncoder());
+    SmartDashboard.putNumber("getLeftEncoder", getLeftEncoder());
+    SmartDashboard.putNumber("getRightEncoder", getRightEncoder());
   }
 }

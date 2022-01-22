@@ -8,7 +8,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ControllerConstants.Thrustmaster;
+import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.DriveWithPID;
+import frc.robot.commands.SolenoidForward;
+import frc.robot.commands.SolenoidReverse;
+import frc.robot.commands.Auto.DriveDistance;
 import frc.robot.subsystems.Drive;
 
 /**
@@ -21,17 +30,24 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   // **SUBSYSTEMS**
-  private final Drive drive = new Drive();
+    private final Drive drive = new Drive();
 
-   // **JOYSTICKS**
-   Joystick controller = new Joystick(Constants.ControllerConstants.USB_CONTROLLER);
-   Joystick leftStick = new Joystick(Constants.ControllerConstants.USB_LEFT_STICK);
-   Joystick rightStick = new Joystick(Constants.ControllerConstants.USB_RIGHT_STICK);
+  // **JOYSTICKS**
+   Joystick controller = new Joystick(ControllerConstants.USB_CONTROLLER);
+   Joystick leftStick = new Joystick(ControllerConstants.USB_LEFT_STICK);
+   Joystick rightStick = new Joystick(ControllerConstants.USB_RIGHT_STICK);
 
   // **COMMANDS**
      
+    // AUTO
+    private final DriveDistance driveDistance = new DriveDistance(drive);
     // DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
+    private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    // PNEUMATICS
+    private final SolenoidForward solenoidForward = new SolenoidForward();
+    private final SolenoidReverse solenoidReverse = new SolenoidReverse();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -50,7 +66,17 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    
+    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.TRIGGER);
+    leftTrigger.whenPressed(driveWithPID);
+
+    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
+    rightTrigger.whileHeld(dashboardPID);
+
+    JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    leftMiddle.whenPressed(solenoidForward);
+
+    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    rightMiddle.whenPressed(solenoidReverse);
   }
 
   /**
@@ -60,6 +86,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return driveWithJoysticks;
+    return driveDistance;
   }
 }

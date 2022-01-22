@@ -4,7 +4,12 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -23,10 +28,41 @@ public final class Constants {
         public static final int USB_RIGHT_STICK = 1;
         public static final int USB_CONTROLLER = 2;
 
-        public static final int TRIGGER = 1;
-	    public static final int BUTTON_MIDDLE = 2;
-	    public static final int BUTTON_LEFT = 3;
-	    public static final int BUTTON_RIGHT = 4;
+        public static class Thrustmaster {
+            public static final int TRIGGER = 1;
+            public static final int BUTTON_MIDDLE = 2;
+            public static final int BUTTON_LEFT = 3;
+            public static final int BUTTON_RIGHT = 4;
+    
+            public static class AxesThrustmaster {
+                public static final int X = 0;
+                public static final int Y = 1;
+                public static final int Z = 2;
+                public static final int THROTTLE = 3;
+            }
+        }
+        
+        public static class LogitechF310 {
+            public static final int A = 1;
+            public static final int B = 2;
+            public static final int X = 3;
+            public static final int Y = 4;
+            public static final int LB = 5;
+            public static final int RB = 6;
+            public static final int BACK = 7;
+            public static final int START = 8;
+            public static final int LEFT_PRESS = 9;
+            public static final int RIGHT_PRESS = 10;
+            public class AxesController {
+                public static final int LEFT_X = 0;
+                public static final int LEFT_Y = 1;
+                public static final int LT = 2;
+                public static final int RT = 3;
+                public static final int RIGHT_X = 4;
+                public static final int RIGHT_Y = 5;
+            }
+        }
+        
 
     }
     public static class DriveConstants {
@@ -38,7 +74,7 @@ public final class Constants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
-        public static final double DIAMETER = 6.0;
+        public static final double DIAMETER = 6;
         public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
         public static final double GEAR_RATIO = 8.71;
 
@@ -62,5 +98,24 @@ public final class Constants {
         public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); */
 	}
 
+        // PID
+        public static double kP = 0.03;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kIz = 0;
+        public static double kF = 0;
+
+        public static double MIN_OUTPUT = -1;
+        public static double MAX_OUTPUT = 1;
+        public static final double MARGIN = 3;
+        public static final double DISTANCE = 48;
+
+    }
+
+    public static class ColorSensorConstants {
+        public static final I2C.Port i2cPort = I2C.Port.kOnboard;
+
+        // public final Color BLUE = ColorMatch.makeColor(0.143, 0.427, 0.429);
+        // public final Color RED = ColorMatch.makeColor(0.343, 0.432, 0.223);
     }
 }
