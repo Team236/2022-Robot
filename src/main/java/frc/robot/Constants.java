@@ -82,6 +82,21 @@ public final class Constants {
         public static final double IN_TO_REV_K = GEAR_RATIO / CIRCUMFERENCE;
 
         public static final boolean IS_DEADZONE = true;
+	    
+	     public static class limelight {
+       /*  public static final double CATAPULTLEGNTH = ?;
+        public static final double CATAPULTANGLE = ?;
+        public static final double SPRINGCONSTANT = ?;   
+        public static final double CAMHEIGHT = ?;
+        public static final double CAMANGLE = ?;
+        public static final int HUBHEIGHT = 104;
+        public static final double TARMACDISTANCE = 84.75;
+        public static final int TARGETDIAMETER = 48;
+        public static final double TOTALANGLE = Math.tan((HUBHEIGHT-CAMHEIGHT) / TARMACDISTANCE);
+        public static final double CAMANGLECOMPLIMENT = TOTALANGLE - CAMANGLE;
+        public static final double TARGETAREA = Math.PI * TARGETDIAMETER;
+        public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); */
+	}
 
         // PID
         public static double kP = 0.03;
