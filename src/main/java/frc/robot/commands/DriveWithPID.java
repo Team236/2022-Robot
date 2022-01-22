@@ -65,8 +65,8 @@ public class DriveWithPID extends CommandBase {
     SmartDashboard.putNumber("Drive R Encoder", drive.getRightEncoder());
     SmartDashboard.putNumber("Drive L Distance", drive.getLeftDistance());
     SmartDashboard.putNumber("Drive R Distance", drive.getRightDistance());
-    SmartDashboard.putNumber("Drive kP", this.kP);
-    SmartDashboard.putNumber("Drive setpoint", this.dist);
+    SmartDashboard.putNumber("Drive kP", kP);
+    SmartDashboard.putNumber("Drive setpoint", dist);
     
   }
 
@@ -74,7 +74,6 @@ public class DriveWithPID extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     
-    System.out.println("DriveWithPID interrupted");
     drive.stop();
 
   }

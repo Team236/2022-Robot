@@ -92,7 +92,6 @@ public class DashboardPID extends CommandBase {
   public void end(boolean interrupted) {
 
     drive.resetEncoders();
-    System.out.println("DashboardPID interrupted");
     drive.stop();
   }
 
