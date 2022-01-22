@@ -5,6 +5,9 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.DriveWithPID;
+import frc.robot.subsystems.Drive;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -12,9 +15,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class DriveDistance extends SequentialCommandGroup {
   
   /** Creates a new DriveWithPID. */
-  public DriveDistance() {
+  public DriveDistance(Drive drive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+
+    // possible auto routine: shoot ball, back up, intake ball, limelight, shoot ball
+    // or : back up, intake ball, limelight, shoot 2 balls
+
+    addCommands(parallel(sequence(new DriveWithPID(drive, 48, 3).withTimeout(10)), new WaitCommand(3), new DriveWithPID(drive, 24, 3).withTimeout(10)));
   }
 }
