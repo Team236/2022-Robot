@@ -70,19 +70,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.TRIGGER);
+    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.joyTRIGGER);
     leftTrigger.whenPressed(driveWithPID);
 
-    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
+    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.joyTRIGGER);
     rightTrigger.whileHeld(dashboardPID);
 
-    JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.joyBUTTON_MIDDLE);
     // leftMiddle.whenPressed(solenoidForward);
 
-    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.joyBUTTON_MIDDLE);
     // rightMiddle.whenPressed(solenoidReverse);
 
-    JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.Y);
+    JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.contY);
     y.whileHeld(getColorSensor);
   }
 
