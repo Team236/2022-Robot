@@ -4,13 +4,16 @@
 
 package frc.robot;
 
+import com.revrobotics.AnalogInput;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.subsystems.Drive;
-
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -19,7 +22,8 @@ import frc.robot.subsystems.Drive;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  
+  private Compressor compressor;
+   public AnalogInput pressureSensor;
   // **SUBSYSTEMS**
   private final Drive drive = new Drive();
 
@@ -37,7 +41,11 @@ public class RobotContainer {
   public RobotContainer() {
     
     drive.setDefaultCommand(driveWithJoysticks);
+    
+   compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
+
+  // pressureSensor = new AnalogInput(Constants.IntakeConstants.ANALOG_PRESSURE_SENSOR);
     // Configure the button bindings
     configureButtonBindings();
   }
