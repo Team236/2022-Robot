@@ -22,6 +22,7 @@ public class GetColorSensor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    colorSensor.getAllianceColor();
 
   }
 
@@ -29,6 +30,10 @@ public class GetColorSensor extends CommandBase {
   @Override
   public void execute() {
     colorSensor.getColor();
+    colorSensor.publishAllianceColor();
+    colorSensor.getBlue();
+    colorSensor.getRed();
+    colorSensor.isBallMine();
   }
 
   // Called once the command ends or is interrupted.

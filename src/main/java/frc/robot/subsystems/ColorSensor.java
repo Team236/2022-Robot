@@ -9,9 +9,10 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
 
-import org.ejml.dense.row.misc.DeterminantFromMinor_DDRM;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,7 +22,6 @@ public class ColorSensor extends SubsystemBase {
 
   private ColorSensorV3 colorSensor;
   private ColorMatch colorMatcher;
-  // private DriverStation.Alliance allianceColor;
   private String colorString;
   
   /** Creates a new ColorSensor. */
@@ -31,39 +31,69 @@ public class ColorSensor extends SubsystemBase {
     colorSensor = new ColorSensorV3(i2cPort);
     colorMatcher = new ColorMatch();
     
-    // blueBall = Constants.ColorSensorConstants.BLUE;
-    // redBall = RED;
   }
 
-  // public String getAllianceColor() {
-  //   allianceColor = DriverStation.getAlliance();
-  //   return allianceColor;
-  // }
+  public Alliance getAllianceColor() {
+
+    return DriverStation.getAlliance();
+  }
+
+  public String publishAllianceColor(){
+    String myAlliance = "Invalid";
+
+    if (getAllianceColor() == Alliance.Red) {
+      myAlliance = "Red";
+    } else if (getAllianceColor() == Alliance.Blue) {
+      myAlliance = "Blue";
+    } else if (getAllianceColor() == Alliance.Invalid) {
+      myAlliance = "Invalid";
+    }
+
+    SmartDashboard.putString("myAlliance", myAlliance);
+
+    return myAlliance;
+  }
 
   public void getColor() {
     
     Color detectedColor = colorSensor.getColor();
-    double IR = colorSensor.getIR();
-    RawColor rawColor = colorSensor.getRawColor();
-    String myRawColor = rawColor.toString();
+    // RawColor rawColor = colorSensor.getRawColor();
+    // String myRawColor = rawColor.toString();
+    // String myGetColor = detectedColor.toString();
+
+    // SmartDashboard.putNumber("get red", colorSensor.getRed());
+    // SmartDashboard.putString("getColor string", myGetColor);
 
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putString("raw color", myRawColor);
+    // SmartDashboard.putString("raw color", myRawColor);
 
-    ColorMatchResult closestColor = colorMatcher.matchClosestColor(detectedColor);
-    String myClosestColor = closestColor.toString();
-    SmartDashboard.putString("closest color", myClosestColor);
+    // ColorMatchResult closestColor = colorMatcher.matchClosestColor(detectedColor);
+    // SmartDashboard.putString("closest color", closestColor.color.toString());
+    // String myClosestColor = closestColor.toString();
+    // SmartDashboard.putString("closest color string", myClosestColor);
+    // colorMatcher.matchClosestColor(detectedColor);
     
   }
 
-  // public void checkBallColor() {
-  //   // if ((colorString == "Blue") & (DriverStation.Alliance == blue)) {
-  //   //   SmartDashboard.putBoolean("correct ball", true);
-  //   // }
-  // }
+  public double getRed() {
+    Double redDouble = colorSensor.getColor().red;
+    return redDouble;
+  }
+
+  public double getBlue() {
+    Double blueDouble = colorSensor.getColor().blue;
+    return blueDouble;
+  }
+
+  public void isBallMine() {
+    if ((publishAllianceColor() == "Red") && (getRed() > getBlue())) {
+      SmartDashboard.putBoolean("isBallMine", true);
+    } else if ((publishAllianceColor() == "Blue") && (getBlue() > getRed())) {
+      SmartDashboard.putBoolean("isBallMine", true);
+    } else SmartDashboard.putBoolean("isBallMine", false);
+  }
 
   @Override
   public void periodic() {
