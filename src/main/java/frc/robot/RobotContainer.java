@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private Compressor compressor;
+  //private Compressor compressor;
    public AnalogInput pressureSensor;
   // **SUBSYSTEMS**
   private final Drive drive = new Drive();
@@ -42,7 +42,7 @@ public class RobotContainer {
     
     drive.setDefaultCommand(driveWithJoysticks);
     
-   compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+   //compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
 
   // pressureSensor = new AnalogInput(Constants.IntakeConstants.ANALOG_PRESSURE_SENSOR);
