@@ -9,6 +9,7 @@ import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -29,41 +30,40 @@ public final class Constants {
         public static final int USB_CONTROLLER = 2;
 
         public static class Thrustmaster {
-            public static final int joyTRIGGER = 1;
-            public static final int joyBUTTON_MIDDLE = 2;
-            public static final int joyBUTTON_LEFT = 3;
-            public static final int joyBUTTON_RIGHT = 4;
+            public static final int TRIGGER = 1;
+            public static final int BUTTON_MIDDLE = 2;
+            public static final int BUTTON_LEFT = 3;
+            public static final int BUTTON_RIGHT = 4;
     
             public static class AxesThrustmaster {
-                public static final int joyX = 0;
-                public static final int joyY = 1;
-                public static final int joyZ = 2;
-                public static final int joyTHROTTLE = 3;
-            }
+                public static final int X = 0;
+                public static final int Y = 1;
+                public static final int Z = 2;
+                public static final int THROTTLE = 3;
+            }       
         }
         
         public static class LogitechF310 {
-            public static final int contA = 1;
-            public static final int contB = 2;
-            public static final int contX = 3;
-            public static final int contY = 4;
-            public static final int contLB = 5;
-            public static final int contRB = 6;
-            public static final int contBACK = 7;
-            public static final int contSTART = 8;
-            public static final int contLEFT_PRESS = 9;
-            public static final int contRIGHT_PRESS = 10;
+            public static final int A = 1;
+            public static final int B = 2;
+            public static final int X = 3;
+            public static final int Y = 4;
+            public static final int LB = 5;
+            public static final int RB = 6;
+            public static final int BACK = 7;
+            public static final int START = 8;
+            public static final int LEFT_PRESS = 9;
+            public static final int RIGHT_PRESS = 10;
             public class AxesController {
-                public static final int contLEFT_X = 0;
-                public static final int contLEFT_Y = 1;
-                public static final int contLT = 2;
-                public static final int contRT = 3;
-                public static final int contRIGHT_X = 4;
-                public static final int contRIGHT_Y = 5;
+                public static final int LEFT_X = 0;
+                public static final int LEFT_Y = 1;
+                public static final int LT = 2;
+                public static final int RT = 3;
+                public static final int RIGHT_X = 4;
+                public static final int RIGHT_Y = 5;
             }
         }
         
-
     }
     public static class DriveConstants {
         public static final int ID_LEFT_FRONT = 10;
@@ -79,7 +79,7 @@ public final class Constants {
         public static final double GEAR_RATIO = 8.71;
 
         public static final double REV_TO_IN_K = CIRCUMFERENCE / GEAR_RATIO;
-        public static final double IN_TO_REV_K = GEAR_RATIO / CIRCUMFERENCE;
+        public static final double IN_TO_REV_K = GEAR_RATIO / (.75 * CIRCUMFERENCE);
 
         public static final boolean IS_DEADZONE = true;
 	    
@@ -99,16 +99,16 @@ public final class Constants {
 	}
 
         // PID
-        public static double kP = 0.03;
+        public static double kP = 0.015;
+        public static double turnkP = 0.013;
         public static double kI = 0;
         public static double kD = 0;
-        public static double kIz = 0;
         public static double kF = 0;
 
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
-        public static final double MARGIN = 3;
-        public static final double DISTANCE = 48;
+        public static final double MARGIN = 2;
+        public static final double DISTANCE = 40;
 
     }
 
