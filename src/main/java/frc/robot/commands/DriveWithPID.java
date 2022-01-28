@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.SparkMaxPIDController;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -18,12 +16,12 @@ public class DriveWithPID extends CommandBase {
   private double dist;
   private double margin;
   private double error;
-  private double kP, kI, kD, kIz, kF;
+  private double kP, kI, kD, kF;
 
   /** Creates a new DriveWithPID. */
-  public DriveWithPID(Drive drive, double dist, double margin) {
+  public DriveWithPID(Drive pidDrive, double dist, double margin) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.drive = drive;
+    this.drive = pidDrive;
     addRequirements(this.drive);
 
     this.dist = dist;
@@ -32,7 +30,6 @@ public class DriveWithPID extends CommandBase {
     this.kP = Constants.DriveConstants.kP;
     this.kI = Constants.DriveConstants.kI;
     this.kD = Constants.DriveConstants.kD;
-    this.kIz = Constants.DriveConstants.kIz;
     this.kF = Constants.DriveConstants.kF;
   }
 
@@ -45,7 +42,6 @@ public class DriveWithPID extends CommandBase {
     drive.setkP(this.kP);
     drive.setkI(this.kI);
     drive.setkD(this.kD);
-    drive.setkIz(this.kIz);
     drive.setkF(this.kF);
   }
 
@@ -59,15 +55,13 @@ public class DriveWithPID extends CommandBase {
     // calculates error in inches
     error = Math.abs(dist - drive.getLeftDistance());
 
-    // SmartDashboard.putNumber("Drive Setpoint", dist);
-    SmartDashboard.putNumber("Drive Error", error);
-    SmartDashboard.putNumber("Drive L Encoder", drive.getLeftEncoder());
-    SmartDashboard.putNumber("Drive R Encoder", drive.getRightEncoder());
-    SmartDashboard.putNumber("Drive L Distance", drive.getLeftDistance());
-    SmartDashboard.putNumber("Drive R Distance", drive.getRightDistance());
-    SmartDashboard.putNumber("Drive kP", kP);
-    SmartDashboard.putNumber("Drive setpoint", dist);
-    
+    SmartDashboard.putNumber("PID L Encoder", drive.getLeftEncoder());
+    SmartDashboard.putNumber("PID R Encoder", drive.getRightEncoder());
+    SmartDashboard.putNumber("PID L Distance", drive.getLeftDistance());
+    SmartDashboard.putNumber("PID R Distance", drive.getRightDistance());
+    SmartDashboard.putNumber("PID kP", kP);
+    SmartDashboard.putNumber("PID setpoint", dist);
+    SmartDashboard.putNumber("PID Error", error);
   }
 
   // Called once the command ends or is interrupted.
@@ -75,17 +69,15 @@ public class DriveWithPID extends CommandBase {
   public void end(boolean interrupted) {
     
     drive.stop();
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
     // ends command when the error is less than the margin
     boolean isDistMargin = error < margin;
 
-    // SmartDashboard.putString("Is Finished", "is finished");
-
-    return isDistMargin;
+    return false;
   }
 }

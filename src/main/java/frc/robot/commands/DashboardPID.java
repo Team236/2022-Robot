@@ -46,11 +46,10 @@ public class DashboardPID extends CommandBase {
     drive.setkF(this.kFF);
     
     // puts the editable PIDF values on the dashboard
-    SmartDashboard.putNumber("dash k_P", kP);
-    SmartDashboard.putNumber("dash k_I", kI);
-    SmartDashboard.putNumber("dash k_D", kD);
-    SmartDashboard.putNumber("dash Feed Fwd", kFF);
-    // SmartDashboard.putNumber("setpoint", 0);
+    SmartDashboard.putNumber("edit kP", kP);
+    SmartDashboard.putNumber("edit kI", kI);
+    SmartDashboard.putNumber("edit kD", kD);
+    SmartDashboard.putNumber("edit Feed Fwd", kFF);
 
   }
 
@@ -59,11 +58,10 @@ public class DashboardPID extends CommandBase {
   public void execute() {
 
     // gets the PIDF values from the dashboard
-    p = SmartDashboard.getNumber("dash k_P", 0);
-    i = SmartDashboard.getNumber("dash k_I", 0);
-    d = SmartDashboard.getNumber("dash k_D", 0);
-    ff = SmartDashboard.getNumber("dash Feed Fwd", 0);
-    // double setpoint = SmartDashboard.getNumber("setpoint", 0);
+    p = SmartDashboard.getNumber("edit kP", 0);
+    i = SmartDashboard.getNumber("edit kI", 0);
+    d = SmartDashboard.getNumber("edit kD", 0);
+    ff = SmartDashboard.getNumber("edit Feed Fwd", 0);
 
     // if dashboard PIDF values are not equal to the set values in init, then set the values equal to the dashboard values
     if((p != kP)) { drive.setkP(p); kP = p; }
@@ -81,10 +79,10 @@ public class DashboardPID extends CommandBase {
     // calculates error in inches
     error = Math.abs(dist - drive.getLeftDistance());
 
-    SmartDashboard.putNumber("setPoint", dist);
-    SmartDashboard.putNumber("error", error);
-    SmartDashboard.putNumber("L distance", drive.getLeftDistance());
-    SmartDashboard.putNumber("R distance", drive.getRightDistance());
+    SmartDashboard.putNumber("PID Dash setPoint", dist);
+    SmartDashboard.putNumber("PID Dash error", error);
+    SmartDashboard.putNumber("PID Dash L distance", drive.getLeftDistance());
+    SmartDashboard.putNumber("PID Dashe R distance", drive.getRightDistance());
   }
 
   // Called once the command ends or is interrupted.
@@ -99,10 +97,11 @@ public class DashboardPID extends CommandBase {
   @Override
   public boolean isFinished() {
 
+
     // finishes command when error is less than the margin
     boolean isDistMargin = error < margin;
     // SmartDashboard.putBoolean("isFinished", isFinished());
 
-    return isDistMargin;
+    return false;
   }
 }
