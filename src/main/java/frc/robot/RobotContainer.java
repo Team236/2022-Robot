@@ -11,16 +11,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
 import frc.robot.commands.GetColorSensor;
+import frc.robot.commands.SolenoidForward;
+import frc.robot.commands.SolenoidReverse;
+import frc.robot.commands.TurnWithPID;
 // import frc.robot.commands.SolenoidForward;
 // import frc.robot.commands.SolenoidReverse;
-import frc.robot.commands.Auto.DriveDistance;
+import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.PneumaticTest;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,27 +34,29 @@ import frc.robot.subsystems.Drive;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   
-  Joystick controller = new Joystick(ControllerConstants.USB_CONTROLLER);
-  Joystick leftStick = new Joystick(ControllerConstants.USB_LEFT_STICK);
-  Joystick rightStick = new Joystick(ControllerConstants.USB_RIGHT_STICK);
+  // **JOYSTICKS**
+  Joystick controller = new Joystick(Constants.ControllerConstants.USB_CONTROLLER);
+  Joystick leftStick = new Joystick(Constants.ControllerConstants.USB_LEFT_STICK);
+  Joystick rightStick = new Joystick(Constants.ControllerConstants.USB_RIGHT_STICK);
 
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
     private final ColorSensor colorSensor = new ColorSensor();
+    private final PneumaticTest pneumaticTest = new PneumaticTest();
 
   // **COMMANDS**
      
     // AUTO
-    private final DriveDistance driveDistance = new DriveDistance(drive);
+    private final TestCmdGroup testCmdGroup = new TestCmdGroup(drive);
     // DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     // PNEUMATICS
-    // private final SolenoidForward solenoidForward = new SolenoidForward();
-    // private final SolenoidReverse solenoidReverse = new SolenoidReverse();
+    private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
+    private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
     // COLOR SENSOR
     private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
 
@@ -70,20 +77,30 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.joyTRIGGER);
-    leftTrigger.whenPressed(driveWithPID);
+    // CREATE BUTTONS
+    JoystickButton a = new JoystickButton(controller, ControllerConstants.LogitechF310.A);
+    JoystickButton b = new JoystickButton(controller, ControllerConstants.LogitechF310.B);
+    JoystickButton x = new JoystickButton(controller, ControllerConstants.LogitechF310.X);
+    JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.Y);
+    JoystickButton lb = new JoystickButton(controller, ControllerConstants.LogitechF310.LB);
+    JoystickButton rb = new JoystickButton(controller, ControllerConstants.LogitechF310.RB);
+    JoystickButton leftPress = new JoystickButton(controller, ControllerConstants.LogitechF310.LEFT_PRESS);
+    JoystickButton rightPress = new JoystickButton(controller, ControllerConstants.LogitechF310.RIGHT_PRESS);
 
-    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.joyTRIGGER);
-    rightTrigger.whileHeld(dashboardPID);
 
-    JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.joyBUTTON_MIDDLE);
-    // leftMiddle.whenPressed(solenoidForward);
+    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
+    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    JoystickButton rightSLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
+    JoystickButton rightSRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
 
-    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.joyBUTTON_MIDDLE);
-    // rightMiddle.whenPressed(solenoidReverse);
-
-    JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.contY);
+    // ASSIGN BUTTONS TO COMMANDS
+    a.whileHeld(turnWithPID);
+    b.whileHeld(dashboardPID);
+    x.whileHeld(driveWithPID);
+    rightSLeft.whenPressed(solenoidForward);
+    rightSRight.whenPressed(solenoidReverse);
     y.whileHeld(getColorSensor);
+
   }
 
   /**
@@ -93,6 +110,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return driveDistance;
+    return testCmdGroup;
   }
 }
