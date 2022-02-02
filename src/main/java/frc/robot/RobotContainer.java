@@ -17,6 +17,7 @@ import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
 import frc.robot.commands.GetColorSensor;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.SolenoidForward;
 import frc.robot.commands.SolenoidReverse;
 import frc.robot.commands.TurnWithPID;
@@ -26,6 +27,7 @@ import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PneumaticTest;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -44,6 +46,7 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final ColorSensor colorSensor = new ColorSensor();
     private final PneumaticTest pneumaticTest = new PneumaticTest();
+    private final Shooter shooter = new Shooter();
 
   // **COMMANDS**
      
@@ -53,7 +56,9 @@ public class RobotContainer {
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
-    private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
+    // SHOOTER
+    private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.BOT_SPEED, Constants.ShooterConstants.TOP_SPEED);
     // PNEUMATICS
     private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
     private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
@@ -95,11 +100,12 @@ public class RobotContainer {
 
     // ASSIGN BUTTONS TO COMMANDS
     a.whileHeld(turnWithPID);
-    b.whileHeld(dashboardPID);
+    b.whileHeld(shoot); //dashboardPID
     x.whileHeld(driveWithPID);
     rightSLeft.whenPressed(solenoidForward);
     rightSRight.whenPressed(solenoidReverse);
     y.whileHeld(getColorSensor);
+
 
   }
 
