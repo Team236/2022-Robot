@@ -100,7 +100,7 @@ public final class Constants {
 
         // PID
         public static double kP = 0.015;
-        public static double turnkP = 0.013;
+        public static double turnkP = 0.014;
         public static double kI = 0;
         public static double kD = 0;
         public static double kF = 0;
@@ -108,8 +108,20 @@ public final class Constants {
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
-        public static final double DISTANCE = 40;
+        public static final double DISTANCE = 60;
+        public static final double TURN_DISTANCE = 21; // 42 is 180 degrees
 
+    }
+
+    public static class ShooterConstants {
+        
+        public static final double kPShoot = 0.000;
+        public static final double kIShoot = 0.0;
+        public static final double kDShoot = 0.0;
+        public static final double kFFShoot = 0.000215;//.00022
+
+        public static final double BOT_SPEED = 3000;
+        public static final double TOP_SPEED = 3000;
     }
 
     public static class ColorSensorConstants {
