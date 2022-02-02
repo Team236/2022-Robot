@@ -26,7 +26,7 @@ public class TestCmdGroup extends SequentialCommandGroup {
     super(sequence (
       new DriveWithPID(drive, 96, 1).withTimeout(10), 
       new WaitCommand(3), 
-      new TurnWithPID(drive, 40, 1).withTimeout(5), 
+      new TurnWithPID(drive, 42, 1).withTimeout(5), 
       new WaitCommand(2), 
       new DriveWithPID(drive, 48, 1)
        )

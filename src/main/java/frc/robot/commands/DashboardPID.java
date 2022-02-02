@@ -82,7 +82,7 @@ public class DashboardPID extends CommandBase {
     SmartDashboard.putNumber("PID Dash setPoint", dist);
     SmartDashboard.putNumber("PID Dash error", error);
     SmartDashboard.putNumber("PID Dash L distance", drive.getLeftDistance());
-    SmartDashboard.putNumber("PID Dashe R distance", drive.getRightDistance());
+    SmartDashboard.putNumber("PID Dash R distance", drive.getRightDistance());
   }
 
   // Called once the command ends or is interrupted.
