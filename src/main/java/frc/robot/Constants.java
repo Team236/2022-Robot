@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -117,5 +120,12 @@ public final class Constants {
 
         // public final Color BLUE = ColorMatch.makeColor(0.143, 0.427, 0.429);
         // public final Color RED = ColorMatch.makeColor(0.343, 0.432, 0.223);
+    }
+
+
+    public static class TriggerConstants {
+        public static final int TriggerRetract = 1;
+        public static final int TriggerExtend = 0;
+        
     }
 }
