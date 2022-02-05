@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.ResourceBundle.Control;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -11,23 +13,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
 import frc.robot.commands.GetColorSensor;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.IntakeExtendAndRetract;
+import frc.robot.commands.SetIntakeSpeed;
 import frc.robot.commands.SolenoidForward;
 import frc.robot.commands.SolenoidReverse;
 import frc.robot.commands.TurnWithPID;
-// import frc.robot.commands.SolenoidForward;
-// import frc.robot.commands.SolenoidReverse;
 import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PneumaticTest;
-import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -46,7 +48,8 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final ColorSensor colorSensor = new ColorSensor();
     private final PneumaticTest pneumaticTest = new PneumaticTest();
-    private final Shooter shooter = new Shooter();
+    // private final Shooter shooter = new Shooter();
+    private final Intake intake = new Intake();
 
   // **COMMANDS**
      
@@ -58,7 +61,11 @@ public class RobotContainer {
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
     // SHOOTER
-    private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.BOT_SPEED, Constants.ShooterConstants.TOP_SPEED);
+    // private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.BOT_SPEED, Constants.ShooterConstants.TOP_SPEED);
+    // INTAKE
+    private final SetIntakeSpeed intakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
+    private final SetIntakeSpeed intakeReverse = new SetIntakeSpeed(intake, IntakeConstants.REVERSE_SPEED);
+    private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract();
     // PNEUMATICS
     private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
     private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
@@ -89,24 +96,26 @@ public class RobotContainer {
     JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.Y);
     JoystickButton lb = new JoystickButton(controller, ControllerConstants.LogitechF310.LB);
     JoystickButton rb = new JoystickButton(controller, ControllerConstants.LogitechF310.RB);
+    JoystickButton back = new JoystickButton(controller, ControllerConstants.LogitechF310.BACK);
+    JoystickButton start = new JoystickButton(controller, ControllerConstants.LogitechF310.START);
     JoystickButton leftPress = new JoystickButton(controller, ControllerConstants.LogitechF310.LEFT_PRESS);
     JoystickButton rightPress = new JoystickButton(controller, ControllerConstants.LogitechF310.RIGHT_PRESS);
 
-
     JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
     JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
-    JoystickButton rightSLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
-    JoystickButton rightSRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
+    JoystickButton rightStickLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
+    JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
 
     // ASSIGN BUTTONS TO COMMANDS
     a.whileHeld(turnWithPID);
-    b.whileHeld(shoot); //dashboardPID
+    b.whileHeld(dashboardPID); //shoot
     x.whileHeld(driveWithPID);
-    rightSLeft.whenPressed(solenoidForward);
-    rightSRight.whenPressed(solenoidReverse);
-    y.whileHeld(getColorSensor);
-
-
+    // rightStickLeft.whenPressed(solenoidForward);
+    // rightStickRight.whenPressed(solenoidReverse);
+    // y.whileHeld(getColorSensor);
+    start.whenPressed(intakeExtendAndRetract);
+    rb.whileHeld(intakeForward);
+    lb.whileHeld(intakeReverse);
   }
 
   /**
