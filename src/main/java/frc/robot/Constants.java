@@ -124,6 +124,15 @@ public final class Constants {
         public static final double TOP_SPEED = 3000;
     }
 
+    public static class IntakeConstants {
+
+        public static final int ID_MOTOR = 15; //MOTOR CONTROLLER ID
+        public static final double FORWARD_SPEED = 0.5;
+        public static final double REVERSE_SPEED = -0.5;
+        public static final double SOL_FWD = 0;//CHECK THESE #s ON THE PCM
+        public static final double SOL_REV = 1;
+    }
+
     public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
     }
