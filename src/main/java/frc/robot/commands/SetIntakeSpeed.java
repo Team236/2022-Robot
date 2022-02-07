@@ -5,32 +5,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PneumaticTest;
+import frc.robot.subsystems.Intake;
 
-public class SolenoidReverse extends CommandBase {
+public class SetIntakeSpeed extends CommandBase {
 
-  private PneumaticTest pneumaticTest;
+  private Intake intake;
+  private double speed;
+  
+  /** Creates a new SetIntakeSpeed. */
+  public SetIntakeSpeed(Intake intake, double speed) {
 
-  /** Creates a new SolenoidReverse. */
-  public SolenoidReverse(PneumaticTest pneumaticTest) {
+    this.intake = intake;
+    this.speed = speed;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    this.pneumaticTest = pneumaticTest;
-    addRequirements(this.pneumaticTest);
+    addRequirements(this.intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    pneumaticTest.reverse();
+    intake.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.stop();
+  }
 
   // Returns true when the command should end.
   @Override

@@ -5,24 +5,27 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PneumaticTest extends SubsystemBase {
 
-  public DoubleSolenoid solenoid;
+  
+  DoubleSolenoid doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+
   /** Creates a new PneumaticTest. */
   public PneumaticTest() {
-    // solenoid = new DoubleSolenoid(moduleType, 2, 2;)
   }
 
   public void forward() {
-    solenoid.set(Value.kForward);
+    doubleSolenoid.set(Value.kForward);
   }
 
   public void reverse() {
-    solenoid.set(Value.kReverse);
+    doubleSolenoid.set(Value.kReverse);
   }
 
   @Override

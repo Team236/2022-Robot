@@ -14,6 +14,7 @@ public class DriveWithJoysticks extends CommandBase {
 
   private Drive drive;
   private Joystick leftStick, rightStick;
+  private boolean isCube;
   private int pow = 1;
   private boolean isDeadzone = Constants.DriveConstants.IS_DEADZONE;
   
@@ -23,6 +24,7 @@ public class DriveWithJoysticks extends CommandBase {
     this.drive = drive;
     this.leftStick = leftStick;
     this.rightStick = rightStick;
+    this.isCube = isCube;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.drive);
@@ -31,6 +33,14 @@ public class DriveWithJoysticks extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    if (isCube) {
+      this.pow = 3;
+      this.isDeadzone = false;
+    } else {
+      this.pow = 1;
+      this.isDeadzone = true;
+    }
     this.pow = 1;
     this.isDeadzone = true;
   }
@@ -48,9 +58,10 @@ public class DriveWithJoysticks extends CommandBase {
       drive.setRightSpeed(Math.pow(-rightStick.getY(), pow));
     }
 
+    SmartDashboard.putNumber("DWJ getLeftEncoder", drive.getLeftEncoder());
+    SmartDashboard.putNumber("DWJ getRightEncoder", drive.getRightEncoder());
     SmartDashboard.putNumber("DWJ L Distance", drive.getLeftDistance());
     SmartDashboard.putNumber("DWJ R Distance", drive.getRightDistance());
-
   }
 
   // Called once the command ends or is interrupted.

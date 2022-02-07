@@ -7,21 +7,29 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveWithPID;
+import frc.robot.commands.TurnWithPID;
 import frc.robot.subsystems.Drive;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DriveDistance extends SequentialCommandGroup {
+public class TestCmdGroup extends SequentialCommandGroup {
   
   /** Creates a new DriveWithPID. */
-  public DriveDistance(Drive drive) {
+  public TestCmdGroup(Drive drive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     // possible auto routine: shoot ball, back up, intake ball, limelight, shoot ball
     // or : back up, intake ball, limelight, shoot 2 balls
 
-    addCommands(parallel(sequence(new DriveWithPID(drive, 48, 3).withTimeout(10)), new WaitCommand(3), new DriveWithPID(drive, 24, 3).withTimeout(10)));
+    super(sequence (
+      new DriveWithPID(drive, 96, 1).withTimeout(10), 
+      new WaitCommand(3), 
+      new TurnWithPID(drive, 42, 1).withTimeout(5), 
+      new WaitCommand(2), 
+      new DriveWithPID(drive, 48, 1)
+       )
+    );
   }
 }

@@ -9,6 +9,7 @@ import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -39,7 +40,7 @@ public final class Constants {
                 public static final int Y = 1;
                 public static final int Z = 2;
                 public static final int THROTTLE = 3;
-            }
+            }       
         }
         
         public static class LogitechF310 {
@@ -63,7 +64,6 @@ public final class Constants {
             }
         }
         
-
     }
     public static class DriveConstants {
         public static final int ID_LEFT_FRONT = 10;
@@ -79,7 +79,7 @@ public final class Constants {
         public static final double GEAR_RATIO = 8.71;
 
         public static final double REV_TO_IN_K = CIRCUMFERENCE / GEAR_RATIO;
-        public static final double IN_TO_REV_K = GEAR_RATIO / CIRCUMFERENCE;
+        public static final double IN_TO_REV_K = GEAR_RATIO / (.75 * CIRCUMFERENCE);
 
         public static final boolean IS_DEADZONE = true;
 	    
@@ -99,23 +99,41 @@ public final class Constants {
 	}
 
         // PID
-        public static double kP = 0.03;
+        public static double kP = 0.015;
+        public static double turnkP = 0.014;
         public static double kI = 0;
         public static double kD = 0;
-        public static double kIz = 0;
         public static double kF = 0;
 
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
-        public static final double MARGIN = 3;
-        public static final double DISTANCE = 48;
+        public static final double MARGIN = 2;
+        public static final double DISTANCE = 60;
+        public static final double TURN_DISTANCE = 21; // 42 is 180 degrees
 
+    }
+
+    public static class ShooterConstants {
+        
+        public static final double kPShoot = 0.000;
+        public static final double kIShoot = 0.0;
+        public static final double kDShoot = 0.0;
+        public static final double kFFShoot = 0.000215;//.00022
+
+        public static final double BOT_SPEED = 3000;
+        public static final double TOP_SPEED = 3000;
+    }
+
+    public static class IntakeConstants {
+
+        public static final int ID_MOTOR = 15; //MOTOR CONTROLLER ID
+        public static final double FORWARD_SPEED = 0.5;
+        public static final double REVERSE_SPEED = -0.5;
+        public static final double SOL_FWD = 0;//CHECK THESE #s ON THE PCM
+        public static final double SOL_REV = 1;
     }
 
     public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
-
-        // public final Color BLUE = ColorMatch.makeColor(0.143, 0.427, 0.429);
-        // public final Color RED = ColorMatch.makeColor(0.343, 0.432, 0.223);
     }
 }

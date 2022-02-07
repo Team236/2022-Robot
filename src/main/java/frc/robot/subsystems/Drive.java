@@ -120,6 +120,11 @@ public class Drive extends SubsystemBase {
     rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
   }
 
+  public void setTurnSetPoint (double dist) {
+    leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+    rightPID.setReference((-dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+  }
+  
   public void setOutputRange (double minOutput, double maxOutput) {
     leftPID.setOutputRange(minOutput, maxOutput);
     rightPID.setOutputRange(minOutput, maxOutput);
@@ -154,7 +159,6 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("getLeftEncoder", getLeftEncoder());
-    SmartDashboard.putNumber("getRightEncoder", getRightEncoder());
+
   }
 }

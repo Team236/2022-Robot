@@ -10,24 +10,21 @@ import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drive;
 
-public class DriveWithPID extends CommandBase {
+public class TurnWithPID extends CommandBase {
 
   private Drive drive;
-  private double dist;
-  private double margin;
-  private double error;
+  private double dist, margin, error;
   private double kP, kI, kD, kF;
-
-  /** Creates a new DriveWithPID. */
-  public DriveWithPID(Drive pidDrive, double dist, double margin) {
+  /** Creates a new TurnWithPID. */
+  public TurnWithPID(Drive turnPidDrive, double dist, double margin) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.drive = pidDrive;
+    this.drive = turnPidDrive;
     addRequirements(this.drive);
 
     this.dist = dist;
     this.margin = margin;
 
-    this.kP = Constants.DriveConstants.kP;
+    this.kP = Constants.DriveConstants.turnkP;
     this.kI = Constants.DriveConstants.kI;
     this.kD = Constants.DriveConstants.kD;
     this.kF = Constants.DriveConstants.kF;
@@ -36,8 +33,9 @@ public class DriveWithPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drive.resetEncoders();
 
+    drive.resetEncoders();
+    
     // sets PIDF values to the values defined in DriveConstants
     drive.setkP(this.kP);
     drive.setkI(this.kI);
@@ -50,24 +48,24 @@ public class DriveWithPID extends CommandBase {
   public void execute() {
 
     drive.setOutputRange(DriveConstants.MIN_OUTPUT, DriveConstants.MAX_OUTPUT);
-    drive.setSetPoint(dist);
+    drive.setTurnSetPoint(dist);
 
     // calculates error in inches
     error = Math.abs(dist - drive.getLeftDistance());
 
-    SmartDashboard.putNumber("PID L Encoder", drive.getLeftEncoder());
-    SmartDashboard.putNumber("PID R Encoder", drive.getRightEncoder());
-    SmartDashboard.putNumber("PID L Distance", drive.getLeftDistance());
-    SmartDashboard.putNumber("PID R Distance", drive.getRightDistance());
-    SmartDashboard.putNumber("PID kP", kP);
-    SmartDashboard.putNumber("PID setpoint", dist);
-    SmartDashboard.putNumber("PID Error", error);
+    SmartDashboard.putNumber("PID Turn L Encoder", drive.getLeftEncoder());
+    SmartDashboard.putNumber("PID Turn R Encoder", drive.getRightEncoder());
+    SmartDashboard.putNumber("PID Turn L Distance", drive.getLeftDistance());
+    SmartDashboard.putNumber("PID Turn R Distance", drive.getRightDistance());
+    SmartDashboard.putNumber("PID Turn kP", kP);
+    SmartDashboard.putNumber("PID Turn setpoint", dist);
+    SmartDashboard.putNumber("PID Turn Error", error);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+
     drive.stop();
   }
 

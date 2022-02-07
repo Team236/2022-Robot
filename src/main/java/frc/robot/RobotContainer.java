@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.ResourceBundle.Control;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -11,14 +13,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
+import frc.robot.commands.GetColorSensor;
+import frc.robot.commands.IntakeExtendAndRetract;
+import frc.robot.commands.SetIntakeSpeed;
 import frc.robot.commands.SolenoidForward;
 import frc.robot.commands.SolenoidReverse;
-import frc.robot.commands.Auto.DriveDistance;
+import frc.robot.commands.TurnWithPID;
+import frc.robot.commands.Auto.TestCmdGroup;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.PneumaticTest;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,27 +38,39 @@ import frc.robot.subsystems.Drive;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   
+  // **JOYSTICKS**
+  Joystick controller = new Joystick(Constants.ControllerConstants.USB_CONTROLLER);
+  Joystick leftStick = new Joystick(Constants.ControllerConstants.USB_LEFT_STICK);
+  Joystick rightStick = new Joystick(Constants.ControllerConstants.USB_RIGHT_STICK);
+
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
-
-  // **JOYSTICKS**
-   Joystick controller = new Joystick(ControllerConstants.USB_CONTROLLER);
-   Joystick leftStick = new Joystick(ControllerConstants.USB_LEFT_STICK);
-   Joystick rightStick = new Joystick(ControllerConstants.USB_RIGHT_STICK);
+    private final ColorSensor colorSensor = new ColorSensor();
+    private final PneumaticTest pneumaticTest = new PneumaticTest();
+    // private final Shooter shooter = new Shooter();
+    private final Intake intake = new Intake();
 
   // **COMMANDS**
      
     // AUTO
-    private final DriveDistance driveDistance = new DriveDistance(drive);
+    private final TestCmdGroup testCmdGroup = new TestCmdGroup(drive);
     // DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
+    // SHOOTER
+    // private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.BOT_SPEED, Constants.ShooterConstants.TOP_SPEED);
+    // INTAKE
+    private final SetIntakeSpeed intakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
+    private final SetIntakeSpeed intakeReverse = new SetIntakeSpeed(intake, IntakeConstants.REVERSE_SPEED);
+    private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract();
     // PNEUMATICS
-    private final SolenoidForward solenoidForward = new SolenoidForward();
-    private final SolenoidReverse solenoidReverse = new SolenoidReverse();
+    private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
+    private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
+    // COLOR SENSOR
+    private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -66,17 +89,33 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton leftTrigger = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.TRIGGER);
-    leftTrigger.whenPressed(driveWithPID);
+    // CREATE BUTTONS
+    JoystickButton a = new JoystickButton(controller, ControllerConstants.LogitechF310.A);
+    JoystickButton b = new JoystickButton(controller, ControllerConstants.LogitechF310.B);
+    JoystickButton x = new JoystickButton(controller, ControllerConstants.LogitechF310.X);
+    JoystickButton y = new JoystickButton(controller, ControllerConstants.LogitechF310.Y);
+    JoystickButton lb = new JoystickButton(controller, ControllerConstants.LogitechF310.LB);
+    JoystickButton rb = new JoystickButton(controller, ControllerConstants.LogitechF310.RB);
+    JoystickButton back = new JoystickButton(controller, ControllerConstants.LogitechF310.BACK);
+    JoystickButton start = new JoystickButton(controller, ControllerConstants.LogitechF310.START);
+    JoystickButton leftPress = new JoystickButton(controller, ControllerConstants.LogitechF310.LEFT_PRESS);
+    JoystickButton rightPress = new JoystickButton(controller, ControllerConstants.LogitechF310.RIGHT_PRESS);
 
     JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
-    rightTrigger.whileHeld(dashboardPID);
-
-    JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
-    leftMiddle.whenPressed(solenoidForward);
-
     JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
-    rightMiddle.whenPressed(solenoidReverse);
+    JoystickButton rightStickLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
+    JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
+
+    // ASSIGN BUTTONS TO COMMANDS
+    a.whileHeld(turnWithPID);
+    b.whileHeld(dashboardPID); //shoot
+    x.whileHeld(driveWithPID);
+    // rightStickLeft.whenPressed(solenoidForward);
+    // rightStickRight.whenPressed(solenoidReverse);
+    // y.whileHeld(getColorSensor);
+    start.whenPressed(intakeExtendAndRetract);
+    rb.whileHeld(intakeForward);
+    lb.whileHeld(intakeReverse);
   }
 
   /**
@@ -86,6 +125,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return driveDistance;
+    return testCmdGroup;
   }
 }
