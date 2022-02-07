@@ -12,11 +12,11 @@ public class SolenoidReverse extends CommandBase {
   private PneumaticTest pneumaticTest;
 
   /** Creates a new SolenoidReverse. */
-  public SolenoidReverse() {
+ /* public SolenoidReverse() {
     // Use addRequirements() here to declare subsystem dependencies.
     this.pneumaticTest = pneumaticTest;
     addRequirements(this.pneumaticTest);
-  }
+  }*/
 
   // Called when the command is initially scheduled.
   @Override

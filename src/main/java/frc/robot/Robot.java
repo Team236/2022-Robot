@@ -25,11 +25,11 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  //private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
   private Compressor compressor;
-  public UsbCamera usbCamera0;
+ // public UsbCamera usbCamera0;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -48,14 +48,14 @@ public class Robot extends TimedRobot {
 
 
     // USB camera try-catch
-      try {
-      usbCamera0 = CameraServer.startAutomaticCapture(0);
+     /* try {
+      //usbCamera0 = CameraServer.startAutomaticCapture(0);
     } catch (Exception e) {
       System.out.println("camera capture failed");
       System.out.println(e.getStackTrace());
 
       SmartDashboard.putString("camera capture failed", "failed");
-    } 
+    } */
 
 
   }
@@ -84,16 +84,16 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+ // @Override
+  public void autonomousInit() { }
+   /* m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
   }
-
+*/
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
@@ -104,28 +104,15 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    //if (m_autonomousCommand != null) {
+     // m_autonomousCommand.cancel();
+   // }
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-//   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-// NetworkTableEntry tx = table.getEntry("tx");
-// NetworkTableEntry ty = table.getEntry("ty");
-// NetworkTableEntry ta = table.getEntry("ta");
 
-// //read values periodically
-// double x = tx.getDouble(0.0);
-// double y = ty.getDouble(0.0);
-// double area = ta.getDouble(0.0);
-
-// //post to smart dashboard periodically
-// SmartDashboard.putNumber("LimelightX", x);
-// SmartDashboard.putNumber("LimelightY", y);
-// SmartDashboard.putNumber("LimelightArea", area);
 }
 
   @Override

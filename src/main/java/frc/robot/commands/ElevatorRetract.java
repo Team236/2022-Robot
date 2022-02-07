@@ -14,10 +14,10 @@ public class ElevatorRetract extends CommandBase {
   private Trigger retract;
 
   /** Creates a new SolenoidForward. */
-  public ElevatorRetract() {
-    this.retract = retract;
+  public ElevatorRetract(Trigger retract) {
+   this.retract = retract;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(this.retract);
+   addRequirements(this.retract);
   }
 
   // Called when the command is initially scheduled.

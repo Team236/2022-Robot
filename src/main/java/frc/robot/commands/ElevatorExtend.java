@@ -5,28 +5,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Trigger;
 
 public class ElevatorExtend extends CommandBase {
-    private Trigger extend;
+    private Trigger extendTrigger;
 
   /** Creates a new SolenoidForward. */
-  public ElevatorExtend() {
-    this.extend = extend;
+  public ElevatorExtend(Trigger extendTrigger) {
+   this.extendTrigger = extendTrigger;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(this.extend);
+   addRequirements(this.extendTrigger);
   }
 
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    SmartDashboard.putString("initialize", "has been initialized");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    extend.forward();
+    extendTrigger.forward();
   }
 
   // Called once the command ends or is interrupted.

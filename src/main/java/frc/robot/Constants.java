@@ -27,9 +27,9 @@ public final class Constants {
 
     public static class MainControllerConstants {
 
-        public static final int USB_LEFT_STICK = 0;
-        public static final int USB_RIGHT_STICK = 1;
-        public static final int USB_CONTROLLER = 2;
+       // public static final int USB_LEFT_STICK = 0;
+       // public static final int USB_RIGHT_STICK = 1;
+        public static final int USB_CONTROLLER = 0;
 
         public static class Thrustmaster {
             public static final int joyTRIGGER = 1;
@@ -124,8 +124,8 @@ public final class Constants {
 
 
     public static class TriggerConstants {
-        public static final int TriggerRetract = 1;
-        public static final int TriggerExtend = 0;
+        public static final int TRIGGER_RETRACT = 1;
+        public static final int TRIGGER_EXTEND = 0;
         
     }
 }

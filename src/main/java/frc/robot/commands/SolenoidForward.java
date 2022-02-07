@@ -12,11 +12,11 @@ public class SolenoidForward extends CommandBase {
   private PneumaticTest pneumaticTest;
 
   /** Creates a new SolenoidForward. */
-  public SolenoidForward() {
+ /* public SolenoidForward() {
     this.pneumaticTest = pneumaticTest;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.pneumaticTest);
-  }
+  }*/
 
   // Called when the command is initially scheduled.
   @Override
