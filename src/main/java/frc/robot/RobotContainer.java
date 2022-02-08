@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -19,6 +20,8 @@ import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.DashboardPID;
 import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.DriveWithPID;
+import frc.robot.commands.SpoonExtend;
+import frc.robot.commands.SpoonRetract;
 import frc.robot.commands.GetColorSensor;
 import frc.robot.commands.IntakeExtendAndRetract;
 import frc.robot.commands.SetIntakeSpeed;
@@ -29,6 +32,7 @@ import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.subsystems.PneumaticTest;
 
 /**
@@ -50,7 +54,7 @@ public class RobotContainer {
     private final PneumaticTest pneumaticTest = new PneumaticTest();
     // private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
-
+    private final LoadingSpoon loadingSpoon = new LoadingSpoon();
   // **COMMANDS**
      
     // AUTO
@@ -71,6 +75,9 @@ public class RobotContainer {
     private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
     // COLOR SENSOR
     private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    //INTAKE-TO-SHOOTER/ELEVATOR
+    private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
+    private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -116,6 +123,9 @@ public class RobotContainer {
     start.whenPressed(intakeExtendAndRetract);
     rb.whileHeld(intakeForward);
     lb.whileHeld(intakeReverse);
+    leftPress.whenPressed(spoonExtend);
+    rightPress.whenPressed(spoonRetract);
+    
   }
 
   /**
