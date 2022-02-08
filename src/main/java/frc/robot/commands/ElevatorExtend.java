@@ -6,8 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Trigger;
+import edu.wpi.first.wpilibj2.command.CommandBase; 
+import frc.robot.subsystems.Trigger; 
 
 public class ElevatorExtend extends CommandBase {
     private Trigger extendTrigger;
