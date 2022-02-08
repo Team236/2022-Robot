@@ -136,4 +136,11 @@ public final class Constants {
     public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
     }
+
+    public static class SpoonConstants {
+        public static final int SPOON_EXTEND = 0;
+        public static final int SPOON_RETRACT = 1;
+    
+        
+    }
 }
