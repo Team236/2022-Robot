@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -17,6 +18,8 @@ public class Intake extends SubsystemBase {
 
   private CANSparkMax intakeMotor;
   private DoubleSolenoid intakeSolenoid;
+  private Counter ballCounter;
+  private boolean isCounterUnplugged = false;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -45,6 +48,20 @@ public class Intake extends SubsystemBase {
   public void retract() {
     intakeSolenoid.set(Value.kReverse);
   }
+
+  public int getBallCount() {
+    if (isCounterUnplugged) {
+      return 0;
+    } else {
+      return ballCounter.get();
+    }
+  }
+
+  public void resetCounter() {
+    ballCounter.reset();
+  }
+
+
 
   @Override
   public void periodic() {
