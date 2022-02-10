@@ -6,8 +6,8 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DriveWithPID;
-import frc.robot.commands.TurnWithPID;
+import frc.robot.commands.Drive.DriveWithPID;
+import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.subsystems.Drive;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
