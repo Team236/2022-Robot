@@ -44,9 +44,9 @@ public final class Constants {
         }
         
         public static class LogitechF310 {
-            public static final int A = 1;
-            public static final int B = 2;
-            public static final int X = 3;
+            public static final int A = 2;
+            public static final int B = 3;
+            public static final int X = 1;
             public static final int Y = 4;
             public static final int LB = 5;
             public static final int RB = 6;
@@ -68,18 +68,18 @@ public final class Constants {
     public static class DriveConstants {
         public static final int ID_LEFT_FRONT = 10;
         public static final int ID_LEFT_REAR = 11;
-        public static final int ID_RIGHT_FRONT = 15;
+        public static final int ID_RIGHT_FRONT = 15; //SHOULD BE 15;
         public static final int ID_RIGHT_REAR = 16;
 
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
-        public static final double DIAMETER = 6;
+        public static final double DIAMETER = 4; //6;
         public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
         public static final double GEAR_RATIO = 8.71;
 
         public static final double REV_TO_IN_K = CIRCUMFERENCE / GEAR_RATIO;
-        public static final double IN_TO_REV_K = GEAR_RATIO / (.75 * CIRCUMFERENCE);
+        public static final double IN_TO_REV_K = GEAR_RATIO / (CIRCUMFERENCE); //multiply circumference by 0.75
 
         public static final boolean IS_DEADZONE = true;
 	    
@@ -99,7 +99,7 @@ public final class Constants {
 	}
 
         // PID
-        public static double kP = 0.015;
+        public static double kP = 0.022;
         public static double turnkP = 0.014;
         public static double kI = 0;
         public static double kD = 0;
@@ -108,25 +108,46 @@ public final class Constants {
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
-        public static final double DISTANCE = 60;
-        public static final double TURN_DISTANCE = 21; // 42 is 180 degrees
+        public static final double DISTANCE = 48;
+        public static final double TURN_DISTANCE = 100; // 42 is 180 degrees
 
     }
 
     public static class ShooterConstants {
         
-        public static final double kPShoot = 0.000;
-        public static final double kIShoot = 0.0;
-        public static final double kDShoot = 0.0;
-        public static final double kFFShoot = 0.000215;//.00022
+        public static final int BOTTOM_MOTOR = 1;
+        public static final int TOP_MOTOR = 7;
 
-        public static final double BOT_SPEED = 3000;
-        public static final double TOP_SPEED = 3000;
+        public static final double kPBot = 0.0008;
+        public static final double kIBot = 0; //0.0000001;
+        public static final double kDBot = 0.055;
+        public static final double kFFBot = 0; //0.000215;//.00022
+
+        public static final double kPTop = 0.0004;
+        public static final double kITop = 0; //0.0000001;
+        public static final double kDTop = 0.055;
+        public static final double kFFTop = 0; //0.000215;//.00022
+
+        public static final double TOP_SPEED = 1125; // gear ratio is 18:32
+        public static final double BOT_SPEED = 1125;
+
+        public static final double HIGH_HUB_SMALL = -5750; //might need to swap these
+        public static final double HIGH_HUB_LARGE = 2720;
+
+        public static final double LOW_HUB_SMALL = -3400;
+        public static final double LOW_HUB_LARGE = 1700;
+
+        public static final double TARMAC_SMALL = 2200;
+        public static final double TARMAC_LARGE = 4020;
+
+        public static final double LAUNCH_PAD_SMALL = -6000;
+        public static final double LAUNCH_PAD_LARGE = 3000;
+
     }
 
     public static class IntakeConstants {
 
-        public static final int ID_MOTOR = 15; //MOTOR CONTROLLER ID
+        public static final int ID_MOTOR = 13; // this is a random number, need to get the actual ID //MOTOR CONTROLLER ID
         public static final double FORWARD_SPEED = 0.5;
         public static final double REVERSE_SPEED = -0.5;
         public static final double SOL_FWD = 0;//CHECK THESE #s ON THE PCM
