@@ -23,6 +23,7 @@ public class Drive extends SubsystemBase {
   private CANSparkMax leftFront, leftRear, rightFront, rightRear;
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPID, rightPID;
+  private PIDController m_pidController;
   
   /** Creates a new Drive. */
   public Drive() {
@@ -46,6 +47,9 @@ public class Drive extends SubsystemBase {
 
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
+
+    m_pidController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
+    m_pidController.setSetpoint(DriveConstants.DISTANCE);
 
   }
 
@@ -154,6 +158,14 @@ public class Drive extends SubsystemBase {
   public void setkF(double kF) {
     leftPID.setFF(kF);
     rightPID.setFF(kF);
+  }
+
+  public double pidLOut() {
+    return m_pidController.calculate(leftEncoder.getPosition());
+  }
+
+  public double pidROut() {
+    return m_pidController.calculate(rightEncoder.getPosition());
   }
 
   @Override
