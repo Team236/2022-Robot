@@ -19,12 +19,15 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax bottomRoller, topRoller;
   private SparkMaxPIDController botPidController, topPidController;
   private RelativeEncoder botEncoder, topEncoder;
+  private double currentSpeedBot, currentSpeedTop;
 
   /** Creates a new Shooter. */
   public Shooter() {
 
     bottomRoller = new CANSparkMax(1, MotorType.kBrushless);
     topRoller = new CANSparkMax(7, MotorType.kBrushless);
+
+    topRoller.setInverted(true);
 
     // bottomRoller.restoreFactoryDefaults();
     // topRoller.restoreFactoryDefaults();
@@ -35,8 +38,11 @@ public class Shooter extends SubsystemBase {
     botEncoder = bottomRoller.getEncoder();
     topEncoder = topRoller.getEncoder();
 
+    currentSpeedBot = botEncoder.getVelocity();
+    currentSpeedTop = topEncoder.getVelocity();
   }
 
+  // sets RPM velocity set point
   public void setBotSetPoint(double botSpeed) {
     botPidController.setReference(botSpeed, ControlType.kVelocity);
   }
@@ -45,6 +51,7 @@ public class Shooter extends SubsystemBase {
     topPidController.setReference(topSpeed, ControlType.kVelocity);
   }
 
+  // sets PIDF values for each motor
   public void setP(double kPBot, double kPTop) {
     botPidController.setP(kPBot);
     topPidController.setP(kPTop);
@@ -66,8 +73,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setOutputRange() {
-    topPidController.setOutputRange(0.0, 5000.0);
-    botPidController.setOutputRange(0.0, 5000.0);
+    topPidController.setOutputRange(0, 8000);
+    botPidController.setOutputRange(0, 8000);
   }
 
   public void resetEncoders() {
@@ -99,26 +106,22 @@ public class Shooter extends SubsystemBase {
   public void setBotRawSpeed(double botSpeed) {
     if (botSpeed == 0) {
       bottomRoller.set(0);
-    } else {
-      if (botEncoder.getVelocity() > botSpeed) {
+    } else if (currentSpeedBot > botSpeed) {
         bottomRoller.set(0);
-      } else {
+    } else {
         bottomRoller.set(1);
       }
     }
-  }
 
   public void setTopRawSpeed(double topSpeed) {
     if (topSpeed == 0) {
       topRoller.set(0);
-    } else {
-      if (topEncoder.getVelocity() > topSpeed) {
+    } else if (currentSpeedTop > topSpeed) {
         topRoller.set(0);
       } else {
         topRoller.set(1);
       }
     }
-  }
 
   public void stop() {
     setMotorSpeeds(0, 0);
