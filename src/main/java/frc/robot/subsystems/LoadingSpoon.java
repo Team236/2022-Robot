@@ -13,23 +13,18 @@ import frc.robot.Constants;
 public class LoadingSpoon extends SubsystemBase {
 
   
-  DoubleSolenoid elevatorDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SpoonConstants.SPOON_EXTEND,  Constants.SpoonConstants.SPOON_RETRACT);
+  DoubleSolenoid spoonDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SpoonConstants.SPOON_EXTEND,  Constants.SpoonConstants.SPOON_RETRACT);
 
   
   public LoadingSpoon() {
   }
 
   public void forward() {
-    elevatorDoubleSolenoid.set(Value.kForward);
+    spoonDoubleSolenoid.set(Value.kForward);
   }
 
   public void reverse() {
-    elevatorDoubleSolenoid.set(Value.kReverse);
-  }
-
-  public void off() {
-    elevatorDoubleSolenoid.set(Value.kOff);
-    
+    spoonDoubleSolenoid.set(Value.kReverse);
   }
   
   @Override
