@@ -41,10 +41,12 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    // compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    // compressor.enableDigital();
-    // SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
-    // SmartDashboard.putNumber("compressor current", compressor.getCurrent());
+    /*
+    compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+    compressor.enableDigital();
+    SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
+    SmartDashboard.putNumber("compressor current", compressor.getCurrent());
+    */
 
 
     // USB camera try-catch
