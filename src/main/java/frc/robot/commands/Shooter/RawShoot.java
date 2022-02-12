@@ -6,6 +6,7 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 public class RawShoot extends CommandBase {
@@ -34,8 +35,7 @@ public class RawShoot extends CommandBase {
   @Override
   public void execute() {
 
-    shooter.setBotRawSpeed(botSpeed);
-    shooter.setTopRawSpeed(topSpeed);
+    shooter.setMotorSpeeds(ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
 
     SmartDashboard.putNumber("bot actual raw speed", shooter.getBotVelocity());
     SmartDashboard.putNumber("top actual raw speed", shooter.getTopVelocity());
