@@ -29,7 +29,7 @@ public class Shoot extends CommandBase {
   @Override
   public void initialize() {
     
-    shooterSub.restoreFactoryDefaults();
+    // shooterSub.restoreFactoryDefaults();
     shooterSub.resetEncoders();
 
     shooterSub.setP(ShooterConstants.kPBot, ShooterConstants.kPTop);
@@ -48,7 +48,6 @@ public class Shoot extends CommandBase {
     shooterSub.setBotSetPoint(botSpeed);
     shooterSub.setTopSetPoint(topSpeed);
 
-    // shooterSub.setMotorSpeeds(0.3, 0.3);
     SmartDashboard.putNumber("bot shoot setpoint", botSpeed);
     SmartDashboard.putNumber("top shoot setpoint", topSpeed);
     SmartDashboard.putNumber("bot actual speed", shooterSub.getBotVelocity());
