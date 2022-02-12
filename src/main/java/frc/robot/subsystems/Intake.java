@@ -25,8 +25,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     intakeMotor = new CANSparkMax(Constants.IntakeConstants.ID_MOTOR, MotorType.kBrushless);
-
-    DoubleSolenoid intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
   }
 
   public void setSpeed(double speed) {
@@ -42,8 +41,14 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean isExtended() {
-    return intakeSolenoid.get() == Value.kForward;
+    if (intakeSolenoid.get() == Value.kForward) {
+      return true;
+    } else {
+      return false;
+    }
+    // return intakeSolenoid.get() == Value.kForward;
   }
+
 
   public void retract() {
     intakeSolenoid.set(Value.kReverse);

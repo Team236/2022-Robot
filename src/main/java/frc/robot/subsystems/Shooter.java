@@ -103,26 +103,6 @@ public class Shooter extends SubsystemBase {
     topRoller.set(topSpeed);
   }
 
-  public void setBotRawSpeed(double botSpeed) {
-    if (botSpeed == 0) {
-      bottomRoller.set(0);
-    } else if (currentSpeedBot > botSpeed) {
-        bottomRoller.set(0);
-    } else {
-        bottomRoller.set(1);
-      }
-    }
-
-  public void setTopRawSpeed(double topSpeed) {
-    if (topSpeed == 0) {
-      topRoller.set(0);
-    } else if (currentSpeedTop > topSpeed) {
-        topRoller.set(0);
-      } else {
-        topRoller.set(1);
-      }
-    }
-
   public void stop() {
     setMotorSpeeds(0, 0);
   }

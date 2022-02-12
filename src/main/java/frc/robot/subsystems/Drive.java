@@ -28,9 +28,6 @@ public class Drive extends SubsystemBase {
   /** Creates a new Drive. */
   public Drive() {
 
-    // leftFront.restoreFactoryDefaults();
-    // rightFront.restoreFactoryDefaults();
-
     leftFront = new CANSparkMax(DriveConstants.ID_LEFT_FRONT, MotorType.kBrushless);
     leftRear = new CANSparkMax(DriveConstants.ID_LEFT_REAR, MotorType.kBrushless);
     rightFront = new CANSparkMax(DriveConstants.ID_RIGHT_FRONT, MotorType.kBrushless);
@@ -122,6 +119,11 @@ public class Drive extends SubsystemBase {
   public void setSetPoint (double dist) {
     leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
     rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
+  }
+
+  public void setRawSetPoint () {
+    leftPID.setReference((10), ControlType.kPosition);
+    rightPID.setReference((10), ControlType.kPosition);
   }
 
   public void setTurnSetPoint (double dist) {
