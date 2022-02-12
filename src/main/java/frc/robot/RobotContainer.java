@@ -14,22 +14,23 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
-import frc.robot.commands.DashboardPID;
-import frc.robot.commands.DriveWithJoysticks;
-import frc.robot.commands.DriveWithPID;
 import frc.robot.commands.GetColorSensor;
-import frc.robot.commands.IntakeExtendAndRetract;
-import frc.robot.commands.SetIntakeSpeed;
-import frc.robot.commands.SolenoidForward;
-import frc.robot.commands.SolenoidReverse;
-import frc.robot.commands.TurnWithPID;
 import frc.robot.commands.Auto.TestCmdGroup;
+import frc.robot.commands.Drive.DashboardPID;
+import frc.robot.commands.Drive.DriveWithJoysticks;
+import frc.robot.commands.Drive.DriveWithPID;
+import frc.robot.commands.Drive.NewPID;
+import frc.robot.commands.Drive.TurnWithPID;
+import frc.robot.commands.Intake.SetIntakeSpeed;
+import frc.robot.commands.Shooter.RawShoot;
+import frc.robot.commands.Shooter.Shoot;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.PneumaticTest;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -46,10 +47,10 @@ public class RobotContainer {
 
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
-    private final ColorSensor colorSensor = new ColorSensor();
-    private final PneumaticTest pneumaticTest = new PneumaticTest();
-    // private final Shooter shooter = new Shooter();
-    private final Intake intake = new Intake();
+    // private final ColorSensor colorSensor = new ColorSensor();
+    // private final PneumaticTest pneumaticTest = new PneumaticTest();
+    private final Shooter shooter = new Shooter();
+    // private final Intake intake = new Intake();
 
   // **COMMANDS**
      
@@ -59,18 +60,20 @@ public class RobotContainer {
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
-    private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
+    // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
+    // private final NewPID newPID = new NewPID(drive);
     // SHOOTER
-    // private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.BOT_SPEED, Constants.ShooterConstants.TOP_SPEED);
+    private final Shoot shoot = new Shoot(shooter, ShooterConstants.LOW_HUB_LARGE, Constants.ShooterConstants.LOW_HUB_SMALL);
+    // private final RawShoot rawShoot = new RawShoot(shooter, ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
     // INTAKE
-    private final SetIntakeSpeed intakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
-    private final SetIntakeSpeed intakeReverse = new SetIntakeSpeed(intake, IntakeConstants.REVERSE_SPEED);
-    private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract();
+    // private final SetIntakeSpeed intakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
+    // private final SetIntakeSpeed intakeReverse = new SetIntakeSpeed(intake, IntakeConstants.REVERSE_SPEED);
+    // private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract();
     // PNEUMATICS
-    private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
-    private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
+    // private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
+    // private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
     // COLOR SENSOR
-    private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -107,15 +110,15 @@ public class RobotContainer {
     JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
 
     // ASSIGN BUTTONS TO COMMANDS
-    a.whileHeld(turnWithPID);
-    b.whileHeld(dashboardPID); //shoot
+    a.whileHeld(dashboardPID);
+    b.whenPressed(shoot);
     x.whileHeld(driveWithPID);
     // rightStickLeft.whenPressed(solenoidForward);
     // rightStickRight.whenPressed(solenoidReverse);
     // y.whileHeld(getColorSensor);
-    start.whenPressed(intakeExtendAndRetract);
-    rb.whileHeld(intakeForward);
-    lb.whileHeld(intakeReverse);
+    // start.whenPressed(intakeExtendAndRetract);
+    // rb.whileHeld(intakeForward);
+    // lb.whileHeld(intakeReverse);
   }
 
   /**
