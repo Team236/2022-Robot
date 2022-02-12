@@ -11,12 +11,21 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
+<<<<<<< HEAD
+=======
+import frc.robot.commands.DashboardPID;
+import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.DriveWithPID;
+import frc.robot.commands.SpoonExtend;
+import frc.robot.commands.SpoonRetract;
+>>>>>>> c755f60bb45dea2c46fe69a95f3f00d7944a6f78
 import frc.robot.commands.GetColorSensor;
 import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.commands.Drive.DashboardPID;
@@ -30,7 +39,12 @@ import frc.robot.commands.Shooter.Shoot;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
+<<<<<<< HEAD
 import frc.robot.subsystems.Shooter;
+=======
+import frc.robot.subsystems.LoadingSpoon;
+import frc.robot.subsystems.PneumaticTest;
+>>>>>>> c755f60bb45dea2c46fe69a95f3f00d7944a6f78
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -47,11 +61,19 @@ public class RobotContainer {
 
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
+<<<<<<< HEAD
     // private final ColorSensor colorSensor = new ColorSensor();
     // private final PneumaticTest pneumaticTest = new PneumaticTest();
     private final Shooter shooter = new Shooter();
     // private final Intake intake = new Intake();
 
+=======
+    private final ColorSensor colorSensor = new ColorSensor();
+    private final PneumaticTest pneumaticTest = new PneumaticTest();
+    // private final Shooter shooter = new Shooter();
+    private final Intake intake = new Intake();
+    private final LoadingSpoon loadingSpoon = new LoadingSpoon();
+>>>>>>> c755f60bb45dea2c46fe69a95f3f00d7944a6f78
   // **COMMANDS**
      
     // AUTO
@@ -74,6 +96,10 @@ public class RobotContainer {
     // private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
     // COLOR SENSOR
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    //INTAKE-TO-SHOOTER/ELEVATOR
+    private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
+    private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -119,6 +145,12 @@ public class RobotContainer {
     // start.whenPressed(intakeExtendAndRetract);
     // rb.whileHeld(intakeForward);
     // lb.whileHeld(intakeReverse);
+    start.whenPressed(intakeExtendAndRetract);
+    rb.whileHeld(intakeForward);
+    lb.whileHeld(intakeReverse);
+    leftPress.whenPressed(spoonExtend);
+    rightPress.whenPressed(spoonRetract);
+    
   }
 
   /**
