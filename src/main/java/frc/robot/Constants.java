@@ -118,29 +118,29 @@ public final class Constants {
         public static final int BOTTOM_MOTOR = 1;
         public static final int TOP_MOTOR = 7;
 
-        public static final double kPBot = 0.0008;
-        public static final double kIBot = 0; //0.0000001;
-        public static final double kDBot = 0.055;
-        public static final double kFFBot = 0; //0.000215;//.00022
+        public static final double kPBot = 0.0002;
+        public static final double kIBot = 0.00000001;
+        public static final double kDBot = 0.0565;
+        public static final double kFFBot = 0.00021; //0.000215;//.00022
 
-        public static final double kPTop = 0.0004;
-        public static final double kITop = 0; //0.0000001;
-        public static final double kDTop = 0.055;
-        public static final double kFFTop = 0; //0.000215;//.00022
+        public static final double kPTop = 0.0001;
+        public static final double kITop = 0.00000001;
+        public static final double kDTop = 0.0565;
+        public static final double kFFTop = 0.00018; //0.000215;//.00022
 
         public static final double TOP_SPEED = 1125; // gear ratio is 18:32
-        public static final double BOT_SPEED = 1125;
+        public static final double BOT_SPEED = 1125; // speed on wheels should be 2000
 
-        public static final double HIGH_HUB_SMALL = -5750; //might need to swap these
-        public static final double HIGH_HUB_LARGE = 2720;
+        public static final double HIGH_HUB_SMALL = 3234; //5750; //might need to swap these??
+        public static final double HIGH_HUB_LARGE = 1530; //2720;
 
-        public static final double LOW_HUB_SMALL = -3400;
-        public static final double LOW_HUB_LARGE = 1700;
+        public static final double LOW_HUB_SMALL = 1913; //3400;
+        public static final double LOW_HUB_LARGE = 956; //1700;
 
-        public static final double TARMAC_SMALL = 2200;
-        public static final double TARMAC_LARGE = 4020;
+        public static final double TARMAC_SMALL = 1237; // wheel speed = 2200;
+        public static final double TARMAC_LARGE = 2261; // wheel speed = 4020;
 
-        public static final double LAUNCH_PAD_SMALL = -6000;
+        public static final double LAUNCH_PAD_SMALL = 6000;
         public static final double LAUNCH_PAD_LARGE = 3000;
 
     }
