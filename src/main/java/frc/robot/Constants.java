@@ -108,8 +108,8 @@ public final class Constants {
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
-        public static final double DISTANCE = 48;
-        public static final double TURN_DISTANCE = 100; // 42 is 180 degrees
+        public static final double DISTANCE = 60;
+        public static final double TURN_DISTANCE = 42; // 42 is 180 degrees
 
     }
 
@@ -154,6 +154,10 @@ public final class Constants {
         public static final double SOL_REV = 1;
     }
 
+    public static class SpoonConstants {
+        public static final int SPOON_EXTEND = 6;
+        public static final int SPOON_RETRACT = 7;
+    }
     public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
     }
