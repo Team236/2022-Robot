@@ -13,7 +13,7 @@ public class SpoonExtend extends CommandBase {
     private LoadingSpoon extendSpoon;
 
   /** Creates a new SolenoidForward. */
-  public SpoonExtend(LoadingSpoon loadingSpoon) {
+  public SpoonExtend(LoadingSpoon extendSpoon) {
    this.extendSpoon = extendSpoon;
     // Use addRequirements() here to declare subsystem dependencies.
    addRequirements(this.extendSpoon);

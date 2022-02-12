@@ -25,8 +25,8 @@ public final class Constants {
 
     public static class ControllerConstants {
 
-        public static final int USB_LEFT_STICK = 0;
-        public static final int USB_RIGHT_STICK = 1;
+       // public static final int USB_LEFT_STICK = 0;
+        //public static final int USB_RIGHT_STICK = 1;
         public static final int USB_CONTROLLER = 2;
 
         public static class Thrustmaster {
@@ -44,9 +44,9 @@ public final class Constants {
         }
         
         public static class LogitechF310 {
-            public static final int A = 1;
-            public static final int B = 2;
-            public static final int X = 3;
+            public static final int A = 2;
+            public static final int B = 3;
+            public static final int X = 1;
             public static final int Y = 4;
             public static final int LB = 5;
             public static final int RB = 6;
@@ -126,21 +126,31 @@ public final class Constants {
 
     public static class IntakeConstants {
 
-        public static final int ID_MOTOR = 15; //MOTOR CONTROLLER ID
+       // public static final int ID_MOTOR = 15; //MOTOR CONTROLLER ID
         public static final double FORWARD_SPEED = 0.5;
         public static final double REVERSE_SPEED = -0.5;
         public static final double SOL_FWD = 0;//CHECK THESE #s ON THE PCM
         public static final double SOL_REV = 1;
     }
 
-    public static class ColorSensorConstants {
+   /* public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
-    }
+    } */
 
     public static class SpoonConstants {
-        public static final int SPOON_EXTEND = 0;
-        public static final int SPOON_RETRACT = 1;
-    
+        public static final int SPOON_EXTEND = 4; //PCM Numbers, will change on final board
+        public static final int SPOON_RETRACT = 5;
         
+    }
+
+    public static class ClimberConstants {
+       public static final int ID_MAST = 42;
+       public static final int ID_ARM = 0;
+       public static final double MAST_EX_SPEED = 0.5;
+       public static final double MAST_RE_SPEED = 0.5;
+       public static final double ARM_EX_SPEED = 0.5;
+       public static final double ARM_RE_SPEED = 0.5;
+
+
     }
 }

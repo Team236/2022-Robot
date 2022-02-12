@@ -5,22 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+//import frc.robot.subsystems.Intake;
 
 public class IntakeExtendAndRetract extends CommandBase {
 
-  private Intake intake;
+ // private Intake intake;
    
   /** Creates a new IntakeExtendAndRetract. */
-  public IntakeExtendAndRetract() {
+ /* public IntakeExtendAndRetract(Intake intake) {
 
     this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
-  }
+  } */
 
   // Called when the command is initially scheduled.
-  @Override
+  /*@Override
   public void initialize() {
     
     if (intake.isExtended()) {
@@ -28,10 +28,10 @@ public class IntakeExtendAndRetract extends CommandBase {
     } else if (!intake.isExtended()) {
       intake.extend();
     }
-  }
+  }*/
 
   // Called every time the scheduler runs while the command is scheduled.
-  @Override
+  /*@Override
   public void execute() {}
 
   // Called once the command ends or is interrupted.
@@ -42,5 +42,5 @@ public class IntakeExtendAndRetract extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
+  }*/
 }

@@ -13,20 +13,20 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Intake extends SubsystemBase {
+/*public class Intake extends SubsystemBase {
 
   private CANSparkMax intakeMotor;
   private DoubleSolenoid intakeSolenoid;
 
   /** Creates a new Intake. */
-  public Intake() {
+  /*public Intake() {
 
     intakeMotor = new CANSparkMax(Constants.IntakeConstants.ID_MOTOR, MotorType.kBrushless);
 
     DoubleSolenoid intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-  }
+  } 
 
-  public void setSpeed(double speed) {
+  /*public void setSpeed(double speed) {
     intakeMotor.set(speed);
   }
 
@@ -50,4 +50,4 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-}
+} */

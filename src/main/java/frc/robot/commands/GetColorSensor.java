@@ -6,21 +6,21 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ColorSensor;
+//import frc.robot.subsystems.ColorSensor;
 
-public class GetColorSensor extends CommandBase {
+/*public class GetColorSensor extends CommandBase {
 
-  private ColorSensor colorSensor;
+  private ColorSensor colorSensor; */
 
   /** Creates a new GetColorSensor. */
-  public GetColorSensor(ColorSensor colorSensor) {
+ /* public GetColorSensor(ColorSensor colorSensor) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.colorSensor = colorSensor;
     addRequirements(this.colorSensor);
-  }
+  } */
 
   // Called when the command is initially scheduled.
-  @Override
+/*  @Override
   public void initialize() {
     colorSensor.getAllianceColor();
 
@@ -34,15 +34,17 @@ public class GetColorSensor extends CommandBase {
     colorSensor.getBlue();
     colorSensor.getRed();
     colorSensor.isBallMine();
-  }
+  } */
 
   // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+ /* @Override
+  public void end(boolean interrupted) {} */
 
   // Returns true when the command should end.
-  @Override
+ /* @Override
   public boolean isFinished() {
     return false;
-  }
-}
+  } 
+} 
+*/
+

@@ -18,22 +18,22 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ColorSensor extends SubsystemBase {
+//public class ColorSensor extends SubsystemBase []
 
-  private ColorSensorV3 colorSensor;
+ /* private ColorSensorV3 colorSensor;
   private ColorMatch colorMatcher;
   private String colorString;
   
   /** Creates a new ColorSensor. */
-  public ColorSensor() {
-
+ /* public ColorSensor() {
+/*
     I2C.Port i2cPort = I2C.Port.kMXP;
     colorSensor = new ColorSensorV3(i2cPort);
-    colorMatcher = new ColorMatch();
+    colorMatcher = new ColorMatch(); */
     
-  }
+ // }*/
 
-  public Alliance getAllianceColor() {
+  /*public Alliance getAllianceColor() {
 
     return DriverStation.getAlliance();
   }
@@ -48,15 +48,15 @@ public class ColorSensor extends SubsystemBase {
     } else if (getAllianceColor() == Alliance.Invalid) {
       myAlliance = "Invalid";
     }
+*/
+   // SmartDashboard.putString("myAlliance", myAlliance);
 
-    SmartDashboard.putString("myAlliance", myAlliance);
+    //return myAlliance;
+ // }
 
-    return myAlliance;
-  }
-
-  public void getColor() {
+ // public void getColor() {
     
-    Color detectedColor = colorSensor.getColor();
+   /* Color detectedColor = colorSensor.getColor();
     // RawColor rawColor = colorSensor.getRawColor();
     // String myRawColor = rawColor.toString();
     // String myGetColor = detectedColor.toString();
@@ -98,5 +98,5 @@ public class ColorSensor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-}
+  } */
+//}
