@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
@@ -16,11 +17,18 @@ public class RawShoot extends CommandBase {
   public RawShoot(Shooter shooter, double botSpeed, double topSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
+    addRequirements(this.shooter);
+
+    this.botSpeed = botSpeed;
+    this.topSpeed = topSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+    shooter.resetEncoders();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -28,11 +36,16 @@ public class RawShoot extends CommandBase {
 
     shooter.setBotRawSpeed(botSpeed);
     shooter.setTopRawSpeed(topSpeed);
+
+    SmartDashboard.putNumber("bot actual raw speed", shooter.getBotVelocity());
+    SmartDashboard.putNumber("top actual raw speed", shooter.getTopVelocity());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooter.stop();
+  }
 
   // Returns true when the command should end.
   @Override
