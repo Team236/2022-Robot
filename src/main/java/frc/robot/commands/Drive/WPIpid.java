@@ -11,20 +11,19 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drive;
 
-public class NewPID extends CommandBase {
+public class WPIpid extends CommandBase {
 
   private Drive drive;
   private PIDController m_pidController;
   private CANSparkMax leftFront, rightFront;
   private double pidLOut, pidROut;
+  private boolean isReachedSetpoint;
 
   /** Creates a new NewPID. */
-  public NewPID(Drive pidDrive) {
+  public WPIpid(Drive pidDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = pidDrive;
     addRequirements(this.drive);
-    this.rightFront = rightFront;
-    this.leftFront = leftFront;
   }
 
   // Called when the command is initially scheduled.
@@ -47,7 +46,9 @@ public class NewPID extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    drive.resetEncoders();
+  }
 
   // Returns true when the command should end.
   @Override
