@@ -161,4 +161,20 @@ public final class Constants {
     public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
     }
+
+    public static class HangarPIDConstants {
+
+        public static double kParm = 0;
+        public static double kIarm = 0;
+        public static double kDarm = 0;
+        public static double kFarm = 0;
+
+        public static double kPmast = 0;
+        public static double kImast = 0;
+        public static double kDmast = 0;
+        public static double kFmast = 0;
+
+        public static double armREV_TO_IN = 1.64;
+        public static double armIN_TO_REV = 0.6097;
+    }
 }
