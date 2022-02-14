@@ -18,14 +18,12 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
-import frc.robot.commands.SpoonExtend;
-import frc.robot.commands.SpoonRetract;
 import frc.robot.commands.GetColorSensor;
 import frc.robot.commands.Auto.TestCmdGroup;
+import frc.robot.commands.Drive.AnotherOne;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
-import frc.robot.commands.Drive.WPIpid;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
@@ -33,12 +31,14 @@ import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.SetIntakeSpeed;
 import frc.robot.commands.Shooter.RawShoot;
 import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Shooter.SpoonAndShoot;
+import frc.robot.commands.Spoon.SpoonExtend;
+import frc.robot.commands.Spoon.SpoonRetract;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.LoadingSpoon;
-import frc.robot.subsystems.PneumaticTest;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,24 +55,25 @@ public class RobotContainer {
 
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
-    // private final Shooter shooter = new Shooter();
+    private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
     private final ColorSensor colorSensor = new ColorSensor();
-    private final PneumaticTest pneumaticTest = new PneumaticTest();
-    // private final LoadingSpoon loadingSpoon = new LoadingSpoon();
+    private final LoadingSpoon loadingSpoon = new LoadingSpoon();
  
   // **COMMANDS**
     // *AUTO
     private final TestCmdGroup testCmdGroup = new TestCmdGroup(drive);
+    
     // *DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
-    private final WPIpid newPID = new WPIpid(drive);
+    private final AnotherOne anothaPID = new AnotherOne(drive);
     // *SHOOTER
     // private final Shoot shoot = new Shoot(shooter, ShooterConstants.LOW_HUB_LARGE, Constants.ShooterConstants.LOW_HUB_SMALL);
     // private final RawShoot rawShoot = new RawShoot(shooter, ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
+    private final SpoonAndShoot spoonAndShoot = new SpoonAndShoot(loadingSpoon, shooter);
     // *INTAKE
     // private final SetIntakeSpeed intakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
     // private final SetIntakeSpeed intakeReverse = new SetIntakeSpeed(intake, IntakeConstants.REVERSE_SPEED);
@@ -127,21 +128,7 @@ public class RobotContainer {
     // a.whileHeld(dashboardPID);
     // b.whenPressed(shoot);
     x.whenPressed(driveWithPID);
-    a.whileHeld(turnWithPID);
-    b.whileHeld(dashboardPID);
-    y.whileHeld(newPID);
-    // rightStickLeft.whenPressed(solenoidForward);
-    // rightStickRight.whenPressed(solenoidReverse);
-    // y.whileHeld(getColorSensor);
-    // rb.whileHeld(intakeForward);
-    // lb.whileHeld(intakeReverse);
-    // b.whenPressed(intakeExtendAndRetract);
-    // y.whenPressed(intakeExtend);
-    // a.whenPressed(intakeRetract);
-    // rb.whileHeld(intakeForward);
-    // lb.whileHeld(intakeReverse);
-    // y.whenPressed(spoonExtend);
-    // a.whenPressed(spoonRetract);
+    // y.whenPressed(spoonAndShoot);
     
   }
 
@@ -151,7 +138,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return testCmdGroup;
   }
 }
