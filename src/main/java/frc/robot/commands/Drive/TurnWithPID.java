@@ -14,7 +14,7 @@ public class TurnWithPID extends CommandBase {
 
   private Drive drive;
   private double dist, margin, error;
-  private double kP, kI, kD, kF;
+  private double kP, kI, kD;
   /** Creates a new TurnWithPID. */
   public TurnWithPID(Drive turnPidDrive, double dist, double margin) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +27,6 @@ public class TurnWithPID extends CommandBase {
     this.kP = Constants.DriveConstants.turnkP;
     this.kI = Constants.DriveConstants.kI;
     this.kD = Constants.DriveConstants.kD;
-    this.kF = Constants.DriveConstants.kF;
   }
 
   // Called when the command is initially scheduled.
@@ -40,7 +39,6 @@ public class TurnWithPID extends CommandBase {
     drive.setkP(this.kP);
     drive.setkI(this.kI);
     drive.setkD(this.kD);
-    drive.setkF(this.kF);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -76,6 +74,6 @@ public class TurnWithPID extends CommandBase {
     // ends command when the error is less than the margin
     boolean isDistMargin = error < margin;
 
-    return false;
+    return isDistMargin;
   }
 }

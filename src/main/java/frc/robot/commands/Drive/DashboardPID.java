@@ -13,8 +13,8 @@ public class DashboardPID extends CommandBase {
 
   private Drive drive;
   private double dist, margin, error;
-  private double kP, kI, kD, kFF;
-  private double p, i, d, ff;
+  private double kP, kI, kD;
+  private double p, i, d;
   // private double lastp, lasti, lastd, lastf;
 
   /** Creates a new DashboardPID. */
@@ -37,19 +37,16 @@ public class DashboardPID extends CommandBase {
     kP = 0; 
     kI = 0; 
     kD = 0;
-    kFF = 0;
 
     // sets the Spark PID controllers to the PIDF values
     drive.setkP(this.kP);
     drive.setkI(this.kI);
     drive.setkD(this.kD);
-    drive.setkF(this.kFF);
     
     // puts the editable PIDF values on the dashboard
     SmartDashboard.putNumber("edit kP", kP);
     SmartDashboard.putNumber("edit kI", kI);
     SmartDashboard.putNumber("edit kD", kD);
-    SmartDashboard.putNumber("edit Feed Fwd", kFF);
 
   }
 
@@ -61,7 +58,6 @@ public class DashboardPID extends CommandBase {
     p = SmartDashboard.getNumber("edit kP", 0);
     i = SmartDashboard.getNumber("edit kI", 0);
     d = SmartDashboard.getNumber("edit kD", 0);
-    ff = SmartDashboard.getNumber("edit Feed Fwd", 0);
 
     // if dashboard PIDF values are not equal to the set values in init, then set the values equal to the dashboard values
     if((p != kP)) { drive.setkP(p); kP = p; }
@@ -70,8 +66,6 @@ public class DashboardPID extends CommandBase {
     //  SmartDashboard.putNumber("set i", i);
     if((d != kD)) { drive.setkD(d); kD = d; }
     //  SmartDashboard.putNumber("set pd", d);
-    if((ff != kFF)) { drive.setkF(ff); kFF = ff; }
-    //  SmartDashboard.putNumber("set f", ff);
 
     drive.setOutputRange(Constants.DriveConstants.MIN_OUTPUT, Constants.DriveConstants.MAX_OUTPUT);
     drive.setSetPoint(dist);
@@ -96,8 +90,6 @@ public class DashboardPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-
     // finishes command when error is less than the margin
     boolean isDistMargin = error < margin;
     // SmartDashboard.putBoolean("isFinished", isFinished());
