@@ -17,18 +17,14 @@ public class TestCmdGroup extends SequentialCommandGroup {
   
   /** Creates a new DriveWithPID. */
   public TestCmdGroup(Drive drive) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
 
-    // possible auto routine: shoot ball, back up, intake ball, limelight, shoot ball
-    // or : back up, intake ball, limelight, shoot 2 balls
-
+    // does the command end at the setpoint or at the timeout?
     super(sequence (
-      new DriveWithPID(drive, 96, 1).withTimeout(10), 
+      new DriveWithPID(drive, 30, 2).withTimeout(3),
       new WaitCommand(3), 
-      new TurnWithPID(drive, 42, 1).withTimeout(5), 
-      new WaitCommand(2), 
-      new DriveWithPID(drive, 48, 1)
+      // new TurnWithPID(drive, 42, 1).withTimeout(5), 
+      // new WaitCommand(2), 
+      new DriveWithPID(drive, 30, 2).withTimeout(3)
        )
     );
   }
