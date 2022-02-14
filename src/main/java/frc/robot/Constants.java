@@ -24,17 +24,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public final class Constants {
 
     public static class ControllerConstants {
-
         public static final int USB_LEFT_STICK = 0;
         public static final int USB_RIGHT_STICK = 1;
         public static final int USB_CONTROLLER = 2;
-
         public static class Thrustmaster {
             public static final int TRIGGER = 1;
             public static final int BUTTON_MIDDLE = 2;
             public static final int BUTTON_LEFT = 3;
             public static final int BUTTON_RIGHT = 4;
-    
             public static class AxesThrustmaster {
                 public static final int X = 0;
                 public static final int Y = 1;
@@ -42,7 +39,6 @@ public final class Constants {
                 public static final int THROTTLE = 3;
             }       
         }
-        
         public static class LogitechF310 {
             public static final int A = 2;
             public static final int B = 3;
@@ -63,14 +59,20 @@ public final class Constants {
                 public static final int RIGHT_Y = 5;
             }
         }
-        
     }
-    public static class DriveConstants {
+
+    public static class MotorControllers {
         public static final int ID_LEFT_FRONT = 10;
         public static final int ID_LEFT_REAR = 11;
-        public static final int ID_RIGHT_FRONT = 15; //SHOULD BE 15;
+        public static final int ID_RIGHT_FRONT = 15;
         public static final int ID_RIGHT_REAR = 16;
 
+        public static final int BOTTOM_SHOOTER = 1;
+        public static final int TOP_SHOOTER = 7;
+
+        public static final int INTAKE = 13; // this is a random number, need to get the actual ID
+    }
+    public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
@@ -79,11 +81,23 @@ public final class Constants {
         public static final double GEAR_RATIO = 8.71;
 
         public static final double REV_TO_IN_K = CIRCUMFERENCE / GEAR_RATIO;
-        public static final double IN_TO_REV_K = GEAR_RATIO / (CIRCUMFERENCE); //multiply circumference by 0.75
+        public static final double IN_TO_REV_K = GEAR_RATIO / CIRCUMFERENCE; //multiply circumference by 0.75
 
         public static final boolean IS_DEADZONE = true;
+
+        // PID
+        public static double kP = 0.03;
+        public static double turnkP = 0.014;
+        public static double kI = 0;
+        public static double kD = 0;
+   
+        public static double MIN_OUTPUT = -1;
+        public static double MAX_OUTPUT = 1;
+        public static final double MARGIN = 2;
+        public static final double DISTANCE = 60;
+        public static final double TURN_DISTANCE = 42; // 42 is 180 degrees
 	    
-	     public static class limelight {
+	    public static class limelight {
        /*  public static final double CATAPULTLEGNTH = ?;
         public static final double CATAPULTANGLE = ?;
         public static final double SPRINGCONSTANT = ?;   
@@ -96,28 +110,10 @@ public final class Constants {
         public static final double CAMANGLECOMPLIMENT = TOTALANGLE - CAMANGLE;
         public static final double TARGETAREA = Math.PI * TARGETDIAMETER;
         public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); */
-	}
-
-        // PID
-        public static double kP = 0.022;
-        public static double turnkP = 0.014;
-        public static double kI = 0;
-        public static double kD = 0;
-        public static double kF = 0;
-
-        public static double MIN_OUTPUT = -1;
-        public static double MAX_OUTPUT = 1;
-        public static final double MARGIN = 2;
-        public static final double DISTANCE = 60;
-        public static final double TURN_DISTANCE = 42; // 42 is 180 degrees
-
+	    }
     }
 
     public static class ShooterConstants {
-        
-        public static final int BOTTOM_MOTOR = 1;
-        public static final int TOP_MOTOR = 7;
-
         public static final double kPBot = 0.0002;
         public static final double kIBot = 0.00000001;
         public static final double kDBot = 0.0565;
@@ -142,16 +138,13 @@ public final class Constants {
 
         public static final double LAUNCH_PAD_SMALL = 6000;
         public static final double LAUNCH_PAD_LARGE = 3000;
-
     }
 
     public static class IntakeConstants {
-
-        public static final int ID_MOTOR = 13; // this is a random number, need to get the actual ID //MOTOR CONTROLLER ID
         public static final double FORWARD_SPEED = 0.5;
         public static final double REVERSE_SPEED = -0.5;
-        public static final double SOL_FWD = 0;//CHECK THESE #s ON THE PCM
-        public static final double SOL_REV = 1;
+        public static final double SOL_FWD = 2;//CHECK THESE #s ON THE PCM
+        public static final double SOL_REV = 3;
     }
 
     public static class SpoonConstants {
