@@ -13,6 +13,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.MotorControllers;
 
 public class Shooter extends SubsystemBase {
 
@@ -24,8 +26,8 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   public Shooter() {
 
-    bottomRoller = new CANSparkMax(1, MotorType.kBrushless);
-    topRoller = new CANSparkMax(7, MotorType.kBrushless);
+    bottomRoller = new CANSparkMax(MotorControllers.BOTTOM_SHOOTER, MotorType.kBrushless);
+    topRoller = new CANSparkMax(MotorControllers.TOP_SHOOTER, MotorType.kBrushless);
 
     topRoller.setInverted(true);
 

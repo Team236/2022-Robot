@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.MotorControllers;;
 
 public class Intake extends SubsystemBase {
 
@@ -24,7 +25,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
 
-    intakeMotor = new CANSparkMax(Constants.IntakeConstants.ID_MOTOR, MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(MotorControllers.INTAKE, MotorType.kBrushless);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
   }
 

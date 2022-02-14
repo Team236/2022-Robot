@@ -12,26 +12,25 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.MotorControllers;
+import frc.robot.Constants.DriveConstants;;
 
 public class Drive extends SubsystemBase {
 
-  private CANSparkMax leftFront, leftRear, rightFront, rightRear;
+  public CANSparkMax leftFront, leftRear, rightFront, rightRear;
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPID, rightPID;
-  private PIDController m_pidController;
   
   /** Creates a new Drive. */
   public Drive() {
 
-    leftFront = new CANSparkMax(DriveConstants.ID_LEFT_FRONT, MotorType.kBrushless);
-    leftRear = new CANSparkMax(DriveConstants.ID_LEFT_REAR, MotorType.kBrushless);
-    rightFront = new CANSparkMax(DriveConstants.ID_RIGHT_FRONT, MotorType.kBrushless);
-    rightRear = new CANSparkMax(DriveConstants.ID_RIGHT_REAR, MotorType.kBrushless);
+    leftFront = new CANSparkMax(MotorControllers.ID_LEFT_FRONT, MotorType.kBrushless);
+    leftRear = new CANSparkMax(MotorControllers.ID_LEFT_REAR, MotorType.kBrushless);
+    rightFront = new CANSparkMax(MotorControllers.ID_RIGHT_FRONT, MotorType.kBrushless);
+    rightRear = new CANSparkMax(MotorControllers.ID_RIGHT_REAR, MotorType.kBrushless);
     
     leftFront.setInverted(false);
     rightFront.setInverted(true);
@@ -44,9 +43,6 @@ public class Drive extends SubsystemBase {
 
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
-
-    m_pidController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
-    m_pidController.setSetpoint(DriveConstants.DISTANCE);
 
   }
 
@@ -121,10 +117,10 @@ public class Drive extends SubsystemBase {
     rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
   }
 
-  public void setRawSetPoint () {
-    leftPID.setReference((10), ControlType.kPosition);
-    rightPID.setReference((10), ControlType.kPosition);
-  }
+  // public void setRawSetPoint () {
+  //   leftPID.setReference((10), ControlType.kPosition);
+  //   rightPID.setReference((10), ControlType.kPosition);
+  // }
 
   public void setTurnSetPoint (double dist) {
     leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
@@ -151,24 +147,6 @@ public class Drive extends SubsystemBase {
     leftPID.setD(kD);
     rightPID.setD(kD);
   }  
-
-  public void setkIz(double kIz) {
-    leftPID.setIZone(kIz);
-    rightPID.setIZone(kIz);
-  }
-  
-  public void setkF(double kF) {
-    leftPID.setFF(kF);
-    rightPID.setFF(kF);
-  }
-
-  public double pidLOut() {
-    return m_pidController.calculate(leftEncoder.getPosition());
-  }
-
-  public double pidROut() {
-    return m_pidController.calculate(rightEncoder.getPosition());
-  }
 
   @Override
   public void periodic() {
