@@ -14,7 +14,6 @@ public class DriveWithJoysticks extends CommandBase {
 
   private Drive drive;
   private Joystick leftStick, rightStick;
-  private boolean isCube;
   private int pow = 1;
   private boolean isDeadzone = Constants.DriveConstants.IS_DEADZONE;
   
@@ -24,7 +23,6 @@ public class DriveWithJoysticks extends CommandBase {
     this.drive = drive;
     this.leftStick = leftStick;
     this.rightStick = rightStick;
-    this.isCube = isCube;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.drive);
@@ -33,14 +31,7 @@ public class DriveWithJoysticks extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    if (isCube) {
-      this.pow = 3;
-      this.isDeadzone = false;
-    } else {
-      this.pow = 1;
-      this.isDeadzone = true;
-    }
+    
     this.pow = 1;
     this.isDeadzone = true;
   }
