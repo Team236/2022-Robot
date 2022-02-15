@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
 
-    intakeMotor = new CANSparkMax(Constants.IntakeConstants.ID_MOTOR, MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(Constants.MotorControllers.INTAKE, MotorType.kBrushless);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
   }
 

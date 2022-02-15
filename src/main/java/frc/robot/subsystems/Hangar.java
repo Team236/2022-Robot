@@ -28,8 +28,8 @@ public class Hangar extends SubsystemBase {
   /** Creates a new Hangar. */
   public Hangar() {
 
-    armMotor = new CANSparkMax(Constants.Hanger.ClimberConstants.ID_ARM, MotorType.kBrushless);
-    mastMotor = new CANSparkMax(Constants.Hanger.ClimberConstants.ID_MAST, MotorType.kBrushless);
+    armMotor = new CANSparkMax(Constants.MotorControllers.ID_ARM, MotorType.kBrushless);
+    mastMotor = new CANSparkMax(Constants.MotorControllers.ID_MAST, MotorType.kBrushless);
 
     mastMotor.setInverted(false);
     armMotor.setInverted(false);

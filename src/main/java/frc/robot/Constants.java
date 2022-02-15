@@ -71,6 +71,10 @@ public final class Constants {
         public static final int TOP_SHOOTER = 7;
 
         public static final int INTAKE = 13; // this is a random number, need to get the actual ID
+
+        public static final int ID_MAST = 42; //FOR TESTING, CHANGE FOR ROBOT
+        public static final int ID_ARM = 41;
+
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
@@ -97,14 +101,8 @@ public final class Constants {
         public static final double MARGIN = 2;
         public static final double DISTANCE = 60;
         public static final double TURN_DISTANCE = 42; // 42 is 180 degrees
-
     }
-
     public static class ShooterConstants {
-        
-        public static final int BOTTOM_MOTOR = 1;
-        public static final int TOP_MOTOR = 7;
-
         public static final double kPBot = 0.0002;
         public static final double kIBot = 0.00000001;
         public static final double kDBot = 0.0565;
@@ -131,16 +129,12 @@ public final class Constants {
         public static final double LAUNCH_PAD_LARGE = 3000;
 
     }
-
     public static class IntakeConstants {
-
-        public static final int ID_MOTOR = 13; // this is a random number, need to get the actual ID //MOTOR CONTROLLER ID
         public static final double FORWARD_SPEED = 0.5;
         public static final double REVERSE_SPEED = -0.5;
         public static final double SOL_FWD = 6;//CHECK THESE #s ON THE PCM
         public static final double SOL_REV = 7;
     }
-
     public static class SpoonConstants {
         public static final int SPOON_EXTEND = 0;
         public static final int SPOON_RETRACT = 1;
@@ -150,16 +144,11 @@ public final class Constants {
     }
     public static class Hanger {
     public static class ClimberConstants {
-
-        public static final int ID_MAST = 42;
-        public static final int ID_ARM = 0;
         public static final double MAST_EX_SPEED = 0.5;
         public static final double MAST_RE_SPEED = 0.5;
         public static final double ARM_EX_SPEED = 0.5;
         public static final double ARM_RE_SPEED = 0.5;
     }
-    
-    
     public static class HangarPIDConstants {
 
         public static double kParm = 0;
@@ -187,11 +176,8 @@ public final class Constants {
 
         public static final double mastMARGIN = 2;
         public static final double mastDISTANCE1 = 28;
-
-        
     }
 }
-
  public static class HoodConstants {
 
     public static final int HOOD_EXTEND = 2;
