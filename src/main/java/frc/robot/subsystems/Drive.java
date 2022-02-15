@@ -28,10 +28,10 @@ public class Drive extends SubsystemBase {
   /** Creates a new Drive. */
   public Drive() {
 
-    leftFront = new CANSparkMax(DriveConstants.ID_LEFT_FRONT, MotorType.kBrushless);
-    leftRear = new CANSparkMax(DriveConstants.ID_LEFT_REAR, MotorType.kBrushless);
-    rightFront = new CANSparkMax(DriveConstants.ID_RIGHT_FRONT, MotorType.kBrushless);
-    rightRear = new CANSparkMax(DriveConstants.ID_RIGHT_REAR, MotorType.kBrushless);
+    leftFront = new CANSparkMax(Constants.MotorControllers.ID_LEFT_FRONT, MotorType.kBrushless);
+    leftRear = new CANSparkMax(Constants.MotorControllers.ID_LEFT_REAR, MotorType.kBrushless);
+    rightFront = new CANSparkMax(Constants.MotorControllers.ID_RIGHT_FRONT, MotorType.kBrushless);
+    rightRear = new CANSparkMax(Constants.MotorControllers.ID_RIGHT_REAR, MotorType.kBrushless);
     
     leftFront.setInverted(false);
     rightFront.setInverted(true);

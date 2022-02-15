@@ -10,6 +10,7 @@ public class IntakeExtendAndRetract extends CommandBase {
 
   private Intake intake;
   private boolean isExtended;
+  private boolean toggle; 
    
   /** Creates a new IntakeExtendAndRetract. */
   public IntakeExtendAndRetract(Intake intake) {
@@ -22,22 +23,21 @@ public class IntakeExtendAndRetract extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    System.out.println("beginning if else");
-    if (intake.isExtended()) {
-        System.out.println("is extended");
-      intake.retract();    
-    } else if (!intake.isExtended()) {
-        System.out.println("is retracted");
-
-      intake.extend();
-    }
    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    toggle = false;
+    if(intake.isExtended()) {
+      intake.retract();
+      toggle = true;
+    } else if (!intake.isExtended()) {
+      intake.extend();
+      toggle = true;
+    }
  
   }
 
@@ -48,6 +48,6 @@ public class IntakeExtendAndRetract extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return toggle;
   }
 }

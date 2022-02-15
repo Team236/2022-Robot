@@ -2,20 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Hood;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PneumaticTest;
+import frc.robot.subsystems.Hood;
 
-public class SolenoidForward extends CommandBase {
+public class HoodExtendAndRetract extends CommandBase {
 
-  private PneumaticTest pneumaticTest;
-
-  /** Creates a new SolenoidForward. */
-  public SolenoidForward(PneumaticTest pneumaticTest) {
-    this.pneumaticTest = pneumaticTest;
+  private Hood hood;
+  private boolean hoodIsExtended;
+  private boolean toggle;
+  /** Creates a new HoodExtendAndRetract. */
+  public HoodExtendAndRetract(Hood hood) {
+    this.hood = hood;
+   addRequirements(hood);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(this.pneumaticTest);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +26,17 @@ public class SolenoidForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    pneumaticTest.forward();
+
+    toggle = false;
+
+    if (hood.hoodIsExtended()) {
+      hood.hoodRetract();
+      toggle = true;
+    } else if (!hood.hoodIsExtended()) {
+      hood.hoodExtend();
+      toggle = true;
+    }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +46,6 @@ public class SolenoidForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return toggle;
   }
 }

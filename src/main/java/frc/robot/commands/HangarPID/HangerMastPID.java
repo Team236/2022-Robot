@@ -2,20 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.HangarPID;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PneumaticTest;
 
-public class SolenoidReverse extends CommandBase {
-
-  private PneumaticTest pneumaticTest;
-
-  /** Creates a new SolenoidReverse. */
-  public SolenoidReverse(PneumaticTest pneumaticTest) {
+public class HangerMastPID extends CommandBase {
+  /** Creates a new HangerMastPID. */
+  public HangerMastPID() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.pneumaticTest = pneumaticTest;
-    addRequirements(this.pneumaticTest);
   }
 
   // Called when the command is initially scheduled.
@@ -24,9 +18,7 @@ public class SolenoidReverse extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    pneumaticTest.reverse();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

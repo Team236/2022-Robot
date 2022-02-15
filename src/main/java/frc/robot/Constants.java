@@ -22,13 +22,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
     public static class ControllerConstants {
 
         public static final int USB_LEFT_STICK = 0;
         public static final int USB_RIGHT_STICK = 1;
         public static final int USB_CONTROLLER = 2;
-
         public static class Thrustmaster {
             public static final int TRIGGER = 1;
             public static final int BUTTON_MIDDLE = 2;
@@ -42,7 +40,6 @@ public final class Constants {
                 public static final int THROTTLE = 3;
             }       
         }
-        
         public static class LogitechF310 {
             public static final int A = 2;
             public static final int B = 3;
@@ -63,14 +60,19 @@ public final class Constants {
                 public static final int RIGHT_Y = 5;
             }
         }
-        
     }
-    public static class DriveConstants {
+    public static class MotorControllers {
         public static final int ID_LEFT_FRONT = 10;
         public static final int ID_LEFT_REAR = 11;
-        public static final int ID_RIGHT_FRONT = 15; //SHOULD BE 15;
+        public static final int ID_RIGHT_FRONT = 15;
         public static final int ID_RIGHT_REAR = 16;
 
+        public static final int BOTTOM_SHOOTER = 1;
+        public static final int TOP_SHOOTER = 7;
+
+        public static final int INTAKE = 13; // this is a random number, need to get the actual ID
+    }
+    public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
@@ -82,21 +84,6 @@ public final class Constants {
         public static final double IN_TO_REV_K = GEAR_RATIO / (CIRCUMFERENCE); //multiply circumference by 0.75
 
         public static final boolean IS_DEADZONE = true;
-	    
-	     public static class limelight {
-       /*  public static final double CATAPULTLEGNTH = ?;
-        public static final double CATAPULTANGLE = ?;
-        public static final double SPRINGCONSTANT = ?;   
-        public static final double CAMHEIGHT = ?;
-        public static final double CAMANGLE = ?;
-        public static final int HUBHEIGHT = 104;
-        public static final double TARMACDISTANCE = 84.75;
-        public static final int TARGETDIAMETER = 48;
-        public static final double TOTALANGLE = Math.tan((HUBHEIGHT-CAMHEIGHT) / TARMACDISTANCE);
-        public static final double CAMANGLECOMPLIMENT = TOTALANGLE - CAMANGLE;
-        public static final double TARGETAREA = Math.PI * TARGETDIAMETER;
-        public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); */
-	}
 
         // PID
         public static double kP = 0.022;
@@ -150,18 +137,29 @@ public final class Constants {
         public static final int ID_MOTOR = 13; // this is a random number, need to get the actual ID //MOTOR CONTROLLER ID
         public static final double FORWARD_SPEED = 0.5;
         public static final double REVERSE_SPEED = -0.5;
-        public static final double SOL_FWD = 0;//CHECK THESE #s ON THE PCM
-        public static final double SOL_REV = 1;
+        public static final double SOL_FWD = 6;//CHECK THESE #s ON THE PCM
+        public static final double SOL_REV = 7;
     }
 
     public static class SpoonConstants {
-        public static final int SPOON_EXTEND = 6;
-        public static final int SPOON_RETRACT = 7;
+        public static final int SPOON_EXTEND = 0;
+        public static final int SPOON_RETRACT = 1;
     }
     public static class ColorSensorConstants {
         public static final I2C.Port i2cPort = I2C.Port.kOnboard;
     }
+    public static class Hanger {
+    public static class ClimberConstants {
 
+        public static final int ID_MAST = 42;
+        public static final int ID_ARM = 0;
+        public static final double MAST_EX_SPEED = 0.5;
+        public static final double MAST_RE_SPEED = 0.5;
+        public static final double ARM_EX_SPEED = 0.5;
+        public static final double ARM_RE_SPEED = 0.5;
+    }
+    
+    
     public static class HangarPIDConstants {
 
         public static double kParm = 0;
@@ -174,7 +172,29 @@ public final class Constants {
         public static double kDmast = 0;
         public static double kFmast = 0;
 
+        //2.4 rotations = 100 millimeters;
         public static double armREV_TO_IN = 1.64;
         public static double armIN_TO_REV = 0.6097;
+
+        //public static double mastREV_TO_IN = ?;
+        //public static double mastIN_TO_REV = ?;
+
+        public static double hangarMIN_OUTPUT = -1;
+        public static double hangarMAX_OUTPUT = 1;
+
+        public static final double armMARGIN = 0.25;
+        public static final double armDISTANCE1 = 3;
+
+        public static final double mastMARGIN = 2;
+        public static final double mastDISTANCE1 = 28;
+
+        
     }
+}
+
+ public static class HoodConstants {
+
+    public static final int HOOD_EXTEND = 2;
+    public static final int HOOD_RETRACT = 3;
+ }
 }

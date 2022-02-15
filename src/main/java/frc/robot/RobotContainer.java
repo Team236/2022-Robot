@@ -33,12 +33,14 @@ import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.SetIntakeSpeed;
 import frc.robot.commands.Shooter.RawShoot;
 import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Hood.HoodExtendAndRetract;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.LoadingSpoon;
-import frc.robot.subsystems.PneumaticTest;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -58,8 +60,8 @@ public class RobotContainer {
     // private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
     private final ColorSensor colorSensor = new ColorSensor();
-    private final PneumaticTest pneumaticTest = new PneumaticTest();
     // private final LoadingSpoon loadingSpoon = new LoadingSpoon();
+    private final Hood hood = new Hood();
  
   // **COMMANDS**
     // *AUTO
@@ -82,11 +84,10 @@ public class RobotContainer {
     // *LOADING SPOON
     // private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
     // private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
-    // private final SolenoidForward solenoidForward = new SolenoidForward(pneumaticTest);
-    // private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
     // *COLOR SENSOR
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
    
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -126,22 +127,22 @@ public class RobotContainer {
     // ASSIGN BUTTONS TO COMMANDS
     // a.whileHeld(dashboardPID);
     // b.whenPressed(shoot);
-    x.whenPressed(driveWithPID);
-    a.whileHeld(turnWithPID);
-    b.whileHeld(dashboardPID);
-    y.whileHeld(newPID);
-    // rightStickLeft.whenPressed(solenoidForward);
-    // rightStickRight.whenPressed(solenoidReverse);
+   // x.whenPressed(driveWithPID);
+    //a.whileHeld(turnWithPID);
+    //b.whileHeld(dashboardPID);
+    //y.whileHeld(newPID);
     // y.whileHeld(getColorSensor);
     // rb.whileHeld(intakeForward);
     // lb.whileHeld(intakeReverse);
-    // b.whenPressed(intakeExtendAndRetract);
+    b.whenPressed(intakeExtendAndRetract);
     // y.whenPressed(intakeExtend);
     // a.whenPressed(intakeRetract);
     // rb.whileHeld(intakeForward);
     // lb.whileHeld(intakeReverse);
     // y.whenPressed(spoonExtend);
     // a.whenPressed(spoonRetract);
+    x.whenPressed(hoodExtendAndRetract);
+    
     
   }
 

@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     intakeMotor = new CANSparkMax(Constants.IntakeConstants.ID_MOTOR, MotorType.kBrushless);
-    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
+    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
   }
 
   public void setSpeed(double speed) {
