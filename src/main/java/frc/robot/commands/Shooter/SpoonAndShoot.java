@@ -22,11 +22,25 @@ public class SpoonAndShoot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
+    // runs shooter in parallel with wait/spoonExtend/spoonRetract sequence
+    addCommands(
+      parallel(
+        new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, ShooterConstants.HIGH_HUB_SMALL).withTimeout(6), 
+        sequence(
+          new WaitCommand(2), 
+          new SpoonExtend(loadingSpoon).withTimeout(2), 
+          new SpoonRetract(loadingSpoon).withTimeout(1)
+          )
+        )
+      );
+
+    /*
     super(sequence(
       new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, ShooterConstants.HIGH_HUB_SMALL),
       new WaitCommand(0.1),
       new SpoonExtend(loadingSpoon),
       new SpoonRetract(loadingSpoon)
     ));
+    */
   }
 }
