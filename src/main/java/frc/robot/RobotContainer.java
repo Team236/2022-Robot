@@ -31,14 +31,12 @@ import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.SetIntakeSpeed;
 import frc.robot.commands.Intake.IntakeForward;
-import frc.robot.commands.Shooter.ParallelCmdGroup;
 import frc.robot.commands.Shooter.RawShoot;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.SpoonAndShoot;
 import frc.robot.commands.Spoon.ExtendWaitRetract;
 import frc.robot.commands.Spoon.SpoonExtend;
 import frc.robot.commands.Spoon.SpoonExtendAndRetract;
-import frc.robot.commands.Spoon.SpoonExtendThenRetract;
 import frc.robot.commands.Spoon.SpoonRetract;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
@@ -80,7 +78,6 @@ public class RobotContainer {
     private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, Constants.ShooterConstants.HIGH_HUB_SMALL);
     // private final RawShoot rawShoot = new RawShoot(shooter, ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
     private final SpoonAndShoot spoonAndShoot = new SpoonAndShoot(loadingSpoon, shooter);
-    private final ParallelCmdGroup parallelCmdGroup = new ParallelCmdGroup(loadingSpoon, shooter);
     // *INTAKE
     private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract(intake);
     private final IntakeExtend intakeExtend = new IntakeExtend(intake);
@@ -92,7 +89,6 @@ public class RobotContainer {
     private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
     private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
     private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
-    private final SpoonExtendThenRetract spoonExtendThenRetract = new SpoonExtendThenRetract(loadingSpoon);
     private final ExtendWaitRetract extendWaitRetract = new ExtendWaitRetract(loadingSpoon);
     // *COLOR SENSOR
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
