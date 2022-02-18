@@ -141,6 +141,11 @@ public class Hangar extends SubsystemBase {
     armPID.setFF(Constants.Hanger.HangarPIDConstants.kFarm);
   }
 
+  public void setArmOutputRange() {
+    mastPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
+    armPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
+  }
+
   
 
   @Override

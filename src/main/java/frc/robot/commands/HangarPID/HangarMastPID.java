@@ -4,11 +4,20 @@
 
 package frc.robot.commands.HangarPID;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Constants.Hanger;
+import frc.robot.subsystems.Hangar;
 
-public class HangerMastPID extends CommandBase {
+public class HangarMastPID extends CommandBase {
+
+  private Hangar hangar;
+  private double mastDISTANCE1;
   /** Creates a new HangerMastPID. */
-  public HangerMastPID() {
+  public HangarMastPID() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -74,7 +74,6 @@ public final class Constants {
 
         public static final int ID_MAST = 42; //FOR TESTING, CHANGE FOR ROBOT
         public static final int ID_ARM = 41;
-
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
