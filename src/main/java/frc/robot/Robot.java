@@ -5,10 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
@@ -40,26 +42,20 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
-    /*
-    compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    compressor.enableDigital();
-    SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
-    SmartDashboard.putNumber("compressor current", compressor.getCurrent());
-    */
-
-
-    // USB camera try-catch
+    // compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+    // compressor.enableDigital();
+    // SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
+    // SmartDashboard.putNumber("compressor current", compressor.getCurrent());
+    
+    // USB camera
      /* try {
       usbCamera0 = CameraServer.startAutomaticCapture(0);
     } catch (Exception e) {
       System.out.println("camera capture failed");
       System.out.println(e.getStackTrace());
-
       SmartDashboard.putString("camera capture failed", "failed");
       
     } */
-
 
   }
 
