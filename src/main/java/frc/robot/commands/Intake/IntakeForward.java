@@ -20,17 +20,11 @@ public class IntakeForward extends CommandBase {
     this.intake = intake;
     this.speed = speed;
     // myCount = 1;
-    // System.out.println("HHHHHIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.intake);
   }
 
   // Called when the command is initially scheduled.
-
-    
-      
-    
-  }
 @Override
   public void initialize() {
     intake.resetCounter();
@@ -39,8 +33,7 @@ public class IntakeForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    previousCount = intake.getBallCount();
-    // SmartDashboard.putNumber("previous count", previousCount);
+
     SmartDashboard.putNumber("count in intake execute", intake.getBallCount());
 
     intake.setSpeed(speed);
@@ -94,7 +87,6 @@ public class IntakeForward extends CommandBase {
     } else if ((intake.getBallCount() == 0) && (intake.isBallInSpoon())) { // no ball in intake and ball in spoon
       return false;
     } else if ((intake.getBallCount() == 1) && (!intake.isBallInSpoon())) { // ball in intake and no ball in spoon
-    
       return false;
     } else if ((intake.getBallCount() >= 1) && (intake.isBallInSpoon())) { // ball in intake and ball in spoon
       intake.resetCounter();
@@ -102,10 +94,6 @@ public class IntakeForward extends CommandBase {
     } else {
       return false;
     }
-  
-
-
-
-    }
   }
 }
+
