@@ -47,7 +47,7 @@ public class Shoot extends CommandBase {
 
     shooterSub.setBotSetPoint(botSpeed);
     shooterSub.setTopSetPoint(topSpeed);
-
+    
     SmartDashboard.putNumber("bot shoot setpoint", botSpeed);
     SmartDashboard.putNumber("top shoot setpoint", topSpeed);
     SmartDashboard.putNumber("bot actual speed", shooterSub.getBotVelocity());

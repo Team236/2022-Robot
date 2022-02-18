@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.Solenoids;
 
 public class LoadingSpoon extends SubsystemBase {
 
   
-  DoubleSolenoid spoonDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SpoonConstants.SPOON_EXTEND,  Constants.SpoonConstants.SPOON_RETRACT);
+  DoubleSolenoid spoonDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoids.SPOON_SOL_FOR,  Solenoids.SPOON_SOL_REV);
 
   
   public LoadingSpoon() {
@@ -26,11 +26,18 @@ public class LoadingSpoon extends SubsystemBase {
   public void reverse() {
     spoonDoubleSolenoid.set(Value.kReverse);
   }
+
+  public Value getPosition() {
+    return spoonDoubleSolenoid.get();
+  }
+
+  public void toggle() {
+    spoonDoubleSolenoid.toggle();
+  }
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-  
 }
