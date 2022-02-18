@@ -32,7 +32,6 @@ public class DriveWithJoysticks extends CommandBase {
   @Override
   public void initialize() {
     
-    this.pow = 1;
     this.isDeadzone = true;
   }
 
@@ -42,13 +41,14 @@ public class DriveWithJoysticks extends CommandBase {
 
      // IS_DEADZONE determines whether joystick deadzone is considered
      if (this.isDeadzone) {
-      drive.setLeftSpeedWithDeadzone(Math.pow(-leftStick.getY(), pow));
-      drive.setRightSpeedWithDeadzone(Math.pow(-rightStick.getY(), pow));
+      drive.setLeftSpeedWithDeadzone(-leftStick.getY());
+      drive.setRightSpeedWithDeadzone(-rightStick.getY());
     } else {
-      drive.setLeftSpeed(Math.pow(-leftStick.getY(), pow));
-      drive.setRightSpeed(Math.pow(-rightStick.getY(), pow));
+      drive.setLeftSpeed(-leftStick.getY());
+      drive.setRightSpeed(-rightStick.getY());
     }
 
+    
     SmartDashboard.putNumber("DWJ getLeftEncoder", drive.getLeftEncoder());
     SmartDashboard.putNumber("DWJ getRightEncoder", drive.getRightEncoder());
     SmartDashboard.putNumber("DWJ L Distance", drive.getLeftDistance());
