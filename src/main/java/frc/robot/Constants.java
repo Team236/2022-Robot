@@ -70,7 +70,17 @@ public final class Constants {
         public static final int BOTTOM_SHOOTER = 1;
         public static final int TOP_SHOOTER = 7;
 
-        public static final int INTAKE = 13; // this is a random number, need to get the actual ID
+        public static final int INTAKE = 2; // this is a random number, need to get the actual ID
+    }
+
+    public static class Solenoids {
+
+        public static final int INTAKE_SOL_FOR = 6;//CHECK THESE #s ON THE PCM
+        public static final int INTAKE_SOL_REV = 7;
+
+        public static final int SPOON_SOL_FOR = 2;
+        public static final int SPOON_SOL_REV = 3;
+
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
@@ -141,17 +151,12 @@ public final class Constants {
     }
 
     public static class IntakeConstants {
-        public static final double FORWARD_SPEED = 0.5;
-        public static final double REVERSE_SPEED = -0.5;
-        public static final double SOL_FWD = 2;//CHECK THESE #s ON THE PCM
-        public static final double SOL_REV = 3;
-    }
+        public static final int DIO_INTAKE_COUNTER = 0;
 
-    public static class SpoonConstants {
-        public static final int SPOON_EXTEND = 6;
-        public static final int SPOON_RETRACT = 7;
+        public static final double FORWARD_SPEED = 0.3;
+        public static final double REVERSE_SPEED = -0.3;
     }
     public static class ColorSensorConstants {
-        public static final I2C.Port i2cPort = I2C.Port.kOnboard;
+        public static final int DIST = 300;
     }
 }
