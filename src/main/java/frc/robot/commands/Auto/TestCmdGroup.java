@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.TurnWithPID;
+import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.subsystems.Drive;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,14 +19,19 @@ public class TestCmdGroup extends SequentialCommandGroup {
   /** Creates a new DriveWithPID. */
   public TestCmdGroup(Drive drive) {
 
-    // does the command end at the setpoint or at the timeout?
-    super(sequence (
-      new DriveWithPID(drive, 30, 2).withTimeout(3),
-      new WaitCommand(3), 
-      // new TurnWithPID(drive, 42, 1).withTimeout(5), 
-      // new WaitCommand(2), 
-      new DriveWithPID(drive, 30, 2).withTimeout(3)
-       )
+    addCommands(
+      new WPI_PID(drive, 48).withTimeout(3),
+      new WaitCommand(2),
+      new WPI_PID(drive, -20).withTimeout(2)
     );
+    // does the command end at the setpoint or at the timeout?
+    // super(sequence (
+    //   new DriveWithPID(drive, 44, 2).withTimeout(3),
+    //   new WaitCommand(1), 
+    //   // new TurnWithPID(drive, 42, 1).withTimeout(5), 
+    //   // new WaitCommand(2), 
+    //   new DriveWithPID(drive, -20, 2).withTimeout(3)
+    //    )
+    // );
   }
 }
