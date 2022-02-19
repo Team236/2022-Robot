@@ -67,8 +67,8 @@ public final class Constants {
         public static final int ID_RIGHT_FRONT = 15;
         public static final int ID_RIGHT_REAR = 16;
 
-        public static final int BOTTOM_SHOOTER = 1;
-        public static final int TOP_SHOOTER = 7;
+        public static final int BOTTOM_SHOOTER = 3; //1;
+        public static final int TOP_SHOOTER = 5; //7;
 
         public static final int INTAKE = 2; // this is a random number, need to get the actual ID
     }
@@ -86,9 +86,9 @@ public final class Constants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
-        public static final double DIAMETER = 4; //6;
+        public static final double DIAMETER = 6; //4;
         public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
-        public static final double GEAR_RATIO = 8.71;
+        public static final double GEAR_RATIO = 8.71 / 0.75;
 
         public static final double REV_TO_IN_K = CIRCUMFERENCE / GEAR_RATIO;
         public static final double IN_TO_REV_K = GEAR_RATIO / CIRCUMFERENCE; //multiply circumference by 0.75
@@ -96,15 +96,15 @@ public final class Constants {
         public static final boolean IS_DEADZONE = true;
 
         // PID
-        public static double kP = 0.03;
-        public static double turnkP = 0.014;
+        public static double kP = 0.02;
+        public static double turnkP = 0.016;
         public static double kI = 0;
         public static double kD = 0;
    
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
-        public static final double DISTANCE = 60;
+        public static final double DISTANCE = 44;
         public static final double TURN_DISTANCE = 42; // 42 is 180 degrees
 	    
 	    public static class limelight {
