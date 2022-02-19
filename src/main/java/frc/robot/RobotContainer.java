@@ -30,6 +30,7 @@ import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PneumaticTest;
+import frc.robot.commands.DrivewithLimeLight;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -60,6 +61,8 @@ public class RobotContainer {
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
+    private final DrivewithLimeLight drivewithLimeLight = new DrivewithLimeLight(drive);
+    
     // SHOOTER
     // private final Shoot shoot = new Shoot(shooter, Constants.ShooterConstants.BOT_SPEED, Constants.ShooterConstants.TOP_SPEED);
     // INTAKE
@@ -116,6 +119,7 @@ public class RobotContainer {
     start.whenPressed(intakeExtendAndRetract);
     rb.whileHeld(intakeForward);
     lb.whileHeld(intakeReverse);
+    rightTrigger.whileActiveOnce(drivewithLimeLight);  
   }
 
   /**
