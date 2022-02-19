@@ -54,6 +54,11 @@ public class Drive extends SubsystemBase {
     rightFront.set(speed);
   }
 
+  public void setBothSpeeds(double speed) {
+    leftFront.set(speed);
+    rightFront.set(speed);
+  }
+
   public void setLeftSpeedWithDeadzone(double speed) {
     double leftSpeed = speed;
     if (leftSpeed < DriveConstants.LEFT_DEADZONE && leftSpeed > -DriveConstants.LEFT_DEADZONE) {
@@ -95,6 +100,10 @@ public class Drive extends SubsystemBase {
 
   public double getLeftDistance() {
     return getLeftEncoder() * DriveConstants.REV_TO_IN_K;
+  }
+
+  public double getAvgDistance() {
+    return (getLeftDistance() + getRightDistance()) / 2;
   }
 
   public void resetEncoders() {
