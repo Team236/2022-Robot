@@ -12,14 +12,12 @@ public class IntakeForward extends CommandBase {
 
   private Intake intake;
   private double speed;
-//  private int myCount = 1;
   
   /** Creates a new SetIntakeSpeed. */
   public IntakeForward(Intake intake, double speed) {
 
     this.intake = intake;
     this.speed = speed;
-    // myCount = 1;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.intake);
   }
@@ -28,14 +26,12 @@ public class IntakeForward extends CommandBase {
 @Override
   public void initialize() {
     intake.resetCounter();
+    SmartDashboard.putBoolean("FULL", false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    SmartDashboard.putNumber("count in intake execute", intake.getBallCount());
-
     intake.setSpeed(speed);
 
     // if ((intake.getBallCount() == 0) && (!colorSensor.isBallInSpoon())) {
@@ -76,24 +72,24 @@ public class IntakeForward extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intake.stop();
+    SmartDashboard.putBoolean("FULL", true);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
 
-    if ((intake.getBallCount() == 0) && (!intake.isBallInSpoon())) { // no ball in intake and no ball in spoon
-      return false;
-    } else if ((intake.getBallCount() == 0) && (intake.isBallInSpoon())) { // no ball in intake and ball in spoon
+    if (intake.getBallCount() == 0) { // no ball in intake
       return false;
     } else if ((intake.getBallCount() == 1) && (!intake.isBallInSpoon())) { // ball in intake and no ball in spoon
-      return false;
-    } else if ((intake.getBallCount() >= 1) && (intake.isBallInSpoon())) { // ball in intake and ball in spoon
       intake.resetCounter();
+      return false;
+    } else if ((intake.getBallCount() == 1) && (intake.isBallInSpoon())) { // ball in intake and ball in spoon
+      return true;
+    } else if (intake.getBallCount() == 2) {
       return true;
     } else {
       return false;
     }
   }
 }
-

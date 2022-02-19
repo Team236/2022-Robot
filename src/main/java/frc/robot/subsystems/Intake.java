@@ -39,7 +39,8 @@ public class Intake extends SubsystemBase {
     try {
       ballCounter = new Counter();
       ballCounter.setUpSource(IntakeConstants.DIO_INTAKE_COUNTER);
-      // this.ballCounter.setExternalDirectionMode();
+      // ballCounter.setSemiPeriodMode(true);
+      // ballCounter.getPeriod();
     } catch (Exception e) {
       isCounterUnplugged = true;
     }
@@ -139,6 +140,5 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("optical sensor count", ballCounter.get());
     whatColor();
-    SmartDashboard.putNumber("ball counter distance", ballCounter.getDistance());
   }
 }

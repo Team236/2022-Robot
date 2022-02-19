@@ -19,7 +19,7 @@ public class DriveWithPID extends CommandBase {
   private Drive drive;
   private double dist;
   private double margin;
-  private double leftError, rightError;
+  private double error;
   private double kP, kI, kD;
   // private SparkMaxPIDController leftPID, rightPID;
 
@@ -58,8 +58,7 @@ public class DriveWithPID extends CommandBase {
     drive.setSetPoint(dist);
 
     // calculates error in inches
-    leftError = Math.abs(dist - drive.getLeftDistance());
-    rightError = Math.abs(dist - drive.getRightDistance());
+    error = Math.abs(dist - drive.getLeftDistance());
 
     SmartDashboard.putNumber("PID L Encoder", drive.getLeftEncoder());
     SmartDashboard.putNumber("PID R Encoder", drive.getRightEncoder());
@@ -67,7 +66,7 @@ public class DriveWithPID extends CommandBase {
     SmartDashboard.putNumber("PID R Distance", drive.getRightDistance());
     SmartDashboard.putNumber("PID kP", DriveConstants.kP);
     SmartDashboard.putNumber("PID setpoint", dist);
-    SmartDashboard.putNumber("PID Left Error", leftError);
+    SmartDashboard.putNumber("PID Error", error);
   }
 
   // Called once the command ends or is interrupted.
@@ -80,12 +79,11 @@ public class DriveWithPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    // ends command when the error is less than the margin
-    boolean isDistMargin = leftError < margin;
-    SmartDashboard.putBoolean("isFinished", isDistMargin);
-
     // this must return false in order to be able to driveWJoysticks after auto pid drive
+
+    boolean isDistMargin = error < margin;
+    SmartDashboard.putBoolean("PID isFinished", isDistMargin);
+
     return false;
   }
 }
