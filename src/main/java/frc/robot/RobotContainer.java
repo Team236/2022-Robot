@@ -25,6 +25,7 @@ import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.TurnWithPID;
+import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
 import frc.robot.commands.Intake.IntakeRetract;
@@ -75,7 +76,7 @@ public class RobotContainer {
     private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
     private final AnotherOne anothaPID = new AnotherOne(drive);
     // *SHOOTER
-    private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, Constants.ShooterConstants.HIGH_HUB_SMALL);
+    // private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, Constants.ShooterConstants.HIGH_HUB_SMALL);
     // private final RawShoot rawShoot = new RawShoot(shooter, ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
     private final SpoonAndShoot spoonAndShoot = new SpoonAndShoot(loadingSpoon, shooter);
     // *INTAKE
@@ -130,14 +131,15 @@ public class RobotContainer {
     JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
 
     // ASSIGN BUTTONS TO COMMANDS
-    // a.whenPressed(spoonRetract);
-    b.whenPressed(shoot);
-    x.whenPressed(spoonAndShoot);
-    // y.whenPressed(spoonAndShoot);
-    rb.whenPressed(spoonExtend);
-    lb.whenPressed(spoonRetract);
-    rightTrigger.whileHeld(intakeForward);
-    leftTrigger.whileHeld(rawIntakeForward);
+    a.whenPressed(turnWithPID);
+    b.whenPressed(testCmdGroup);
+    x.whileActiveOnce(new WPI_PID(drive, 48));
+    y.whileHeld(new Shoot(shooter, ShooterConstants.LOW_HUB_LARGE, ShooterConstants.LOW_HUB_SMALL));
+    // rb.whenPressed(spoonExtend);
+    // lb.whenPressed(spoonRetract);
+    // rightTrigger.whileHeld(intakeForward);
+    // leftTrigger.whileHeld(rawIntakeForward);
+    // rightTrigger.whileActiveOnce(intakeForward);
   }
 
   /**
