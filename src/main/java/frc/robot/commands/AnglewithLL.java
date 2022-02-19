@@ -22,18 +22,12 @@ import java.lang.Math;
 
 
 //kX is a variable that deterimines the coefficent of force we would need to use to cause the robot to swivel. 
-public class DrivewithLimeLight extends CommandBase {
-private double kX = 0.01;
-private double kY = 0.03;
-private double Ks = 0.02;
+public class AnglewithLL extends CommandBase {
+private double kX = 0.02;
 private Drive drive;
-private double defaultValue = 999;
-private double h1 = 13.5;
-private double h2 = 105.6;
-private double a1 = 0.8340573450259819; //47.78 degrees or 17.98
-private double d = 97;
 
-public DrivewithLimeLight(Drive drive2) {
+
+public AnglewithLL(Drive drive2) {
   drive = drive2;
 }
 
@@ -48,6 +42,8 @@ public DrivewithLimeLight(Drive drive2) {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(6);
+
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override 
@@ -58,42 +54,23 @@ public DrivewithLimeLight(Drive drive2) {
     double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     //tx is the angle on the x axis of the target
     double errorX = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-    double disY= NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     //confirms a target 
     if(tv==1){
 
       //double x = (errorX-160)/320;
         //Establishes a minimum error in the x axis 
-        if(Math.abs(errorX)>1){
+        if(Math.abs(errorX)>2){
+          System.out.println("errorX " +errorX);
          double steeringAdjust = kX * errorX;
          System.out.println("steering adjust " + steeringAdjust);
          drive.setLeftSpeed(steeringAdjust);
          drive.setRightSpeed(-steeringAdjust); 
       }
-      
-        else{
-        //ty is the angle on the y axis of the target
-    //     double a2 = ((disY-120)/240)*Math.PI/180;
-    //       //double a2 = disY*Math.PI/180;
-    //       System.out.println("a2 "+ a2);
-    //       double dx = (h2-h1) / Math.tan(a1+a2);
-    //       System.out.println("dx " + dx);
-    //       double errorY = d - dx;
-    //       System.out.println("errorY "+ errorY);
-    //       double distanceAdjust = kY * errorY;
-    //       System.out.println("distancAdjust " + distanceAdjust);
-    //  // if (distanceaAdjust > 0) {
-    //     drive.setLeftSpeed(-distanceAdjust);
-    //     drive.setRightSpeed(-distanceAdjust);
-     // }
-      //    else{
-      //    drive.setLeftSpeed(distanceaAdjust);
-      //    drive.setRightSpeed(distanceaAdjust);
-      // }
+     
 
-    //}
     }
-  }
+    
+  
   else{
     SmartDashboard.putNumber("No Target", tv);
   }
