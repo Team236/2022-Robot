@@ -96,7 +96,7 @@ public final class Constants {
         public static final boolean IS_DEADZONE = true;
 
         // PID
-        public static double kP = 0.02;
+        public static double kP = 0.01;
         public static double turnkP = 0.016;
         public static double kI = 0;
         public static double kD = 0;
@@ -105,21 +105,22 @@ public final class Constants {
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
         public static final double DISTANCE = 44;
-        public static final double TURN_DISTANCE = 42; // 42 is 180 degrees
+        public static final double TURN_180 = 42;
+        public static final double TURN_90 = 22;
 	    
 	    public static class limelight {
-       /*  public static final double CATAPULTLEGNTH = ?;
-        public static final double CATAPULTANGLE = ?;
-        public static final double SPRINGCONSTANT = ?;   
-        public static final double CAMHEIGHT = ?;
-        public static final double CAMANGLE = ?;
-        public static final int HUBHEIGHT = 104;
-        public static final double TARMACDISTANCE = 84.75;
-        public static final int TARGETDIAMETER = 48;
-        public static final double TOTALANGLE = Math.tan((HUBHEIGHT-CAMHEIGHT) / TARMACDISTANCE);
-        public static final double CAMANGLECOMPLIMENT = TOTALANGLE - CAMANGLE;
-        public static final double TARGETAREA = Math.PI * TARGETDIAMETER;
-        public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); */
+        // public static final double CATAPULTLEGNTH = ?;
+        // public static final double CATAPULTANGLE = ?;
+        // public static final double SPRINGCONSTANT = ?;   
+        // public static final double CAMHEIGHT = ?;
+        // public static final double CAMANGLE = ?;
+        // public static final int HUBHEIGHT = 104;
+        // public static final double TARMACDISTANCE = 84.75;
+        // public static final int TARGETDIAMETER = 48;
+        // public static final double TOTALANGLE = Math.tan((HUBHEIGHT-CAMHEIGHT) / TARMACDISTANCE);
+        // public static final double CAMANGLECOMPLIMENT = TOTALANGLE - CAMANGLE;
+        // public static final double TARGETAREA = Math.PI * TARGETDIAMETER;
+        // public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); 
 	    }
     }
 
