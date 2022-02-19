@@ -30,7 +30,8 @@ import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PneumaticTest;
-import frc.robot.commands.DrivewithLimeLight;
+import frc.robot.commands.AnglewithLL;
+import frc.robot.commands.DistancewithLL;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -74,6 +75,9 @@ public class RobotContainer {
     private final SolenoidReverse solenoidReverse = new SolenoidReverse(pneumaticTest);
     // COLOR SENSOR
     private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    //LIMELIGHT
+    private final AnglewithLL anglewithLL = new AnglewithLL(drive);
+    private final DistancewithLL distancewithLL = new DistancewithLL(drive);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -104,6 +108,7 @@ public class RobotContainer {
     JoystickButton leftPress = new JoystickButton(controller, ControllerConstants.LogitechF310.LEFT_PRESS);
     JoystickButton rightPress = new JoystickButton(controller, ControllerConstants.LogitechF310.RIGHT_PRESS);
 
+    JoystickButton leftTrigger = new JoystickButton(leftStick,ControllerConstants.Thrustmaster.TRIGGER);
     JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER);
     JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
     JoystickButton rightStickLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
@@ -119,7 +124,8 @@ public class RobotContainer {
     start.whenPressed(intakeExtendAndRetract);
     rb.whileHeld(intakeForward);
     lb.whileHeld(intakeReverse);
-    rightTrigger.whileActiveOnce(drivewithLimeLight);  
+    rightTrigger.whileActiveOnce(anglewithLL);
+    leftTrigger.whileActiveOnce(distancewithLL);
   }
 
   /**
