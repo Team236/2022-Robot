@@ -19,13 +19,14 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
+import frc.robot.commands.DrivewithLimeLight;
 import frc.robot.commands.Auto.TestCmdGroup;
-import frc.robot.commands.Drive.AnotherOne;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
+import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
 import frc.robot.commands.Intake.IntakeRetract;
@@ -73,8 +74,8 @@ public class RobotContainer {
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
-    private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
-    private final AnotherOne anothaPID = new AnotherOne(drive);
+    // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
+    private final DrivewithLimeLight drivewithLimeLight = new DrivewithLimeLight(drive);
     // *SHOOTER
     // private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, Constants.ShooterConstants.HIGH_HUB_SMALL);
     // private final RawShoot rawShoot = new RawShoot(shooter, ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
@@ -131,15 +132,15 @@ public class RobotContainer {
     JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
 
     // ASSIGN BUTTONS TO COMMANDS
-    a.whenPressed(turnWithPID);
+    // if whenPressed is used for PID commands, you cannot drive with joysticks after!!
+    a.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_DISTANCE));
     b.whenPressed(testCmdGroup);
-    x.whileActiveOnce(new WPI_PID(drive, 48));
+    x.whileActiveOnce(new WPI_PID(drive, DriveConstants.DISTANCE));
     y.whileHeld(new Shoot(shooter, ShooterConstants.LOW_HUB_LARGE, ShooterConstants.LOW_HUB_SMALL));
     // rb.whenPressed(spoonExtend);
     // lb.whenPressed(spoonRetract);
     // rightTrigger.whileHeld(intakeForward);
-    // leftTrigger.whileHeld(rawIntakeForward);
-    // rightTrigger.whileActiveOnce(intakeForward);
+    // rightMiddle.whileActiveOnce(drivewithLimeLight);
   }
 
   /**
