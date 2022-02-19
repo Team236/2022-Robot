@@ -6,6 +6,7 @@ package frc.robot.commands.Drive;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drive;
 
 public class WPI_PID extends CommandBase {
@@ -15,16 +16,16 @@ public class WPI_PID extends CommandBase {
   /** Creates a new WPI_PID. */
   public WPI_PID(Drive drive, double setpoint) {
     this.drive = drive;
-    this.pidController = new PIDController(0.01, 0, 0);
+    this.pidController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
     pidController.setSetpoint(setpoint);
-    addRequirements(drive);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("WPI_PID started");
+    // System.out.println("WPI_PID started");
     pidController.reset();
     drive.resetEncoders();
   }
@@ -40,7 +41,7 @@ public class WPI_PID extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drive.stop();
-    System.out.println("WPI_PID ended");
+    // System.out.println("WPI_PID ended");
   }
 
   // Returns true when the command should end.

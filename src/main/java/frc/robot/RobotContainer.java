@@ -133,14 +133,14 @@ public class RobotContainer {
 
     // ASSIGN BUTTONS TO COMMANDS
     // if whenPressed is used for PID commands, you cannot drive with joysticks after!!
-    a.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_DISTANCE));
+    a.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
     b.whenPressed(testCmdGroup);
     x.whileActiveOnce(new WPI_PID(drive, DriveConstants.DISTANCE));
     y.whileHeld(new Shoot(shooter, ShooterConstants.LOW_HUB_LARGE, ShooterConstants.LOW_HUB_SMALL));
     // rb.whenPressed(spoonExtend);
     // lb.whenPressed(spoonRetract);
     // rightTrigger.whileHeld(intakeForward);
-    // rightMiddle.whileActiveOnce(drivewithLimeLight);
+    rightMiddle.whileActiveOnce(drivewithLimeLight);
   }
 
   /**

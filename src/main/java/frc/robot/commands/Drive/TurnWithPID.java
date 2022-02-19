@@ -74,6 +74,6 @@ public class TurnWithPID extends CommandBase {
     // ends command when the error is less than the margin
     boolean isDistMargin = error < margin;
 
-    return isDistMargin;
+    return false;
   }
 }

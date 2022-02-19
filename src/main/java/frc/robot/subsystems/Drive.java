@@ -59,6 +59,11 @@ public class Drive extends SubsystemBase {
     rightFront.set(speed);
   }
 
+  public void setTurnSpeeds(double speed) {
+    leftFront.set(speed);
+    rightFront.set(-speed);
+  }
+
   public void setLeftSpeedWithDeadzone(double speed) {
     double leftSpeed = speed;
     if (leftSpeed < DriveConstants.LEFT_DEADZONE && leftSpeed > -DriveConstants.LEFT_DEADZONE) {
