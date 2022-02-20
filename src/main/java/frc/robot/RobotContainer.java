@@ -19,7 +19,6 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
-import frc.robot.commands.DrivewithLimeLight;
 import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
@@ -77,7 +76,6 @@ public class RobotContainer {
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
-    private final DrivewithLimeLight drivewithLimeLight = new DrivewithLimeLight(drive);
     // *SHOOTER
     // private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, Constants.ShooterConstants.HIGH_HUB_SMALL);
     // private final RawShoot rawShoot = new RawShoot(shooter, ShooterConstants.BOT_SPEED, ShooterConstants.TOP_SPEED);
@@ -96,6 +94,9 @@ public class RobotContainer {
     private final ExtendWaitRetract extendWaitRetract = new ExtendWaitRetract(loadingSpoon);
     // *COLOR SENSOR
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
+    // *LIMELIGHT
+    private final AnglewithLL anglewithLL = new AnglewithLL(drive);
+    private final DistancewithLL distancewithLL = new DistancewithLL(drive);
     
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -143,7 +144,8 @@ public class RobotContainer {
     // rb.whenPressed(spoonExtend);
     // lb.whenPressed(spoonRetract);
     // rightTrigger.whileHeld(intakeForward);
-    rightMiddle.whileActiveOnce(drivewithLimeLight);
+    rightTrigger.whileActiveOnce(anglewithLL);
+    leftTrigger.whileActiveOnce(distancewithLL);
   }
 
   /**
