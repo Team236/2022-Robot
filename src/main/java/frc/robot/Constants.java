@@ -172,9 +172,14 @@ public final class Constants {
 
         public static final double armMARGIN = 0.25;
         public static final double armDISTANCE1 = 3;
+        public static final double armDISTANCE2 = -10;
+        public static final double armDISTANCE3 = 0;
+        public static final double armDISTANCE4 = 0;
+        public static final double armDISTANCE50 = 0;
 
         public static final double mastMARGIN = 2;
         public static final double mastDISTANCE1 = 28;
+        public static final double mastDISTANCE2 = 0;
     }
 }
  public static class HoodConstants {

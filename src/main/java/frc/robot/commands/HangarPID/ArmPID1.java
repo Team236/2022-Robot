@@ -14,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.Hanger;
 import frc.robot.subsystems.Hangar;
 
-public class HangarArmPID extends CommandBase {
+public class ArmPID1 extends CommandBase {
 
   private Hangar hangarArm;
   private double armDISTANCE1;
@@ -23,7 +23,7 @@ public class HangarArmPID extends CommandBase {
   private double kParm, kIarm, kDarm;
 
   /** Creates a new HangarArmPID. */
-  public HangarArmPID(Hangar hangarArm, double armDISTANCE1, double armMARGIN) {
+  public ArmPID1(Hangar hangarArm, double armDISTANCE1, double armMARGIN) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.hangarArm = hangarArm;
     addRequirements(hangarArm);
