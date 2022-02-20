@@ -26,6 +26,7 @@ import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
+import frc.robot.commands.Hood.HoodExtendAndRetract;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
 import frc.robot.commands.Intake.IntakeRetract;
