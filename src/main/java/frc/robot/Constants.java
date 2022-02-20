@@ -164,8 +164,8 @@ public final class Constants {
         public static double armREV_TO_IN = 1.64; //gear ratio changed since these were updated, check with climber people
         public static double armIN_TO_REV = 0.6097;
 
-        //public static double mastREV_TO_IN = ?;
-        //public static double mastIN_TO_REV = ?;
+        public static double mastREV_TO_IN = 1;
+        public static double mastIN_TO_REV = 1;
 
         public static double hangarMIN_OUTPUT = -1;
         public static double hangarMAX_OUTPUT = 1;

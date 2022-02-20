@@ -91,9 +91,9 @@ public class Hangar extends SubsystemBase {
     return armEncoder.getPosition();
   }
 
- /* public double getMastDistance() {
-    return getMastEncoder() * mastREV_TO_IN;
-  } */
+  public double getMastDistance() {
+    return getMastEncoder() * Constants.Hanger.HangarPIDConstants.mastREV_TO_IN;
+  } 
 
   public double getArmDistance() {
     return getArmEncoder() * Constants.Hanger.HangarPIDConstants.armREV_TO_IN;
@@ -110,9 +110,9 @@ public class Hangar extends SubsystemBase {
     armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE3 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
   }
  
-  /* public void setMastSetPoint1() {
-    mastPID.setReference((Constants.Hanger.HangarPIDConstants.mastDISTANCE1 * Constants.Hanger.HangarPIDCOnstants.mastIN_TO_REV), ControlType.kPostion); 
-  } */
+  public void setMastSetPoint1() {
+    mastPID.setReference((Constants.Hanger.HangarPIDConstants.mastDISTANCE1 * Constants.Hanger.HangarPIDConstants.mastIN_TO_REV), ControlType.kPosition); 
+  } 
 
   //methods for setting hangar-specific PID values
   public void setMastkP(double kPmast) {
