@@ -72,8 +72,8 @@ public final class Constants {
 
         public static final int INTAKE = 13; // this is a random number, need to get the actual ID
 
-        public static final int ID_MAST = 42; //FOR TESTING, CHANGE FOR ROBOT
-        public static final int ID_ARM = 41;
+        public static final int ID_MAST = 3; //FOR TESTING, CHANGE FOR ROBOT
+        public static final int ID_ARM = 5;
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
@@ -161,7 +161,7 @@ public final class Constants {
         public static double kFmast = 0;
 
         //2.4 rotations = 100 millimeters;
-        public static double armREV_TO_IN = 1.64;
+        public static double armREV_TO_IN = 1.64; //gear ratio changed since these were updated, check with climber people
         public static double armIN_TO_REV = 0.6097;
 
         //public static double mastREV_TO_IN = ?;
@@ -171,11 +171,9 @@ public final class Constants {
         public static double hangarMAX_OUTPUT = 1;
 
         public static final double armMARGIN = 0.25;
-        public static final double armDISTANCE1 = 3;
-        public static final double armDISTANCE2 = -10;
-        public static final double armDISTANCE3 = 0;
-        public static final double armDISTANCE4 = 0;
-        public static final double armDISTANCE50 = 0;
+        public static final double armDISTANCE1 = 9;
+        public static final double armDISTANCE2 = -10.5;
+        public static final double armDISTANCE3 = 27;
 
         public static final double mastMARGIN = 2;
         public static final double mastDISTANCE1 = 28;

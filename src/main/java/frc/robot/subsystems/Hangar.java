@@ -103,7 +103,13 @@ public class Hangar extends SubsystemBase {
   public void setArmSetPoint1() {
    armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE1 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
   }
-
+  public void setArmSetPoint2() {
+    armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE2 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV ), ControlType.kPosition);
+  }
+  public void setArmSetPoint3() {
+    armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE3 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
+  }
+ 
   /* public void setMastSetPoint1() {
     mastPID.setReference((Constants.Hanger.HangarPIDConstants.mastDISTANCE1 * Constants.Hanger.HangarPIDCOnstants.mastIN_TO_REV), ControlType.kPostion); 
   } */
