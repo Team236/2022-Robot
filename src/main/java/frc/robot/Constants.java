@@ -62,18 +62,18 @@ public final class Constants {
         }
     }
     public static class MotorControllers {
-        public static final int ID_LEFT_FRONT = 10;
-        public static final int ID_LEFT_REAR = 11;
-        public static final int ID_RIGHT_FRONT = 15;
-        public static final int ID_RIGHT_REAR = 16;
+        public static final int ID_LEFT_FRONT = 42; //10
+        public static final int ID_LEFT_REAR = 41; //11
+        public static final int ID_RIGHT_FRONT = 31; //15
+        public static final int ID_RIGHT_REAR = 30; //16
 
         public static final int BOTTOM_SHOOTER = 1;
         public static final int TOP_SHOOTER = 7;
 
         public static final int INTAKE = 13; // this is a random number, need to get the actual ID
 
-        public static final int ID_MAST = 3; //FOR TESTING, CHANGE FOR ROBOT
-        public static final int ID_ARM = 5;
+        public static final int ID_MAST = 15; //FOR TESTING, CHANGE FOR ROBOT
+        public static final int ID_ARM = 10;
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
@@ -160,24 +160,31 @@ public final class Constants {
         public static double kDmast = 0;
         public static double kFmast = 0;
 
-        //2.4 rotations = 100 millimeters;
+        //2.4 rotations = 100 millimeters
+        //2020 ratios for testing
+     /*  public static final double DIAMETER = 4.0;
+       public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
+       public static final double GEAR_RATIO = 8.71; 
+       public static final double armIN_TO_REV = GEAR_RATIO / CIRCUMFERENCE;
+       public static final double armREV_TO_IN = CIRCUMFERENCE / GEAR_RATIO;*/
         public static double armREV_TO_IN = 1.64; //gear ratio changed since these were updated, check with climber people
         public static double armIN_TO_REV = 0.6097;
 
+    
+        //GET from Mr. Doggart, unknown right now
         public static double mastREV_TO_IN = 1;
         public static double mastIN_TO_REV = 1;
 
         public static double hangarMIN_OUTPUT = -1;
         public static double hangarMAX_OUTPUT = 1;
 
-        public static final double armMARGIN = 0.25;
-        public static final double armDISTANCE1 = 9;
-        public static final double armDISTANCE2 = -10.5;
-        public static final double armDISTANCE3 = 27;
+
+        public static final double armMARGIN = 2;
+        public static final double armDISTANCE = 18;
+
 
         public static final double mastMARGIN = 2;
-        public static final double mastDISTANCE1 = 28;
-        public static final double mastDISTANCE2 = 0;
+        public static final double mastDISTANCE = 48;
     }
 }
  public static class HoodConstants {

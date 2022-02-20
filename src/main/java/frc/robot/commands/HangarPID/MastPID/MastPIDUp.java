@@ -14,41 +14,43 @@ import frc.robot.subsystems.Hangar;
 
 public class MastPIDUp extends CommandBase {
 
-  private Hangar hangarMast;
-  private double mastDISTANCE1;
+  private Hangar hangar;
+  private double mastDISTANCE;
   private double mastMARGIN;
   private double mastERROR;
   
   /** Creates a new HangerMastPID. */
-  public MastPIDUp(Hangar hangarMast, double mastDISTANCE1, double mastMARGIN) {
+  public MastPIDUp(Hangar hangar, double mastDISTANCE, double mastMARGIN) {
 
-    this.hangarMast = hangarMast;
-    addRequirements(hangarMast);
+    this.hangar = hangar;
+    addRequirements(hangar);
     // Use addRequirements() here to declare subsystem dependencies.
 
-    this.mastDISTANCE1 = mastDISTANCE1;
+    this.mastDISTANCE = mastDISTANCE;
     this.mastMARGIN = mastMARGIN;
   }
 
   // Called when the command is initially scheduled.
   @Override 
   public void initialize() {
-    hangarMast.resetEncoders();
-    hangarMast.setMastkP(Constants.Hanger.HangarPIDConstants.kPmast);
-    hangarMast.setMastkI(Constants.Hanger.HangarPIDConstants.kImast);
-    hangarMast.setMastkD(Constants.Hanger.HangarPIDConstants.kDmast);
+    hangar.resetEncoders();
+    hangar.setMastkP(Constants.Hanger.HangarPIDConstants.kPmast);
+    hangar.setMastkI(Constants.Hanger.HangarPIDConstants.kImast);
+    hangar.setMastkD(Constants.Hanger.HangarPIDConstants.kDmast);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hangarMast.setArmOutputRange();
-    hangarMast.setMastSetPoint1();
-    mastERROR = Math.abs(mastDISTANCE1 - hangarMast.getMastDistance());
-    SmartDashboard.putNumber("PID mast", hangarMast.getMastEncoder());
-    SmartDashboard.putNumber("PID mast distance", hangarMast.getMastDistance());
+    hangar.setMastOutputRange();
+    hangar.setMastSetPoint(mastDISTANCE);
+
+    mastERROR = Math.abs(mastDISTANCE - hangar.getMastDistance());
+    
+    SmartDashboard.putNumber("PID mast revs", hangar.getMastEncoder());
+    SmartDashboard.putNumber("PID mast distance", hangar.getMastDistance());
     SmartDashboard.putNumber("PID kPmast", Constants.Hanger.HangarPIDConstants.kParm);
-    SmartDashboard.putNumber("PID mast setpoint", mastDISTANCE1);
+    SmartDashboard.putNumber("PID mast setpoint", mastDISTANCE);
     SmartDashboard.putNumber("PID mast ERROR", mastERROR);
   
   }
@@ -56,14 +58,14 @@ public class MastPIDUp extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hangarMast.mastStop();
+    hangar.mastStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean isMastMargin = mastERROR < mastMARGIN;
-    SmartDashboard.putBoolean("mast PID finished", isMastMargin);
+    //boolean isMastMargin = mastERROR < mastMARGIN;
+    //SmartDashboard.putBoolean("mast PID finished", isMastMargin);
     return false;
   }
 }

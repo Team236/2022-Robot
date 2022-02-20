@@ -26,6 +26,8 @@ import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.WPIpid;
+import frc.robot.commands.HangarPID.ArmPID.ArmPID;
+import frc.robot.commands.HangarPID.MastPID.MastPIDUp;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
@@ -36,6 +38,7 @@ import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Hood.HoodExtendAndRetract;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Hangar;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -62,6 +65,7 @@ public class RobotContainer {
     private final ColorSensor colorSensor = new ColorSensor();
     // private final LoadingSpoon loadingSpoon = new LoadingSpoon();
     private final Hood hood = new Hood();
+    private final Hangar hangar = new Hangar();
  
   // **COMMANDS**
     // *AUTO
@@ -88,9 +92,7 @@ public class RobotContainer {
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
     // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
     private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
-   
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  
   public RobotContainer() {
     
     drive.setDefaultCommand(driveWithJoysticks);
@@ -134,14 +136,17 @@ public class RobotContainer {
     // y.whileHeld(getColorSensor);
     // rb.whileHeld(intakeForward);
     // lb.whileHeld(intakeReverse);
-    b.whenPressed(intakeExtendAndRetract);
+   // b.whenPressed(intakeExtendAndRetract);
     // y.whenPressed(intakeExtend);
     // a.whenPressed(intakeRetract);
     // rb.whileHeld(intakeForward);
     // lb.whileHeld(intakeReverse);
     // y.whenPressed(spoonExtend);
     // a.whenPressed(spoonRetract);
-    x.whenPressed(hoodExtendAndRetract);
+   // x.whenPressed(hoodExtendAndRetract);
+   x.whenPressed(new ArmPID(hangar, Constants.Hanger.HangarPIDConstants.armDISTANCE, Constants.Hanger.HangarPIDConstants.armMARGIN));
+   y.whenPressed(new MastPIDUp(hangar, Constants.Hanger.HangarPIDConstants.mastDISTANCE, Constants.Hanger.HangarPIDConstants.mastMARGIN));
+
     
     
   }

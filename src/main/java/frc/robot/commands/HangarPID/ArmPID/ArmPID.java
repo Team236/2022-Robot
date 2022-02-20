@@ -13,59 +13,63 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hangar;
 
-public class ArmPID2 extends CommandBase {
+public class ArmPID extends CommandBase {
 
-  private Hangar hangarArm;
-  private double armDISTANCE2;
+  private Hangar hangar;
+  private double armDISTANCE;
   private double armMARGIN;
-  private double armERROR1;
+  private double armERROR;
 
-  /** Creates a new ArmPID2. */
-  public ArmPID2(Hangar hangarArm, double armDISTANCE2, double armMARGIN, double kParm, double kIarm, double kDarm) {
-   
-    this.hangarArm = hangarArm;
-    addRequirements(hangarArm);
+  /** Creates a new HangarArmPID. */
+  public ArmPID(Hangar hangar, double armDISTANCE, double armMARGIN) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.hangar = hangar;
+    addRequirements(hangar);
 
-    this.armDISTANCE2 = armDISTANCE2;
+    this.armDISTANCE = armDISTANCE;
     this.armMARGIN = armMARGIN;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    hangarArm.resetEncoders();
 
-    hangarArm.setArmkP(Constants.Hanger.HangarPIDConstants.kParm);
-    hangarArm.setArmkI(Constants.Hanger.HangarPIDConstants.kIarm);
-    hangarArm.setArmkD(Constants.Hanger.HangarPIDConstants.kDarm);
+    hangar.resetEncoders();
+
+    hangar.setArmkP(Constants.Hanger.HangarPIDConstants.kParm);
+    hangar.setArmkI(Constants.Hanger.HangarPIDConstants.kIarm);
+    hangar.setArmkD(Constants.Hanger.HangarPIDConstants.kDarm);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hangarArm.setArmOutputRange();
-    hangarArm.setArmSetPoint2();
 
-    armERROR1 = Math.abs(armDISTANCE2 - hangarArm.getArmDistance());
+    hangar.setArmOutputRange();
+    hangar.setArmSetPoint(armDISTANCE);
 
-    SmartDashboard.putNumber("PID arm", hangarArm.getArmEncoder());
-    SmartDashboard.putNumber("PID arm distance", hangarArm.getArmDistance());
+    armERROR = Math.abs(armDISTANCE - hangar.getArmDistance());
+
+    SmartDashboard.putNumber("PID arm revs", hangar.getArmEncoder());
+    SmartDashboard.putNumber("PID arm distance", hangar.getArmDistance());
     SmartDashboard.putNumber("PID kParm", Constants.Hanger.HangarPIDConstants.kParm);
-    SmartDashboard.putNumber("PID arm setpoint2", armDISTANCE2);
-    SmartDashboard.putNumber("PID arm ERROR", armERROR1);
+    SmartDashboard.putNumber("PID arm setpoint1", armDISTANCE);
+    SmartDashboard.putNumber("PID arm ERROR", armERROR);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hangarArm.armStop();
+    hangar.armStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean isArmMargin = armERROR1 < armMARGIN;
-    SmartDashboard.putBoolean("arm PID finished", isArmMargin);
+
+   // boolean isArmMargin = armERROR < armMARGIN;
+   // SmartDashboard.putBoolean("arm PID finished", isArmMargin);
     
     return false;
   }

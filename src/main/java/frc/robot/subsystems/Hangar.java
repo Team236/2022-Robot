@@ -10,12 +10,9 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Constants.Hanger.ClimberConstants;
-import frc.robot.Constants.Hanger.HangarPIDConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -44,26 +41,26 @@ public class Hangar extends SubsystemBase {
   }
 
   public void mastOut() {
-    mastMotor.restoreFactoryDefaults();
+   // mastMotor.restoreFactoryDefaults();
     mastMotor.set(Constants.Hanger.ClimberConstants.MAST_EX_SPEED);
 
   }
 
   public void armOut() {
-    armMotor.restoreFactoryDefaults();
+    //armMotor.restoreFactoryDefaults();
     armMotor.set(Constants.Hanger.ClimberConstants.ARM_EX_SPEED);
 
   }
 
   public void mastIn() {
-    mastMotor.setInverted(true);
-    mastMotor.set(Constants.Hanger.ClimberConstants.MAST_RE_SPEED);
+   // mastMotor.setInverted(true);
+    mastMotor.set(-Constants.Hanger.ClimberConstants.MAST_RE_SPEED);
 
   }
 
   public void armIn() {
-    armMotor.setInverted(true);
-    armMotor.set(Constants.Hanger.ClimberConstants.ARM_RE_SPEED);
+    //armMotor.setInverted(true);
+    armMotor.set(-Constants.Hanger.ClimberConstants.ARM_RE_SPEED);
 
   }
 
@@ -100,18 +97,13 @@ public class Hangar extends SubsystemBase {
 
   }
   //different distances for each instance of PID
-  public void setArmSetPoint1() {
-   armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE1 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
-  }
-  public void setArmSetPoint2() {
-    armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE2 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV ), ControlType.kPosition);
-  }
-  public void setArmSetPoint3() {
-    armPID.setReference((Constants.Hanger.HangarPIDConstants.armDISTANCE3 * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
+  //armDISTANCE is in INCHES not revs
+  public void setArmSetPoint(double armDISTANCE) {
+   armPID.setReference((armDISTANCE * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
   }
  
-  public void setMastSetPoint1() {
-    mastPID.setReference((Constants.Hanger.HangarPIDConstants.mastDISTANCE1 * Constants.Hanger.HangarPIDConstants.mastIN_TO_REV), ControlType.kPosition); 
+  public void setMastSetPoint(double mastDISTANCE) {
+    mastPID.setReference((mastDISTANCE * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition); 
   } 
 
   //methods for setting hangar-specific PID values
@@ -148,14 +140,16 @@ public class Hangar extends SubsystemBase {
   }
 
   public void setArmOutputRange() {
-    mastPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
     armPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
   }
-
+  public void setMastOutputRange() {
+    mastPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
+  }
   
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 }
