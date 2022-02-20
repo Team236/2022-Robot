@@ -43,8 +43,8 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.LoadingSpoon;
-import frc.robot.commands.AnglewithLL;
-import frc.robot.commands.DistancewithLL;
+import frc.robot.commands.Drive.AnglewithLL;
+import frc.robot.commands.Drive.DistancewithLL;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
