@@ -20,8 +20,6 @@ public class ArmPID2 extends CommandBase {
   private double armDISTANCE2;
   private double armMARGIN;
   private double armERROR1;
-  private double kParm, kIarm, kDarm;
-
 
   /** Creates a new ArmPID2. */
   public ArmPID2(Hangar hangarArm, double armDISTANCE2, double armMARGIN, double kParm, double kIarm, double kDarm) {
@@ -31,10 +29,6 @@ public class ArmPID2 extends CommandBase {
 
     this.armDISTANCE2 = armDISTANCE2;
     this.armMARGIN = armMARGIN;
-
-    this.kParm = Constants.Hanger.HangarPIDConstants.kParm;
-    this.kIarm = Constants.Hanger.HangarPIDConstants.kIarm;
-    this.kDarm = Constants.Hanger.HangarPIDConstants.kDarm;
   }
 
   // Called when the command is initially scheduled.
@@ -42,9 +36,9 @@ public class ArmPID2 extends CommandBase {
   public void initialize() {
     hangarArm.resetEncoders();
 
-    hangarArm.setArmkP();
-    hangarArm.setArmkI();
-    hangarArm.setArmkD();
+    hangarArm.setArmkP(Constants.Hanger.HangarPIDConstants.kParm);
+    hangarArm.setArmkI(Constants.Hanger.HangarPIDConstants.kIarm);
+    hangarArm.setArmkD(Constants.Hanger.HangarPIDConstants.kDarm);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -20,7 +20,6 @@ public class ArmPID3 extends CommandBase {
   private double armDISTANCE3;
   private double armMARGIN;
   private double armERROR1;
-  private double kParm, kIarm, kDarm;
 
   /** Creates a new ArmPID3. */
   public ArmPID3(Hangar hangarArm, double armDISTANCE3, double armMARGIN) {
@@ -30,10 +29,6 @@ public class ArmPID3 extends CommandBase {
 
     this.armDISTANCE3 = armDISTANCE3;
     this.armMARGIN = armMARGIN;
-
-    this.kParm = Constants.Hanger.HangarPIDConstants.kParm;
-    this.kIarm = Constants.Hanger.HangarPIDConstants.kIarm;
-    this.kDarm = Constants.Hanger.HangarPIDConstants.kDarm;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -41,9 +36,9 @@ public class ArmPID3 extends CommandBase {
   @Override
   public void initialize() {
     hangarArm.resetEncoders();
-    hangarArm.setArmkP();
-    hangarArm.setArmkI();
-    hangarArm.setArmkD();
+    hangarArm.setArmkP(Constants.Hanger.HangarPIDConstants.kParm);
+    hangarArm.setArmkI(Constants.Hanger.HangarPIDConstants.kIarm);
+    hangarArm.setArmkD(Constants.Hanger.HangarPIDConstants.kDarm);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -72,7 +67,7 @@ public class ArmPID3 extends CommandBase {
   public boolean isFinished() {
     boolean isArmMargin = armERROR1 < armMARGIN;
     SmartDashboard.putBoolean("arm PID finished", isArmMargin);
-    
+
     return false;
   }
 }

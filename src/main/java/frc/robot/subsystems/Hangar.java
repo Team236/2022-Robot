@@ -115,36 +115,36 @@ public class Hangar extends SubsystemBase {
   } */
 
   //methods for setting hangar-specific PID values
-  public void setMastkP() {
-    mastPID.setP(Constants.Hanger.HangarPIDConstants.kPmast);
+  public void setMastkP(double kPmast) {
+    mastPID.setP(kPmast);
   }
 
-  public void setArmkP() {
-    armPID.setP(Constants.Hanger.HangarPIDConstants.kParm);
+  public void setArmkP(double kParm) {
+    armPID.setP(kParm);
   }
 
-  public void setMastkI() {
-    mastPID.setI(Constants.Hanger.HangarPIDConstants.kImast);
+  public void setMastkI(double kImast) {
+    mastPID.setI(kImast);
   }
 
-  public void setArmkI() {
-    armPID.setI(Constants.Hanger.HangarPIDConstants.kIarm);
+  public void setArmkI(double kIarm) {
+    armPID.setI(kIarm);
   }
 
-  public void setMastkD() {
-    mastPID.setD(Constants.Hanger.HangarPIDConstants.kDmast);
+  public void setMastkD(double kDmast) {
+    mastPID.setD(kDmast);
   }
 
-  public void setArmkD() {
-    armPID.setD(Constants.Hanger.HangarPIDConstants.kDarm);
+  public void setArmkD(double kDarm) {
+    armPID.setD(kDarm);
   }
 
-  public void setMastkF() {
-    mastPID.setFF(Constants.Hanger.HangarPIDConstants.kFmast);
+  public void setMastkF(double kFmast) {
+    mastPID.setFF(kFmast);
   }
 
-  public void setArmkF() {
-    armPID.setFF(Constants.Hanger.HangarPIDConstants.kFarm);
+  public void setArmkF(double kFarm) {
+    armPID.setFF(kFarm);
   }
 
   public void setArmOutputRange() {

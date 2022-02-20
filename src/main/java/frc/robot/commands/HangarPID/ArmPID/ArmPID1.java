@@ -20,7 +20,6 @@ public class ArmPID1 extends CommandBase {
   private double armDISTANCE1;
   private double armMARGIN;
   private double armERROR1;
-  private double kParm, kIarm, kDarm;
 
   /** Creates a new HangarArmPID. */
   public ArmPID1(Hangar hangarArm, double armDISTANCE1, double armMARGIN) {
@@ -30,11 +29,6 @@ public class ArmPID1 extends CommandBase {
 
     this.armDISTANCE1 = armDISTANCE1;
     this.armMARGIN = armMARGIN;
-
-    this.kParm = Constants.Hanger.HangarPIDConstants.kParm;
-    this.kIarm = Constants.Hanger.HangarPIDConstants.kIarm;
-    this.kDarm = Constants.Hanger.HangarPIDConstants.kDarm;
-
   }
 
   // Called when the command is initially scheduled.
@@ -43,9 +37,9 @@ public class ArmPID1 extends CommandBase {
 
     hangarArm.resetEncoders();
 
-    hangarArm.setArmkP();
-    hangarArm.setArmkI();
-    hangarArm.setArmkD();
+    hangarArm.setArmkP(Constants.Hanger.HangarPIDConstants.kParm);
+    hangarArm.setArmkI(Constants.Hanger.HangarPIDConstants.kIarm);
+    hangarArm.setArmkD(Constants.Hanger.HangarPIDConstants.kDarm);
 
   }
 
