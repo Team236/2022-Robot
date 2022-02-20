@@ -110,6 +110,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
 //   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 // NetworkTableEntry tx = table.getEntry("tx");
 // NetworkTableEntry ty = table.getEntry("ty");
