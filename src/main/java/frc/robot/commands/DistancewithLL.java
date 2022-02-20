@@ -23,7 +23,7 @@ import java.lang.Math;
 
 //kX is a variable that deterimines the coefficent of force we would need to use to cause the robot to swivel. 
 public class DistancewithLL extends CommandBase {
-private double kY = 0.00725;
+private double kY = 0.008; //0.00725;
 private Drive drive;
 private double h1 = 13.5;
 private double h2 = 105.6;

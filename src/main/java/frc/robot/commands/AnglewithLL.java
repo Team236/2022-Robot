@@ -63,8 +63,8 @@ public AnglewithLL(Drive drive2) {
           System.out.println("errorX " +errorX);
          double steeringAdjust = kX * errorX;
          System.out.println("steering adjust " + steeringAdjust);
-         drive.setLeftSpeed(steeringAdjust);
-         drive.setRightSpeed(-steeringAdjust); 
+         drive.setLeftSpeed(-steeringAdjust);
+         drive.setRightSpeed(steeringAdjust); 
       }
      
 
