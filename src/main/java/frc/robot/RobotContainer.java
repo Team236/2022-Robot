@@ -43,6 +43,7 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.LoadingSpoon;
+import frc.robot.commands.Drive.AngleAndDistLL;
 import frc.robot.commands.Drive.AnglewithLL;
 import frc.robot.commands.Drive.DistancewithLL;
 
@@ -97,7 +98,7 @@ public class RobotContainer {
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
-    
+    private final AngleAndDistLL angleAndDistLL = new AngleAndDistLL(drive);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -144,8 +145,8 @@ public class RobotContainer {
     // rb.whenPressed(spoonExtend);
     // lb.whenPressed(spoonRetract);
     // rightTrigger.whileHeld(intakeForward);
-    rightTrigger.whileActiveOnce(anglewithLL);
-    leftTrigger.whileActiveOnce(distancewithLL);
+    // rightTrigger.whileActiveOnce(intakeForward);
+    leftTrigger.whileActiveOnce(angleAndDistLL);
   }
 
   /**
