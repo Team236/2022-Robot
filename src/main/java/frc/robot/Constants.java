@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
     public static class ControllerConstants {
         public static final int USB_LEFT_STICK = 0;
         public static final int USB_RIGHT_STICK = 1;
@@ -71,6 +70,9 @@ public final class Constants {
         public static final int TOP_SHOOTER = 5; //7;
 
         public static final int INTAKE = 2; // this is a random number, need to get the actual ID
+
+        public static final int ID_MAST = 30; //random numbers 
+        public static final int ID_ARM = 31; //random numbers
     }
 
     public static class Solenoids {
@@ -123,7 +125,6 @@ public final class Constants {
         // public static final double TRUEDISTANCE = (HUBHEIGHT-CAMHEIGHT)/(Math.tan(CAMANGLE-CAMANGLECOMPLIMENT)); 
 	    }
     }
-
     public static class ShooterConstants {
         public static final double kPBot = 0.0002;
         public static final double kIBot = 0.00000001;
@@ -150,7 +151,6 @@ public final class Constants {
         public static final double LAUNCH_PAD_SMALL = 6000;
         public static final double LAUNCH_PAD_LARGE = 3000;
     }
-
     public static class IntakeConstants {
         public static final int DIO_INTAKE_COUNTER = 0;
 
@@ -160,4 +160,55 @@ public final class Constants {
     public static class ColorSensorConstants {
         public static final int DIST = 300;
     }
+    public static class Hanger {
+    public static class ClimberConstants {
+        public static final double MAST_EX_SPEED = 0.5;
+        public static final double MAST_RE_SPEED = 0.5;
+        public static final double ARM_EX_SPEED = 0.5;
+        public static final double ARM_RE_SPEED = 0.5;
+    }
+    public static class HangarPIDConstants {
+
+        public static double kParm = 0;
+        public static double kIarm = 0;
+        public static double kDarm = 0;
+        public static double kFarm = 0; // mooooooooo
+
+        public static double kPmast = 0;
+        public static double kImast = 0;
+        public static double kDmast = 0;
+        public static double kFmast = 0;
+
+        //2.4 rotations = 100 millimeters
+        //2020 ratios for testing
+     /*  public static final double DIAMETER = 4.0;
+       public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
+       public static final double GEAR_RATIO = 8.71; 
+       public static final double armIN_TO_REV = GEAR_RATIO / CIRCUMFERENCE;
+       public static final double armREV_TO_IN = CIRCUMFERENCE / GEAR_RATIO;*/
+        public static double armREV_TO_IN = 1.64; //gear ratio changed since these were updated, check with climber people
+        public static double armIN_TO_REV = 0.6097;
+
+    
+        //GET from Mr. Doggart, unknown right now
+        public static double mastREV_TO_IN = 1;
+        public static double mastIN_TO_REV = 1;
+
+        public static double hangarMIN_OUTPUT = -1;
+        public static double hangarMAX_OUTPUT = 1;
+
+
+        public static final double armMARGIN = 2;
+        public static final double armDISTANCE = 18;
+
+
+        public static final double mastMARGIN = 2;
+        public static final double mastDISTANCE = 48;
+    }
+}
+ public static class HoodConstants {
+
+    public static final int HOOD_EXTEND = 2;
+    public static final int HOOD_RETRACT = 3;
+ }
 }

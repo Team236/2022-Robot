@@ -40,6 +40,8 @@ import frc.robot.commands.Spoon.SpoonExtend;
 import frc.robot.commands.Spoon.SpoonExtendAndRetract;
 import frc.robot.commands.Spoon.SpoonRetract;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Hangar;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.LoadingSpoon;
@@ -65,8 +67,11 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
+    
     // private final ColorSensor colorSensor = new ColorSensor();
     private final LoadingSpoon loadingSpoon = new LoadingSpoon();
+    private final Hood hood = new Hood();
+    private final Hangar hangar = new Hangar();
  
   // **COMMANDS**
     // *AUTO
@@ -99,6 +104,8 @@ public class RobotContainer {
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
     private final AngleAndDistLL angleAndDistLL = new AngleAndDistLL(drive);
+    // *HOOD
+    private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
