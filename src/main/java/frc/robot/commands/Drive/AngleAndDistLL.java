@@ -17,7 +17,8 @@ public class AngleAndDistLL extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AnglewithLL(drive).withTimeout(0.5),
-      new DistancewithLL(drive).withTimeout(2)
+      new DistancewithLL(drive).withTimeout(1),
+      new AnglewithLL(drive).withTimeout(0.5)
     );
   }
 }
