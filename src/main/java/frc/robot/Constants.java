@@ -82,6 +82,9 @@ public final class Constants {
 
         public static final int SPOON_SOL_FOR = 2;
         public static final int SPOON_SOL_REV = 3;
+        
+        public static final int HOOD_EXTEND = 4;
+        public static final int HOOD_RETRACT = 5;
 
     }
     public static class DriveConstants {
@@ -197,18 +200,12 @@ public final class Constants {
         public static double hangarMIN_OUTPUT = -1;
         public static double hangarMAX_OUTPUT = 1;
 
-
         public static final double armMARGIN = 2;
         public static final double armDISTANCE = 18;
-
 
         public static final double mastMARGIN = 2;
         public static final double mastDISTANCE = 48;
     }
 }
- public static class HoodConstants {
 
-    public static final int HOOD_EXTEND = 2;
-    public static final int HOOD_RETRACT = 3;
- }
 }
