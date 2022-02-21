@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.Solenoids;
 
 public class Hood extends SubsystemBase {
 
-  DoubleSolenoid hoodDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.HoodConstants.HOOD_EXTEND,  Constants.HoodConstants.HOOD_RETRACT);
+  DoubleSolenoid hoodDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoids.HOOD_EXTEND,  Solenoids.HOOD_RETRACT);
 
   
   /** Creates a new Hood. */

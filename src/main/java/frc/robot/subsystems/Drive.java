@@ -87,8 +87,6 @@ public class Drive extends SubsystemBase {
     setRightSpeed(0);
   }
   
-  // I am leaving out the code for the gyro ... is it necessasry?
-
   // getEncoder methods return encoder position in ROTATIONS of motor
   public double getLeftEncoder() {
     return leftEncoder.getPosition();

@@ -62,14 +62,11 @@ public class RobotContainer {
   Joystick controller = new Joystick(Constants.ControllerConstants.USB_CONTROLLER);
   Joystick leftStick = new Joystick(Constants.ControllerConstants.USB_LEFT_STICK);
   Joystick rightStick = new Joystick(Constants.ControllerConstants.USB_RIGHT_STICK);
-  // Counter ballCounter = new Counter();
 
   // **SUBSYSTEMS**
     private final Drive drive = new Drive();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
-    
-    // private final ColorSensor colorSensor = new ColorSensor();
     private final LoadingSpoon loadingSpoon = new LoadingSpoon();
     private final Hood hood = new Hood();
     private final Hangar hangar = new Hangar();
@@ -99,8 +96,6 @@ public class RobotContainer {
     private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
     private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
     private final ExtendWaitRetract extendWaitRetract = new ExtendWaitRetract(loadingSpoon);
-    // *COLOR SENSOR
-    // private final GetColorSensor getColorSensor = new GetColorSensor(colorSensor);
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);

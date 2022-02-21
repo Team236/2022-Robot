@@ -14,7 +14,6 @@ public class DriveWithJoysticks extends CommandBase {
 
   private Drive drive;
   private Joystick leftStick, rightStick;
-  private int pow = 1;
   private boolean isDeadzone = Constants.DriveConstants.IS_DEADZONE;
   
   /** Creates a new DriveWithJoysticks. */
@@ -48,7 +47,6 @@ public class DriveWithJoysticks extends CommandBase {
       drive.setRightSpeed(-rightStick.getY());
     }
 
-    
     SmartDashboard.putNumber("DWJ getLeftEncoder", drive.getLeftEncoder());
     SmartDashboard.putNumber("DWJ getRightEncoder", drive.getRightEncoder());
     SmartDashboard.putNumber("DWJ L Distance", drive.getLeftDistance());
