@@ -13,17 +13,17 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-
+import frc.robot.Constants.ClimberConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Hangar extends SubsystemBase {
+public class Climber extends SubsystemBase {
 
   private CANSparkMax armMotor, mastMotor;
   private RelativeEncoder armEncoder, mastEncoder;
   private SparkMaxPIDController armPID, mastPID;
 
-  /** Creates a new Hangar. */
-  public Hangar() {
+  /** Creates a new Climber. */
+  public Climber() {
 
     armMotor = new CANSparkMax(Constants.MotorControllers.ID_ARM, MotorType.kBrushless);
     mastMotor = new CANSparkMax(Constants.MotorControllers.ID_MAST, MotorType.kBrushless);
@@ -37,41 +37,34 @@ public class Hangar extends SubsystemBase {
     mastEncoder = mastMotor.getEncoder();
     armEncoder = armMotor.getEncoder();
 
-
   }
 
   public void mastOut() {
    // mastMotor.restoreFactoryDefaults();
-    mastMotor.set(Constants.Hanger.ClimberConstants.MAST_EX_SPEED);
-
+    mastMotor.set(ClimberConstants.MAST_EX_SPEED);
   }
 
   public void armOut() {
     //armMotor.restoreFactoryDefaults();
-    armMotor.set(Constants.Hanger.ClimberConstants.ARM_EX_SPEED);
-
+    armMotor.set(ClimberConstants.ARM_EX_SPEED);
   }
 
   public void mastIn() {
    // mastMotor.setInverted(true);
-    mastMotor.set(-Constants.Hanger.ClimberConstants.MAST_RE_SPEED);
-
+    mastMotor.set(-ClimberConstants.MAST_RE_SPEED);
   }
 
   public void armIn() {
     //armMotor.setInverted(true);
-    armMotor.set(-Constants.Hanger.ClimberConstants.ARM_RE_SPEED);
-
+    armMotor.set(-ClimberConstants.ARM_RE_SPEED);
   }
 
   public void mastStop() {
     mastMotor.set(0);
-
   }
 
   public void armStop() {
     mastMotor.set(0);
-
   }
 
   public void resetEncoders() {
@@ -89,24 +82,23 @@ public class Hangar extends SubsystemBase {
   }
 
   public double getMastDistance() {
-    return getMastEncoder() * Constants.Hanger.HangarPIDConstants.mastREV_TO_IN;
+    return getMastEncoder() * ClimberConstants.mastREV_TO_IN;
   } 
 
   public double getArmDistance() {
-    return getArmEncoder() * Constants.Hanger.HangarPIDConstants.armREV_TO_IN;
-
+    return getArmEncoder() * ClimberConstants.armREV_TO_IN;
   }
+
   //different distances for each instance of PID
   //armDISTANCE is in INCHES not revs
   public void setArmSetPoint(double armDISTANCE) {
-   armPID.setReference((armDISTANCE * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition);
+   armPID.setReference((armDISTANCE * ClimberConstants.armIN_TO_REV), ControlType.kPosition);
   }
  
   public void setMastSetPoint(double mastDISTANCE) {
-    mastPID.setReference((mastDISTANCE * Constants.Hanger.HangarPIDConstants.armIN_TO_REV), ControlType.kPosition); 
+    mastPID.setReference((mastDISTANCE * ClimberConstants.armIN_TO_REV), ControlType.kPosition); 
   } 
 
-  //methods for setting hangar-specific PID values
   public void setMastkP(double kPmast) {
     mastPID.setP(kPmast);
   }
@@ -140,10 +132,10 @@ public class Hangar extends SubsystemBase {
   }
 
   public void setArmOutputRange() {
-    armPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
+    armPID.setOutputRange(ClimberConstants.climberMIN_OUTPUT, ClimberConstants.climberMAX_OUTPUT);
   }
   public void setMastOutputRange() {
-    mastPID.setOutputRange(Constants.Hanger.HangarPIDConstants.hangarMIN_OUTPUT, Constants.Hanger.HangarPIDConstants.hangarMAX_OUTPUT);
+    mastPID.setOutputRange(ClimberConstants.climberMIN_OUTPUT, ClimberConstants.climberMAX_OUTPUT);
   }
   
 

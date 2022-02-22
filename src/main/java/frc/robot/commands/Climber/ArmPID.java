@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.HangarPID.ArmPID;
+package frc.robot.commands.Climber;
 
 import com.revrobotics.SparkMaxPIDController;
 
@@ -11,20 +11,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hangar;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.Climber;
 
 public class ArmPID extends CommandBase {
 
-  private Hangar hangar;
+  private Climber climber;
   private double armDISTANCE;
   private double armMARGIN;
   private double armERROR;
 
-  /** Creates a new HangarArmPID. */
-  public ArmPID(Hangar hangar, double armDISTANCE, double armMARGIN) {
+  /** Creates a new climberArmPID. */
+  public ArmPID(Climber climber, double armDISTANCE, double armMARGIN) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.hangar = hangar;
-    addRequirements(hangar);
+    this.climber = climber;
+    addRequirements(climber);
 
     this.armDISTANCE = armDISTANCE;
     this.armMARGIN = armMARGIN;
@@ -34,11 +35,11 @@ public class ArmPID extends CommandBase {
   @Override
   public void initialize() {
 
-    hangar.resetEncoders();
+    climber.resetEncoders();
 
-    hangar.setArmkP(Constants.Hanger.HangarPIDConstants.kParm);
-    hangar.setArmkI(Constants.Hanger.HangarPIDConstants.kIarm);
-    hangar.setArmkD(Constants.Hanger.HangarPIDConstants.kDarm);
+    climber.setArmkP(ClimberConstants.kParm);
+    climber.setArmkI(ClimberConstants.kIarm);
+    climber.setArmkD(ClimberConstants.kDarm);
 
   }
 
@@ -46,14 +47,14 @@ public class ArmPID extends CommandBase {
   @Override
   public void execute() {
 
-    hangar.setArmOutputRange();
-    hangar.setArmSetPoint(armDISTANCE);
+    climber.setArmOutputRange();
+    climber.setArmSetPoint(armDISTANCE);
 
-    armERROR = Math.abs(armDISTANCE - hangar.getArmDistance());
+    armERROR = Math.abs(armDISTANCE - climber.getArmDistance());
 
-    SmartDashboard.putNumber("PID arm revs", hangar.getArmEncoder());
-    SmartDashboard.putNumber("PID arm distance", hangar.getArmDistance());
-    SmartDashboard.putNumber("PID kParm", Constants.Hanger.HangarPIDConstants.kParm);
+    SmartDashboard.putNumber("PID arm revs", climber.getArmEncoder());
+    SmartDashboard.putNumber("PID arm distance", climber.getArmDistance());
+    SmartDashboard.putNumber("PID kParm", ClimberConstants.kParm);
     SmartDashboard.putNumber("PID arm setpoint1", armDISTANCE);
     SmartDashboard.putNumber("PID arm ERROR", armERROR);
   }
@@ -61,7 +62,7 @@ public class ArmPID extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hangar.armStop();
+    climber.armStop();
   }
 
   // Returns true when the command should end.
