@@ -24,14 +24,5 @@ public class TestCmdGroup extends SequentialCommandGroup {
       new WaitCommand(2),
       new WPI_PID(drive, -20).withTimeout(2)
     );
-    // does the command end at the setpoint or at the timeout?
-    // super(sequence (
-    //   new DriveWithPID(drive, 44, 2).withTimeout(3),
-    //   new WaitCommand(1), 
-    //   // new TurnWithPID(drive, 42, 1).withTimeout(5), 
-    //   // new WaitCommand(2), 
-    //   new DriveWithPID(drive, -20, 2).withTimeout(3)
-    //    )
-    // );
   }
 }

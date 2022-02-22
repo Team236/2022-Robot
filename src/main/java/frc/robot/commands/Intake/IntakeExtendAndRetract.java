@@ -9,7 +9,6 @@ import frc.robot.subsystems.Intake;
 public class IntakeExtendAndRetract extends CommandBase {
 
   private Intake intake;
-  private boolean isExtended;
   private boolean toggle;
    
   /** Creates a new IntakeExtendAndRetract. */

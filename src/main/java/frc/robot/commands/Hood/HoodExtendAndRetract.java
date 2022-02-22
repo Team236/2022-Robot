@@ -10,7 +10,6 @@ import frc.robot.subsystems.Hood;
 public class HoodExtendAndRetract extends CommandBase {
 
   private Hood hood;
-  private boolean hoodIsExtended;
   private boolean toggle;
   /** Creates a new HoodExtendAndRetract. */
   public HoodExtendAndRetract(Hood hood) {
