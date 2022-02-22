@@ -40,8 +40,8 @@ import frc.robot.commands.Spoon.ExtendWaitRetract;
 import frc.robot.commands.Spoon.SpoonExtend;
 import frc.robot.commands.Spoon.SpoonExtendAndRetract;
 import frc.robot.commands.Spoon.SpoonRetract;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Hangar;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -69,7 +69,7 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final LoadingSpoon loadingSpoon = new LoadingSpoon();
     private final Hood hood = new Hood();
-    private final Hangar hangar = new Hangar();
+    private final Climber climber = new Climber();
  
   // **COMMANDS**
     // *AUTO
