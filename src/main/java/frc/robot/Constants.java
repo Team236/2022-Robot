@@ -4,13 +4,10 @@
 
 package frc.robot;
 
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -82,7 +79,7 @@ public final class Constants {
 
         public static final int SPOON_SOL_FOR = 2;
         public static final int SPOON_SOL_REV = 3;
-        
+
         public static final int HOOD_EXTEND = 4;
         public static final int HOOD_RETRACT = 5;
 
@@ -163,14 +160,11 @@ public final class Constants {
     public static class ColorSensorConstants {
         public static final int DIST = 300;
     }
-    public static class Hanger {
     public static class ClimberConstants {
         public static final double MAST_EX_SPEED = 0.5;
         public static final double MAST_RE_SPEED = 0.5;
         public static final double ARM_EX_SPEED = 0.5;
         public static final double ARM_RE_SPEED = 0.5;
-    }
-    public static class HangarPIDConstants {
 
         public static double kParm = 0;
         public static double kIarm = 0;
@@ -188,17 +182,17 @@ public final class Constants {
        public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
        public static final double GEAR_RATIO = 8.71; 
        public static final double armIN_TO_REV = GEAR_RATIO / CIRCUMFERENCE;
-       public static final double armREV_TO_IN = CIRCUMFERENCE / GEAR_RATIO;*/
+       public static final double armREV_TO_IN = CIRCUMFERENCE / GEAR_RATIO;
+    */
         public static double armREV_TO_IN = 1.64; //gear ratio changed since these were updated, check with climber people
         public static double armIN_TO_REV = 0.6097;
 
-    
         //GET from Mr. Doggart, unknown right now
         public static double mastREV_TO_IN = 1;
         public static double mastIN_TO_REV = 1;
 
-        public static double hangarMIN_OUTPUT = -1;
-        public static double hangarMAX_OUTPUT = 1;
+        public static double climberMIN_OUTPUT = -1;
+        public static double climberMAX_OUTPUT = 1;
 
         public static final double armMARGIN = 2;
         public static final double armDISTANCE = 18;
@@ -206,6 +200,5 @@ public final class Constants {
         public static final double mastMARGIN = 2;
         public static final double mastDISTANCE = 48;
     }
-}
 
 }
