@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Shooter;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -16,31 +17,20 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SpoonAndShoot extends SequentialCommandGroup {
+public class SpoonAndShoot extends ParallelCommandGroup {
   /** Creates a new SpoonAndShoot. */
-  public SpoonAndShoot(LoadingSpoon loadingSpoon, Shooter shooter) {
+  public SpoonAndShoot(LoadingSpoon loadingSpoon, Shooter shooter, double botSpeed, double topSpeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     // runs shooter in parallel with wait/spoonExtend/spoonRetract sequence
     addCommands(
-      parallel(
-        new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, ShooterConstants.HIGH_HUB_SMALL).withTimeout(6), 
-        sequence(
-          new WaitCommand(2), 
-          new SpoonExtend(loadingSpoon).withTimeout(2), 
-          new SpoonRetract(loadingSpoon).withTimeout(1)
+      new Shoot(shooter, botSpeed, topSpeed), 
+      sequence(
+        new WaitCommand(1.5), 
+        new SpoonExtend(loadingSpoon).withTimeout(2), 
+        new SpoonRetract(loadingSpoon).withTimeout(1)
           )
-        )
-      );
-
-    /*
-    super(sequence(
-      new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, ShooterConstants.HIGH_HUB_SMALL),
-      new WaitCommand(0.1),
-      new SpoonExtend(loadingSpoon),
-      new SpoonRetract(loadingSpoon)
-    ));
-    */
+        );
   }
 }
