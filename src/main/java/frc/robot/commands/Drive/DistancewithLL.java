@@ -61,30 +61,21 @@ public DistancewithLL(Drive drive2) {
        // ty is the angle on the y axis of the target
         //double a2 = ((disY-120)/240)*Math.PI/180;
           double a2 = disY*Math.PI/180;
-          System.out.println("a2 "+ a2);
+          // System.out.println("a2 "+ a2);
           double dx = (h2-h1) / Math.tan(a1+a2);
-          System.out.println("dx " + dx);
+          // System.out.println("dx " + dx);
           double errorY = d - dx;
-          System.out.println("errorY "+ errorY);
+          // System.out.println("errorY "+ errorY);
           double distanceAdjust = kY * errorY;
-          System.out.println("distanceAdjust " + distanceAdjust);
+          // System.out.println("distanceAdjust " + distanceAdjust);
      // if (distanceaAdjust > 0) {
         drive.setLeftSpeed(-distanceAdjust);
         drive.setRightSpeed(-distanceAdjust);
 
-    }
-    
-  
-  else{
+    } else{
     SmartDashboard.putNumber("No Target", tv);
-  }
-  
-  //
-
+    }
       //double a2 = (Math.atan(h2-h1)/dx)-a1 ;
-
-      
-      //
       // }
       //here I intend to use the steering adjust to 
       // if (Errorx < .5) {
@@ -93,7 +84,6 @@ public DistancewithLL(Drive drive2) {
       // if (Error < .2) {
       //   pipelineEntry.setNumber(3);
       // }
-      
 }
 
   // Called once the command ends or is interrupted.

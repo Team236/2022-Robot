@@ -56,30 +56,20 @@ public AnglewithLL(Drive drive2) {
     //confirms a target 
     if(tv==1){
 
-      //double x = (errorX-160)/320;
-        //Establishes a minimum error in the x axis 
-        if(Math.abs(errorX)>2){
-          System.out.println("errorX " +errorX);
-         double steeringAdjust = kX * errorX;
-         System.out.println("steering adjust " + steeringAdjust);
-         drive.setLeftSpeed(-steeringAdjust);
-         drive.setRightSpeed(steeringAdjust); 
+    //double x = (errorX-160)/320;
+    //Establishes a minimum error in the x axis 
+    if(Math.abs(errorX)>2){
+      // System.out.println("errorX " +errorX);
+      double steeringAdjust = kX * errorX;
+      // System.out.println("steering adjust " + steeringAdjust);
+      drive.setLeftSpeed(-steeringAdjust);
+      drive.setRightSpeed(steeringAdjust); 
       }
      
-
-    }
-    
-  
-  else{
+    } else{
     SmartDashboard.putNumber("No Target", tv);
-  }
-  
-  //
-
+    }
       //double a2 = (Math.atan(h2-h1)/dx)-a1 ;
-
-      
-      //
       // }
       //here I intend to use the steering adjust to 
       // if (Errorx < .5) {
