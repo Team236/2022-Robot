@@ -28,6 +28,12 @@ public final class Constants {
             public static final int BUTTON_MIDDLE = 2;
             public static final int BUTTON_LEFT = 3;
             public static final int BUTTON_RIGHT = 4;
+        //need to check the following button numbers
+            public static final int LEFT_BASE_TOP = 5;
+            public static final int LEFT_BASE_BOTTOM = 8;
+            public static final int RIGHT_BASE_TOP = 11;
+            public static final int RIGHT_BASE_BOTTOM = 14;
+
             public static class AxesThrustmaster {
                 public static final int X = 0;
                 public static final int Y = 1;
@@ -36,6 +42,7 @@ public final class Constants {
             }       
         }
         public static class LogitechF310 {
+            // ****when controller is in DirectInput mode (use slider on the back of the controller)
             public static final int A = 2;
             public static final int B = 3;
             public static final int X = 1;
@@ -58,31 +65,30 @@ public final class Constants {
     }
 
     public static class MotorControllers {
-        public static final int ID_LEFT_FRONT = 10;
-        public static final int ID_LEFT_REAR = 11;
-        public static final int ID_RIGHT_FRONT = 15;
-        public static final int ID_RIGHT_REAR = 16;
+        public static final int ID_LEFT_FRONT = 41; //10
+        public static final int ID_LEFT_REAR = 44; //11
+        public static final int ID_RIGHT_FRONT = 43; //15
+        public static final int ID_RIGHT_REAR = 45; //16
 
-        public static final int BOTTOM_SHOOTER = 3; //1;
-        public static final int TOP_SHOOTER = 5; //7;
+        public static final int BOTTOM_SHOOTER = 36; //1
+        public static final int TOP_SHOOTER = 33; //7
 
-        public static final int INTAKE = 2; // this is a random number, need to get the actual ID
+        public static final int INTAKE = 30;
 
-        public static final int ID_MAST = 30; //random numbers 
-        public static final int ID_ARM = 31; //random numbers
+        public static final int ID_MAST = 38;
+        public static final int ID_ARM = 37;
     }
 
     public static class Solenoids {
 
-        public static final int INTAKE_SOL_FOR = 6;//CHECK THESE #s ON THE PCM
-        public static final int INTAKE_SOL_REV = 7;
+        public static final int INTAKE_SOL_FOR = 0;
+        public static final int INTAKE_SOL_REV = 1;
 
         public static final int SPOON_SOL_FOR = 2;
         public static final int SPOON_SOL_REV = 3;
 
         public static final int HOOD_EXTEND = 4;
         public static final int HOOD_RETRACT = 5;
-
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
@@ -109,6 +115,11 @@ public final class Constants {
         public static final double DISTANCE = 44;
         public static final double TURN_180 = 42;
         public static final double TURN_90 = 22;
+        // distances
+        public static final double HUB_TO_BALL = 56;
+        public static final double TARMAC_TO_BALL = 48;
+        public static final double BALL_TO_TARM_LINE = 20;
+        public static final double TARMAC_TO_LINE = 20;
 	    
 	    public static class limelight {
         // public static final double CATAPULTLEGNTH = ?;
@@ -136,20 +147,21 @@ public final class Constants {
         public static final double kDTop = 0.0565;
         public static final double kFFTop = 0.00018; //0.000215;//.00022
 
+        // speeds for top and bottom rollers
         public static final double TOP_SPEED = 1125; // gear ratio is 18:32
         public static final double BOT_SPEED = 1125; // speed on wheels should be 2000
 
-        public static final double HIGH_HUB_SMALL = 3234; //5750; //might need to swap these??
-        public static final double HIGH_HUB_LARGE = 1530; //2720;
+        public static final double HIGH_HUB_TOP = 3234; //5750; //might need to swap these??
+        public static final double HIGH_HUB_BOT = 1530; //2720;
 
-        public static final double LOW_HUB_SMALL = 1913; //3400;
-        public static final double LOW_HUB_LARGE = 956; //1700;
+        public static final double LOW_HUB_TOP = 1913; //3400;
+        public static final double LOW_HUB_BOT = 956; //1700;
 
-        public static final double TARMAC_SMALL = 1237; // wheel speed = 2200;
-        public static final double TARMAC_LARGE = 2261; // wheel speed = 4020;
+        public static final double TARMAC_TOP = 1237; // wheel speed = 2200;
+        public static final double TARMAC_BOT = 2261; // wheel speed = 4020;
 
-        public static final double LAUNCH_PAD_SMALL = 6000;
-        public static final double LAUNCH_PAD_LARGE = 3000;
+        public static final double LAUNCH_PAD_TOP = 6000;
+        public static final double LAUNCH_PAD_BOT = 3000;
     }
     public static class IntakeConstants {
         public static final int DIO_INTAKE_COUNTER = 0;
