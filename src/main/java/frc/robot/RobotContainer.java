@@ -25,6 +25,7 @@ import frc.robot.commands.Auto.DoubleTarmacLineShot;
 import frc.robot.commands.Auto.ShootMoveShoot;
 import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.commands.Climber.ArmPID;
+import frc.robot.commands.Climber.ClimbSequence;
 import frc.robot.commands.Climber.MastPIDUp;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
@@ -115,6 +116,9 @@ public class RobotContainer {
     private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
     private final ExtendWaitRetract extendWaitRetract = new ExtendWaitRetract(loadingSpoon);
     // *CLIMBER
+    private final ArmPID extendArm = new ArmPID(climber, 6, 1);
+    private final MastPIDUp raiseMast = new MastPIDUp(climber, 6, 1);
+    private final ClimbSequence climbSequence = new ClimbSequence(climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -151,21 +155,22 @@ public class RobotContainer {
     JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
     JoystickButton rightStickLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
     JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
-    JoystickButton thridExtraButton = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_BOTTOM);
-    JoystickButton fourthExtraButton = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_TOP);
+    JoystickButton thridExtraButton = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_2);
+    JoystickButton fourthExtraButton = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_1);
 
     // *LEFT STICK
     JoystickButton leftTrigger = new JoystickButton(leftStick,ControllerConstants.Thrustmaster.TRIGGER);
     JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
     JoystickButton leftStickLeft = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
     JoystickButton leftStickRight = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
-    JoystickButton firstExtraButton = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_TOP);
-    JoystickButton secondExtraButton = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_BOTTOM);
+    JoystickButton firstExtraButton = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_1);
+    JoystickButton secondExtraButton = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_2);
 
     // ASSIGN BUTTONS TO COMMANDS
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
     x.whenPressed(new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN));
+    b.whileActiveOnce(new ClimbSequence(climber));
     y.whenPressed(new MastPIDUp(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
