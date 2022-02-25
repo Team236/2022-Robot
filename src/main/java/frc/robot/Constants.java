@@ -28,11 +28,10 @@ public final class Constants {
             public static final int BUTTON_MIDDLE = 2;
             public static final int BUTTON_LEFT = 3;
             public static final int BUTTON_RIGHT = 4;
-        //need to check the following button numbers
-            public static final int LEFT_BASE_TOP = 5;
-            public static final int LEFT_BASE_BOTTOM = 8;
-            public static final int RIGHT_BASE_TOP = 11;
-            public static final int RIGHT_BASE_BOTTOM = 14;
+            public static final int LEFT_BASE_1 = 16;
+            public static final int LEFT_BASE_2 = 15;
+            public static final int RIGHT_BASE_1 = 10;
+            public static final int RIGHT_BASE_2 = 9;
 
             public static class AxesThrustmaster {
                 public static final int X = 0;
