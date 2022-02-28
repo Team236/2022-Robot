@@ -175,7 +175,7 @@ public final class Constants {
     public static class IntakeConstants {
         public static final int DIO_INTAKE_COUNTER = 5;
 
-        public static final double FORWARD_SPEED = 0.5; // 0.7 works well with purple fabric
+        public static final double FORWARD_SPEED = 0.6; // 0.7 works well with purple fabric
         public static final double REVERSE_SPEED = -0.5;
     }
     public static class ColorSensorConstants {
