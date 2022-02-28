@@ -49,7 +49,7 @@ public AnglewithLL(Drive drive2) {
   public void execute() {
   //aims with limelight 
     //NetworkTable table = NetworkTableInstance.getDefault().getTable("limelght");
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     //tx is the angle on the x axis of the target
     double errorX = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
@@ -62,8 +62,8 @@ public AnglewithLL(Drive drive2) {
       // System.out.println("errorX " +errorX);
       double steeringAdjust = kX * errorX;
       // System.out.println("steering adjust " + steeringAdjust);
-      drive.setLeftSpeed(-steeringAdjust);
-      drive.setRightSpeed(steeringAdjust); 
+      drive.setLeftSpeed(steeringAdjust);
+      drive.setRightSpeed(-steeringAdjust); 
       }
      
     } else{

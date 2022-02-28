@@ -32,16 +32,16 @@ public class ShootMoveShoot extends SequentialCommandGroup {
 
     // hood at lower angle
     addCommands(
-      new WPI_PID(drive, DriveConstants.TARMAC_TO_LINE),
-      new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP).withTimeout(6),
+      new WPI_PID(drive, DriveConstants.TARMAC_TO_LINE).withTimeout(2),
+      new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP).withTimeout(3),
       new WaitCommand(1),
-      new IntakeExtend(intake).withTimeout(2),
+      new IntakeExtend(intake).withTimeout(1),
       parallel(
         new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED),
         new WPI_PID(drive, DriveConstants.BALL_TO_TARM_LINE)
-      ).withTimeout(8),
+      ).withTimeout(4),
       new WaitCommand(1),
-      new WPI_PID(drive, -DriveConstants.BALL_TO_TARM_LINE).withTimeout(3),
+      new WPI_PID(drive, -DriveConstants.BALL_TO_TARM_LINE).withTimeout(2),
       new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(6)
     );
   }

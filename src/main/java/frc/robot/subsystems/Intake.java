@@ -33,18 +33,19 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
 
-    intakeMotor = new CANSparkMax(MotorControllers.INTAKE, MotorType.kBrushed);
+    intakeMotor = new CANSparkMax(MotorControllers.INTAKE, MotorType.kBrushless);
+    intakeMotor.setInverted(true);
+
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoids.INTAKE_SOL_FOR, Solenoids.INTAKE_SOL_REV);
 
     try {
       ballCounter = new Counter();
       ballCounter.setUpSource(IntakeConstants.DIO_INTAKE_COUNTER);
-      // ballCounter.setSemiPeriodMode(true);
-      // ballCounter.getPeriod();
     } catch (Exception e) {
       isCounterUnplugged = true;
     }
 
+    // I2C port on the NavX Gyro is known to be more reliable than the I2C port directly on the RoboRio
     I2C.Port onGyro = I2C.Port.kMXP;
     I2C.Port onRio = I2C.Port.kOnboard;
     colorSensor = new ColorSensorV3(onGyro);
@@ -64,16 +65,16 @@ public class Intake extends SubsystemBase {
     intakeSolenoid.set(Value.kForward);
   }
 
+  public void retract() {
+    intakeSolenoid.set(Value.kReverse);
+  }
+
   public boolean isExtended() {
     if (intakeSolenoid.get() == Value.kForward) {
       return true;
     } else {
       return false;
     }
-  }
-
-  public void retract() {
-    intakeSolenoid.set(Value.kReverse);
   }
 
   public int getBallCount() {
@@ -114,6 +115,7 @@ public class Intake extends SubsystemBase {
   }
 
   public int getDistance() {
+    // large values mean object is close; small values mean object is far away
     SmartDashboard.putNumber("color sensor distance", colorSensor.getProximity());
     return colorSensor.getProximity();
   }

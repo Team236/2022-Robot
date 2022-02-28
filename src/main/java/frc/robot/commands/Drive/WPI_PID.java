@@ -25,7 +25,6 @@ public class WPI_PID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // System.out.println("WPI_PID started");
     pidController.reset();
     drive.resetEncoders();
   }
@@ -33,6 +32,7 @@ public class WPI_PID extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // sets speed of drive motors based on the distance that they have travelled
     double speed = pidController.calculate(drive.getAvgDistance());
     drive.setBothSpeeds(speed);
   }
@@ -41,7 +41,6 @@ public class WPI_PID extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drive.stop();
-    // System.out.println("WPI_PID ended");
   }
 
   // Returns true when the command should end.

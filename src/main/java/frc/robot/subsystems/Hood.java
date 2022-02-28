@@ -14,20 +14,17 @@ public class Hood extends SubsystemBase {
 
   DoubleSolenoid hoodDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoids.HOOD_EXTEND,  Solenoids.HOOD_RETRACT);
 
-  
   /** Creates a new Hood. */
-  public Hood() {
+  public Hood() {}
 
-  }
   public void hoodExtend() {
     hoodDoubleSolenoid.set(Value.kForward);
   }
+
   public void hoodRetract() {
     hoodDoubleSolenoid.set(Value.kReverse);
   }
-  public void hoodOff() {
-    hoodDoubleSolenoid.set(Value.kOff);
-  }
+
   public boolean hoodIsExtended() {
     if(hoodDoubleSolenoid.get() == Value.kForward) {
       return true;
@@ -35,6 +32,7 @@ public class Hood extends SubsystemBase {
       return false;
     }
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

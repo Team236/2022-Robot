@@ -12,12 +12,10 @@ import frc.robot.Constants.Solenoids;
 
 public class LoadingSpoon extends SubsystemBase {
 
-  
   DoubleSolenoid spoonDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoids.SPOON_SOL_FOR,  Solenoids.SPOON_SOL_REV);
-
   
-  public LoadingSpoon() {
-  }
+  /** Creates a new LoadingSpoon. */
+  public LoadingSpoon() {}
 
   public void forward() {
     spoonDoubleSolenoid.set(Value.kForward);

@@ -32,6 +32,7 @@ public class WPI_Turn_PID extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // sets speeds of left and right drive motors based on distance they have travelled
     double leftSpeed = pidController.calculate(drive.getLeftDistance());
     double rightSpeed = pidController.calculate(-drive.getRightDistance());
     drive.setLeftSpeed(leftSpeed);

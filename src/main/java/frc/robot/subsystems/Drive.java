@@ -69,7 +69,6 @@ public class Drive extends SubsystemBase {
     if (leftSpeed < DriveConstants.LEFT_DEADZONE && leftSpeed > -DriveConstants.LEFT_DEADZONE) {
       leftSpeed = 0;
     }
-
     setLeftSpeed(leftSpeed);
   }
 
@@ -78,7 +77,6 @@ public class Drive extends SubsystemBase {
     if (rightSpeed < DriveConstants.RIGHT_DEADZONE && rightSpeed > -DriveConstants.RIGHT_DEADZONE) {
       rightSpeed = 0;
     }
-    
     setRightSpeed(rightSpeed);
   }
 
@@ -129,11 +127,6 @@ public class Drive extends SubsystemBase {
     rightPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
   }
 
-  // public void setRawSetPoint () {
-  //   leftPID.setReference((10), ControlType.kPosition);
-  //   rightPID.setReference((10), ControlType.kPosition);
-  // }
-
   public void setTurnSetPoint (double dist) {
     leftPID.setReference((dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
     rightPID.setReference((-dist * DriveConstants.IN_TO_REV_K), ControlType.kPosition);
@@ -144,7 +137,7 @@ public class Drive extends SubsystemBase {
     rightPID.setOutputRange(minOutput, maxOutput);
   }
 
-  // SPARK MOTION CONTROL
+  // SparkMax PID Control   *** not reliable - better to use WPILib PID control
   public void setkP(double kP) {
     leftPID.setP(kP);
     rightPID.setP(kP);

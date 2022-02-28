@@ -17,6 +17,9 @@ public class Shoot extends CommandBase {
 
   /** Creates a new Shoot. */
   public Shoot(Shooter shooterSub, double botSpeed, double topSpeed) {
+    /* *** sets RPMs of top and bottom shooter rollers using SparkMax PID velocity control -- 
+    unlike Spark PID position control, velocity control is reliable and the command finishes normally *** */
+
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSub = shooterSub;
     addRequirements(this.shooterSub);

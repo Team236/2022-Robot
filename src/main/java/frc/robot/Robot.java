@@ -42,10 +42,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    // compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    // compressor.enableDigital();
-    // SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
-    // SmartDashboard.putNumber("compressor current", compressor.getCurrent());
+
+    compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+    compressor.enableDigital();
+    SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
+    SmartDashboard.putNumber("compressor current", compressor.getCurrent());
     
     // USB camera
       try {
@@ -105,12 +106,13 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.doInPeriodic();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
 //   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 // NetworkTableEntry tx = table.getEntry("tx");
 // NetworkTableEntry ty = table.getEntry("ty");
@@ -125,6 +127,7 @@ public class Robot extends TimedRobot {
 // SmartDashboard.putNumber("LimelightX", x);
 // SmartDashboard.putNumber("LimelightY", y);
 // SmartDashboard.putNumber("LimelightArea", area);
+    m_robotContainer.doInPeriodic();
 }
 
   @Override

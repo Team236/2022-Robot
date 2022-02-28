@@ -16,11 +16,11 @@ import frc.robot.subsystems.Shooter;
 public class ShootWithLL extends SequentialCommandGroup {
   /** Creates a new ShootWithLL. */
   public ShootWithLL(Drive drive, LoadingSpoon loadingSpoon, Shooter shooter, double botSpeed, double topSpeed) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+    // Add your commands in the addCommands() call
+    
     addCommands(
       new AngleAndDistLL(drive).withTimeout(2),
-      new SpoonAndShoot(loadingSpoon, shooter, botSpeed, topSpeed).withTimeout(5)
+      new SpoonAndShoot(loadingSpoon, shooter, botSpeed, topSpeed).withTimeout(4)
     );
   }
 }

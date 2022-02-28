@@ -17,6 +17,8 @@ public class TurnWithPID extends CommandBase {
   private double kP, kI, kD;
   /** Creates a new TurnWithPID. */
   public TurnWithPID(Drive turnPidDrive, double dist, double margin) {
+    /* *** PID position control using SparkMax PID control is NOT reliable -- better to use WPILib PID control *** */
+
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = turnPidDrive;
     addRequirements(this.drive);

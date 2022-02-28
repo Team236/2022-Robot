@@ -11,15 +11,14 @@ import frc.robot.subsystems.LoadingSpoon;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ExtendWaitRetract extends SequentialCommandGroup {
+public class SpoonExtendRetractGroup extends SequentialCommandGroup {
   /** Creates a new ExtendWaitRetract. */
-  public ExtendWaitRetract(LoadingSpoon loadingSpoon) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+  public SpoonExtendRetractGroup(LoadingSpoon loadingSpoon) {
+    // Add your commands in the addCommands() call
+
     addCommands(
-      new SpoonExtend(loadingSpoon).withTimeout(2),
-      // new WaitCommand(1),
-      new SpoonRetract(loadingSpoon).withTimeout(1)
+      new SpoonExtend(loadingSpoon).withTimeout(0.5),
+      new SpoonRetract(loadingSpoon).withTimeout(0.5)
     );
   }
 }

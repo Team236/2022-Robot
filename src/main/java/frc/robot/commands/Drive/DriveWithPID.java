@@ -25,6 +25,8 @@ public class DriveWithPID extends CommandBase {
 
   /** Creates a new DriveWithPID. */
   public DriveWithPID(Drive drive, double dist, double margin) {
+    /* *** PID position control using SparkMax PID control is NOT reliable -- better to use WPILib PID control *** */
+
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
     addRequirements(this.drive);
@@ -58,7 +60,7 @@ public class DriveWithPID extends CommandBase {
     drive.setSetPoint(dist);
 
     // calculates error in inches
-    error = Math.abs(dist - drive.getLeftDistance());
+    error = Math.abs(dist - drive.getAvgDistance());
 
     SmartDashboard.putNumber("PID L Encoder", drive.getLeftEncoder());
     SmartDashboard.putNumber("PID R Encoder", drive.getRightEncoder());
@@ -80,9 +82,12 @@ public class DriveWithPID extends CommandBase {
   @Override
   public boolean isFinished() {
     // this must return false in order to be able to driveWJoysticks after auto pid drive
+    // *** the command never finishes if you return isDistMargin -- best to return false and use a whileActiveOnce button binding 
+    // or a whenPressed that creates a new instance of this command every time it is pressed ***
 
-    boolean isDistMargin = error < margin;
-    SmartDashboard.putBoolean("PID isFinished", isDistMargin);
+
+    // boolean isDistMargin = error < margin;
+    // SmartDashboard.putBoolean("PID isFinished", isDistMargin);
 
     return false;
   }

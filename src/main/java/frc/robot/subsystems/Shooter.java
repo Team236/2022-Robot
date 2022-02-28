@@ -74,6 +74,7 @@ public class Shooter extends SubsystemBase {
     topPidController.setFF(kFTop);
   }
 
+  // sets max and min rpm setpoints of motors
   public void setOutputRange() {
     topPidController.setOutputRange(0, 8000);
     botPidController.setOutputRange(0, 8000);
