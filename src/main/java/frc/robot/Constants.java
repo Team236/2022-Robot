@@ -28,10 +28,14 @@ public final class Constants {
             public static final int BUTTON_MIDDLE = 2;
             public static final int BUTTON_LEFT = 3;
             public static final int BUTTON_RIGHT = 4;
-            public static final int LEFT_BASE_1 = 16;
-            public static final int LEFT_BASE_2 = 15;
-            public static final int RIGHT_BASE_1 = 10;
-            public static final int RIGHT_BASE_2 = 9;
+            public static final int LEFT_BASE_1 = 11;
+            public static final int LEFT_BASE_2 = 16;
+            public static final int LEFT_BASE_3 = 13;
+            public static final int LEFT_BASE_4 = 14;
+            public static final int RIGHT_BASE_5 = 7;
+            public static final int RIGHT_BASE_6 = 8;
+            public static final int RIGHT_BASE_7 = 5;
+            public static final int RIGHT_BASE_8 = 10;
 
             public static class AxesThrustmaster {
                 public static final int X = 0;
@@ -72,22 +76,28 @@ public final class Constants {
         public static final int BOTTOM_SHOOTER = 36; //1
         public static final int TOP_SHOOTER = 33; //7
 
-        public static final int INTAKE = 30;
+        public static final int INTAKE = 39;
 
         public static final int ID_MAST = 38;
         public static final int ID_ARM = 37;
     }
 
     public static class Solenoids {
+        public static final int INTAKE_SOL_FOR = 1;
+        public static final int INTAKE_SOL_REV = 0;
 
-        public static final int INTAKE_SOL_FOR = 0;
-        public static final int INTAKE_SOL_REV = 1;
+        public static final int SPOON_SOL_FOR = 3;
+        public static final int SPOON_SOL_REV = 2;
 
-        public static final int SPOON_SOL_FOR = 2;
-        public static final int SPOON_SOL_REV = 3;
-
-        public static final int HOOD_EXTEND = 4;
-        public static final int HOOD_RETRACT = 5;
+        public static final int HOOD_EXTEND = 5;
+        public static final int HOOD_RETRACT = 4;
+    }
+    
+    public static class AutoConstants {
+        public static final int DIO_SWITCH_1 = 6;
+        public static final int DIO_SWITCH_2 = 7;
+        public static final int DIO_SWITCH_3 = 8;
+        public static final int DIO_SWITCH_4 = 9;
     }
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
@@ -163,10 +173,10 @@ public final class Constants {
         public static final double LAUNCH_PAD_BOT = 3000;
     }
     public static class IntakeConstants {
-        public static final int DIO_INTAKE_COUNTER = 0;
+        public static final int DIO_INTAKE_COUNTER = 5;
 
-        public static final double FORWARD_SPEED = 0.3;
-        public static final double REVERSE_SPEED = -0.3;
+        public static final double FORWARD_SPEED = 0.5; // 0.7 works well with purple fabric
+        public static final double REVERSE_SPEED = -0.5;
     }
     public static class ColorSensorConstants {
         public static final int DIST = 300;
