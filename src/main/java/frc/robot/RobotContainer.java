@@ -7,9 +7,11 @@ package frc.robot;
 import java.util.ResourceBundle.Control;
 
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -33,7 +35,9 @@ import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
+import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Hood.HoodExtendAndRetract;
+import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
 import frc.robot.commands.Intake.IntakeRetract;
@@ -43,7 +47,7 @@ import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.ShootWithLL;
 import frc.robot.commands.Shooter.SpoonAndShoot;
-import frc.robot.commands.Spoon.ExtendWaitRetract;
+import frc.robot.commands.Spoon.SpoonExtendRetractGroup;
 import frc.robot.commands.Spoon.SpoonExtend;
 import frc.robot.commands.Spoon.SpoonExtendAndRetract;
 import frc.robot.commands.Spoon.SpoonRetract;
@@ -84,25 +88,29 @@ public class RobotContainer {
     private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, loadingSpoon, intake);
     private final DoubleTarmacLineShot doubleTarmacLineShot = new DoubleTarmacLineShot(drive, shooter, loadingSpoon, intake);
     private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, loadingSpoon, intake);
-    
+    // *AUTO SWITCHES
+    private DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
     // *DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
     // *SHOOTER
-    // private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_LARGE, Constants.ShooterConstants.HIGH_HUB_SMALL);
+    private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_BOT, Constants.ShooterConstants.HIGH_HUB_TOP);
     private final SpoonAndShoot spoonAndShootHigh = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
     private final SpoonAndShoot spoonAndShootLow = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
     private final SpoonAndShoot spoonAndShootTarmac = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     private final SpoonAndShoot spoonAndShootLaunchPad = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
     private final ShootWithLL shootHighWithLL = new ShootWithLL(drive, loadingSpoon, shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
+    private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
     private final AngleAndDistLL angleAndDistLL = new AngleAndDistLL(drive);
     // *HOOD
     private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
+    private final HoodExtend hoodExtend = new HoodExtend(hood);
+    private final HoodRetract hoodRetract = new HoodRetract(hood);
     // *INTAKE
     private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract(intake);
     private final IntakeExtend intakeExtend = new IntakeExtend(intake);
@@ -114,7 +122,7 @@ public class RobotContainer {
     private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
     private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
     private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
-    private final ExtendWaitRetract extendWaitRetract = new ExtendWaitRetract(loadingSpoon);
+    private final SpoonExtendRetractGroup extendWaitRetract = new SpoonExtendRetractGroup(loadingSpoon);
     // *CLIMBER
     private final ArmPID extendArm = new ArmPID(climber, 6, 1);
     private final MastPIDUp raiseMast = new MastPIDUp(climber, 6, 1);
@@ -150,23 +158,36 @@ public class RobotContainer {
     JoystickButton leftPress = new JoystickButton(controller, ControllerConstants.LogitechF310.LEFT_PRESS);
     JoystickButton rightPress = new JoystickButton(controller, ControllerConstants.LogitechF310.RIGHT_PRESS);
 
-    // *RIGHT STICK
-    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER); 
-    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
-    JoystickButton rightStickLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
-    JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
-    JoystickButton thridExtraButton = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_2);
-    JoystickButton fourthExtraButton = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_1);
-
     // *LEFT STICK
     JoystickButton leftTrigger = new JoystickButton(leftStick,ControllerConstants.Thrustmaster.TRIGGER);
     JoystickButton leftMiddle = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
     JoystickButton leftStickLeft = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
     JoystickButton leftStickRight = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
-    JoystickButton firstExtraButton = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_1);
-    JoystickButton secondExtraButton = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_2);
+    JoystickButton extraL1 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_1);
+    JoystickButton extraL2 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_2);
+    JoystickButton extraL3 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_3);
+    JoystickButton extraL4 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.LEFT_BASE_4);
+    JoystickButton extraL5 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.RIGHT_BASE_5);
+    JoystickButton extraL6 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.RIGHT_BASE_6);
+    JoystickButton extraL7 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.RIGHT_BASE_7);
+    JoystickButton extraL8 = new JoystickButton(leftStick, ControllerConstants.Thrustmaster.RIGHT_BASE_8);
+    
+    // *RIGHT STICK
+    JoystickButton rightTrigger = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.TRIGGER); 
+    JoystickButton rightMiddle = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_MIDDLE);
+    JoystickButton rightStickLeft = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_LEFT);
+    JoystickButton rightStickRight = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.BUTTON_RIGHT);
+    JoystickButton extraR1 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.LEFT_BASE_1);
+    JoystickButton extraR2 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.LEFT_BASE_2);
+    JoystickButton extraR3 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.LEFT_BASE_3);
+    JoystickButton extraR4 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.LEFT_BASE_4);
+    JoystickButton extraR5 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_5);
+    JoystickButton extraR6 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_6);
+    JoystickButton extraR7 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_7);
+    JoystickButton extraR8 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_8);
 
     // ASSIGN BUTTONS TO COMMANDS
+
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
     x.whenPressed(new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN));
@@ -174,16 +195,23 @@ public class RobotContainer {
     y.whenPressed(new MastPIDUp(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
+    start.whenPressed(spoonExtendAndRetract);
+    // *LEFT STICK
+    leftTrigger.whileActiveOnce(shootTarmacWLL);
+    leftMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
+    leftStickLeft.whileActiveOnce(spoonAndShootHigh);
+    leftStickRight.whileActiveOnce(spoonAndShootLow);
+    extraL5.whenPressed(spoonExtend);
+    extraL6.whenPressed(spoonRetract);
+    extraL7.whenPressed(hoodExtend);
+    extraL8.whenPressed(hoodRetract);
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(intakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
     rightStickLeft.whileHeld(rawIntakeForward);
-    // *LEFT STICK
-    leftTrigger.whileActiveOnce(spoonAndShootTarmac);
-    leftMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
-    leftStickLeft.whileActiveOnce(spoonAndShootHigh);
-    leftStickRight.whileActiveOnce(spoonAndShootLow);
-    secondExtraButton.whenPressed(spoonRetract);
+    extraR3.whenPressed(intakeExtend);
+    extraR4.whenPressed(intakeRetract);
+    extraR8.whileActiveOnce(angleAndDistLL);
 
     // *TESTING
     // rightMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
@@ -197,12 +225,42 @@ public class RobotContainer {
     // leftTrigger.whileActiveOnce(angleAndDistLL);
   }
 
+  private void configAutos() {
+    autoSwitch1 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_1);
+    autoSwitch2 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_2);
+    autoSwitch3 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_3);
+    autoSwitch4 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_4);
+  }
+
+  public void doInPeriodic() {
+    try {
+      SmartDashboard.putBoolean("switch1", autoSwitch1.get());
+      SmartDashboard.putBoolean("switch2", autoSwitch2.get());
+      SmartDashboard.putBoolean("switch3", autoSwitch3.get());
+      SmartDashboard.putBoolean("switch4", autoSwitch4.get());
+    } catch (Exception e) {
+      // System.out.println("switches bad");
+    }
+
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return testCmdGroup;
+
+    // if (autoSwitch1.get() == true) {
+    //   return testCmdGroup;
+    // } else if (autoSwitch2.get() == true) {
+    //   return doubleHubShot;
+    // } else if (autoSwitch3.get() == true) {
+    //   return doubleTarmacLineShot;
+    // } else if (autoSwitch4.get() == true) {
+    //   return shootMoveShoot;
+    // } else return shootMoveShoot;
+
+    return shootMoveShoot;
   }
 }
