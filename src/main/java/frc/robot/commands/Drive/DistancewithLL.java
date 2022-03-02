@@ -22,12 +22,12 @@ import java.lang.Math;
 
 //kX is a variable that deterimines the coefficent of force we would need to use to cause the robot to swivel. 
 public class DistancewithLL extends CommandBase {
-private double kY = 0.008; //0.00725;
+private double kY = 0.00775; //0.00725;
 private Drive drive;
 private double h1 = 13.5;
 private double h2 = 105.6;
 private double a1 = 0.8340573450259819; //47.78 degrees or 17.98
-private double d = 90 ;
+private double d = 65 ;
 
 public DistancewithLL(Drive drive2) {
   drive = drive2;
@@ -44,7 +44,7 @@ public DistancewithLL(Drive drive2) {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override 
@@ -67,10 +67,10 @@ public DistancewithLL(Drive drive2) {
           double errorY = d - dx;
           // System.out.println("errorY "+ errorY);
           double distanceAdjust = kY * errorY;
-          // System.out.println("distanceAdjust " + distanceAdjust);
+         //System.out.println("distanceAdjust " + distanceAdjust);
      // if (distanceaAdjust > 0) {
-        drive.setLeftSpeed(-distanceAdjust);
-        drive.setRightSpeed(-distanceAdjust);
+        drive.setLeftSpeed(distanceAdjust);
+        drive.setRightSpeed(distanceAdjust);
 
     } else{
     SmartDashboard.putNumber("No Target", tv);

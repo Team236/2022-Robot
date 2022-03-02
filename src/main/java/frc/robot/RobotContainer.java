@@ -23,7 +23,9 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ControllerConstants.LogitechF310;
 import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.Auto.DoubleHubShot;
+import frc.robot.commands.Auto.DoubleTarmac3;
 import frc.robot.commands.Auto.DoubleTarmacLineShot;
+import frc.robot.commands.Auto.DoubleTarmacWithLL;
 import frc.robot.commands.Auto.ShootMoveShoot;
 import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.commands.Climber.ArmPID;
@@ -47,7 +49,7 @@ import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.ShootWithLL;
 import frc.robot.commands.Shooter.SpoonAndShoot;
-import frc.robot.commands.Spoon.SpoonExtendRetractGroup;
+import frc.robot.commands.Spoon.SpoonCmdGroup;
 import frc.robot.commands.Spoon.SpoonExtend;
 import frc.robot.commands.Spoon.SpoonExtendAndRetract;
 import frc.robot.commands.Spoon.SpoonRetract;
@@ -85,11 +87,15 @@ public class RobotContainer {
   // **COMMANDS**
     // *AUTO
     private final TestCmdGroup testCmdGroup = new TestCmdGroup(drive);
-    private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, loadingSpoon, intake);
-    private final DoubleTarmacLineShot doubleTarmacLineShot = new DoubleTarmacLineShot(drive, shooter, loadingSpoon, intake);
-    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, loadingSpoon, intake);
+    private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, loadingSpoon, intake);
+    private final DoubleTarmacLineShot doubleTarmacLineShot = new DoubleTarmacLineShot(drive, shooter, hood, loadingSpoon, intake);
+    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, loadingSpoon, intake);
+    private final DoubleTarmacWithLL doubleTarmacWithLL = new DoubleTarmacWithLL(drive, intake, loadingSpoon, shooter, hood);
+    private final DoubleTarmac3 doubleTarmac3 = new DoubleTarmac3(intake, drive, hood, loadingSpoon, shooter);
     // *AUTO SWITCHES
     private DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
+    private boolean switchBoolean;
+    private int switchInt;
     // *DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
@@ -97,12 +103,12 @@ public class RobotContainer {
     // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
     // *SHOOTER
     private final Shoot shoot = new Shoot(shooter, ShooterConstants.HIGH_HUB_BOT, Constants.ShooterConstants.HIGH_HUB_TOP);
-    private final SpoonAndShoot spoonAndShootHigh = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
-    private final SpoonAndShoot spoonAndShootLow = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
-    private final SpoonAndShoot spoonAndShootTarmac = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
-    private final SpoonAndShoot spoonAndShootLaunchPad = new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
-    private final ShootWithLL shootHighWithLL = new ShootWithLL(drive, loadingSpoon, shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
-    private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
+    private final SpoonAndShoot spoonAndShootHigh = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
+    private final SpoonAndShoot spoonAndShootLow = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
+    private final SpoonAndShoot spoonAndShootTarmac = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
+    private final SpoonAndShoot spoonAndShootLaunchPad = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
+    private final ShootWithLL shootHighWithLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
+    private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
@@ -122,7 +128,7 @@ public class RobotContainer {
     private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
     private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
     private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
-    private final SpoonExtendRetractGroup extendWaitRetract = new SpoonExtendRetractGroup(loadingSpoon);
+    private final SpoonCmdGroup extendWaitRetract = new SpoonCmdGroup(loadingSpoon);
     // *CLIMBER
     private final ArmPID extendArm = new ArmPID(climber, 6, 1);
     private final MastPIDUp raiseMast = new MastPIDUp(climber, 6, 1);
@@ -195,9 +201,9 @@ public class RobotContainer {
     y.whenPressed(new MastPIDUp(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
-    start.whenPressed(spoonExtendAndRetract);
+    back.whenPressed(spoonExtendAndRetract); // need to make sure this button works
     // *LEFT STICK
-    leftTrigger.whileActiveOnce(shootTarmacWLL);
+    leftTrigger.whileActiveOnce(spoonAndShootTarmac);
     leftMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
     leftStickLeft.whileActiveOnce(spoonAndShootHigh);
     leftStickRight.whileActiveOnce(spoonAndShootLow);
@@ -209,9 +215,11 @@ public class RobotContainer {
     rightTrigger.whileActiveOnce(intakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
     rightStickLeft.whileHeld(rawIntakeForward);
+    rightStickRight.whileActiveOnce(angleAndDistLL);
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
-    extraR8.whileActiveOnce(angleAndDistLL);
+    extraR7.whileActiveOnce(anglewithLL);
+    extraR8.whileActiveOnce(distancewithLL);
 
     // *TESTING
     // rightMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
@@ -241,8 +249,15 @@ public class RobotContainer {
     } catch (Exception e) {
       // System.out.println("switches bad");
     }
-
   }
+
+  // private void getSwitchInt(boolean switchBoolean) {
+  //   if (switchBoolean) {
+  //     switchInt = 1;
+  //   } else {
+  //     switchInt = 0;
+  //   }
+  // }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -251,16 +266,17 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    // if (autoSwitch1.get() == true) {
-    //   return testCmdGroup;
-    // } else if (autoSwitch2.get() == true) {
-    //   return doubleHubShot;
-    // } else if (autoSwitch3.get() == true) {
-    //   return doubleTarmacLineShot;
-    // } else if (autoSwitch4.get() == true) {
-    //   return shootMoveShoot;
-    // } else return shootMoveShoot;
+    if (autoSwitch1.get()) {
+      return doubleTarmacLineShot;
+    } else if (autoSwitch2.get()) {
+      return doubleTarmacWithLL;
+    } else if (autoSwitch3.get()) {
+      return doubleTarmac3;
+    } else if (autoSwitch4.get()) {
+      return doubleHubShot;
+    } else return shootMoveShoot;
 
-    return shootMoveShoot;
+
+    // return doubleHubShot;
   }
 }

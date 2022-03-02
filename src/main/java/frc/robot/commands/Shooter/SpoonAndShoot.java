@@ -9,8 +9,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.Hood.HoodBeforeShoot;
+import frc.robot.commands.Hood.HoodExtend;
+import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Spoon.SpoonExtend;
 import frc.robot.commands.Spoon.SpoonRetract;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.subsystems.Shooter;
 
@@ -19,7 +23,7 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SpoonAndShoot extends ParallelCommandGroup {
   /** Creates a new SpoonAndShoot. */
-  public SpoonAndShoot(LoadingSpoon loadingSpoon, Shooter shooter, double botSpeed, double topSpeed) {
+  public SpoonAndShoot(LoadingSpoon loadingSpoon, Shooter shooter, Hood hood, double botSpeed, double topSpeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -27,7 +31,8 @@ public class SpoonAndShoot extends ParallelCommandGroup {
     addCommands(
       new Shoot(shooter, botSpeed, topSpeed), 
       sequence(
-        new WaitCommand(1), 
+        // new WaitCommand(1),
+        new HoodBeforeShoot(hood, botSpeed).withTimeout(1),
         new SpoonExtend(loadingSpoon).withTimeout(0.5), 
         new SpoonRetract(loadingSpoon).withTimeout(0.5)
           )

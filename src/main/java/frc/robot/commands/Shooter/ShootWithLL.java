@@ -7,6 +7,7 @@ package frc.robot.commands.Shooter;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drive.AngleAndDistLL;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.subsystems.Shooter;
 
@@ -15,12 +16,12 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootWithLL extends SequentialCommandGroup {
   /** Creates a new ShootWithLL. */
-  public ShootWithLL(Drive drive, LoadingSpoon loadingSpoon, Shooter shooter, double botSpeed, double topSpeed) {
+  public ShootWithLL(Drive drive, LoadingSpoon loadingSpoon, Shooter shooter, Hood hood, double botSpeed, double topSpeed) {
     // Add your commands in the addCommands() call
     
     addCommands(
       new AngleAndDistLL(drive).withTimeout(2),
-      new SpoonAndShoot(loadingSpoon, shooter, botSpeed, topSpeed).withTimeout(4)
+      new SpoonAndShoot(loadingSpoon, shooter, hood, botSpeed, topSpeed).withTimeout(4)
     );
   }
 }
