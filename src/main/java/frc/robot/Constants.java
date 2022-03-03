@@ -89,8 +89,8 @@ public final class Constants {
         public static final int SPOON_SOL_FOR = 3;
         public static final int SPOON_SOL_REV = 2;
 
-        public static final int HOOD_EXTEND = 5;
-        public static final int HOOD_RETRACT = 4;
+        public static final int HOOD_EXTEND = 4;
+        public static final int HOOD_RETRACT = 5;
     }
     
     public static class AutoConstants {
@@ -103,9 +103,9 @@ public final class Constants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
 
-        public static final double DIAMETER = 6; //4;
+        public static final double DIAMETER = 4;
         public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
-        public static final double GEAR_RATIO = 8.71 / 0.75;
+        public static final double GEAR_RATIO = 8.71 * 0.75;
 
         public static final double REV_TO_IN_K = CIRCUMFERENCE / GEAR_RATIO;
         public static final double IN_TO_REV_K = GEAR_RATIO / CIRCUMFERENCE; //multiply circumference by 0.75
@@ -113,7 +113,7 @@ public final class Constants {
         public static final boolean IS_DEADZONE = true;
 
         // PID
-        public static double kP = 0.005; //0.01;
+        public static double kP = 0.01; //0.01;
         public static double turnkP = 0.016;
         public static double kI = 0;
         public static double kD = 0;
@@ -122,9 +122,10 @@ public final class Constants {
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
         public static final double DISTANCE = 44;
-        public static final double TURN_180 = 42;
+        public static final double TURN_180 = 34;
         public static final double TURN_90 = 22;
-        public static final double TURN_15 = 3.5; // need to test this angle; should be able to head toward loading station ball during position 2 auto
+        public static final double TURN_15 = 3.2; // need to test this angle; should be able to head toward loading station ball during position 2 auto
+        public static final double TURN_18 = 4.3;
         // distances
         public static final double HUB_TO_BALL = 85;
         public static final double TARMAC_TO_BALL = 55;
@@ -164,15 +165,15 @@ public final class Constants {
         public static final double TOP_SPEED = 1125; // gear ratio is 18:32
         public static final double BOT_SPEED = 1125; // speed on wheels should be 2000
 
-        public static final double HIGH_HUB_TOP = 3100; //3234; //5750; //might need to swap these??
+        public static final double HIGH_HUB_TOP = 2800; //3234; //5750; //might need to swap these??
         public static final double HIGH_HUB_BOT = 1600; //1530; //2720;
 
         public static final double LOW_HUB_TOP = 1913; //3400;
         public static final double LOW_HUB_BOT = 956; //1700;
 
-        public static final double TARMAC_TOP = 2000; //1237; // wheel speed = 2200;
-        public static final double TARMAC_BOT = 2000; //2261; // wheel speed = 4020;
-
+        public static final double TARMAC_TOP = 2050; //1237; // wheel speed = 2200;
+        public static final double TARMAC_BOT = 1900; //2261; // wheel speed = 4020;
+// increase top and decrease bottom for more height and less depth
         public static final double LAUNCH_PAD_TOP = 6000;
         public static final double LAUNCH_PAD_BOT = 3000;
     }
