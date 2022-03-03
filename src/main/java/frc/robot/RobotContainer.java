@@ -93,7 +93,7 @@ public class RobotContainer {
     private final DoubleTarmacWithLL doubleTarmacWithLL = new DoubleTarmacWithLL(drive, intake, loadingSpoon, shooter, hood);
     private final DoubleTarmac3 doubleTarmac3 = new DoubleTarmac3(intake, drive, hood, loadingSpoon, shooter);
     // *AUTO SWITCHES
-    private DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
+    private static DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
     private boolean switchBoolean;
     private int switchInt;
     // *DRIVE
@@ -203,10 +203,11 @@ public class RobotContainer {
     rb.whenPressed(intakeExtendAndRetract);
     back.whenPressed(spoonExtendAndRetract); // need to make sure this button works
     // *LEFT STICK
-    leftTrigger.whileActiveOnce(spoonAndShootTarmac);
+    leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //spoonAndShootTarmac
     leftMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
-    leftStickLeft.whileActiveOnce(spoonAndShootHigh);
-    leftStickRight.whileActiveOnce(spoonAndShootLow);
+    leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //spoonAndShootHigh
+    leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //spoonAndShootLow
+    extraL1.whileActiveOnce(new WPI_PID(drive, 45)); //spoonAndShootLow
     extraL5.whenPressed(spoonExtend);
     extraL6.whenPressed(spoonRetract);
     extraL7.whenPressed(hoodExtend);
@@ -251,6 +252,10 @@ public class RobotContainer {
     }
   }
 
+  public void printSwitchValues() {
+    SmartDashboard.putBoolean("switch1", autoSwitch1.get());
+  }
+
   // private void getSwitchInt(boolean switchBoolean) {
   //   if (switchBoolean) {
   //     switchInt = 1;
@@ -266,17 +271,17 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    if (autoSwitch1.get()) {
-      return doubleTarmacLineShot;
-    } else if (autoSwitch2.get()) {
-      return doubleTarmacWithLL;
-    } else if (autoSwitch3.get()) {
-      return doubleTarmac3;
-    } else if (autoSwitch4.get()) {
-      return doubleHubShot;
-    } else return shootMoveShoot;
+    // if (autoSwitch1.get()) {
+    //   return doubleTarmacLineShot;
+    // } else if (autoSwitch2.get()) {
+    //   return doubleTarmacWithLL;
+    // } else if (autoSwitch3.get()) {
+    //   return doubleTarmac3;
+    // } else if (autoSwitch4.get()) {
+    //   return doubleHubShot;
+    // } else return shootMoveShoot;
 
 
-    // return doubleHubShot;
+    return doubleTarmacWithLL;
   }
 }
