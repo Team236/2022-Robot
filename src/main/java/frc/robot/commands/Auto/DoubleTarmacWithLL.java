@@ -41,10 +41,13 @@ public class DoubleTarmacWithLL extends SequentialCommandGroup {
         new HoodExtend(hood)
       ).withTimeout(2.2),
       new WaitCommand(0.5),
-      new AngleAndDistLL(drive).withTimeout(2),
+      new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
+      new WPI_PID(drive, -12).withTimeout(2),
+      // new AngleAndDistLL(drive).withTimeout(2),
       parallel(
         new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
         sequence(
+          new WaitCommand(0.5),
           new SpoonCmdGroup(loadingSpoon),
           new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
           new SpoonCmdGroup(loadingSpoon)

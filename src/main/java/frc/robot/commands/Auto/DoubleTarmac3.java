@@ -44,6 +44,7 @@ public class DoubleTarmac3 extends SequentialCommandGroup {
       parallel(
         new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
         sequence(
+          new WaitCommand(0.5),
           new SpoonCmdGroup(loadingSpoon),
           new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
           new SpoonCmdGroup(loadingSpoon)
