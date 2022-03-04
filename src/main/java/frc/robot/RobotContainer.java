@@ -234,7 +234,7 @@ public class RobotContainer {
     // leftTrigger.whileActiveOnce(angleAndDistLL);
   }
 
-  private void configAutos() {
+  public void configAutos() {
     autoSwitch1 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_1);
     autoSwitch2 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_2);
     autoSwitch3 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_3);
@@ -242,14 +242,14 @@ public class RobotContainer {
   }
 
   public void doInPeriodic() {
-    try {
-      SmartDashboard.putBoolean("switch1", autoSwitch1.get());
-      SmartDashboard.putBoolean("switch2", autoSwitch2.get());
-      SmartDashboard.putBoolean("switch3", autoSwitch3.get());
-      SmartDashboard.putBoolean("switch4", autoSwitch4.get());
-    } catch (Exception e) {
-      // System.out.println("switches bad");
-    }
+    // try {
+    //   SmartDashboard.putBoolean("switch1", autoSwitch1.get());
+    //   SmartDashboard.putBoolean("switch2", autoSwitch2.get());
+    //   SmartDashboard.putBoolean("switch3", autoSwitch3.get());
+    //   SmartDashboard.putBoolean("switch4", autoSwitch4.get());
+    // } catch (Exception e) {
+    //   // System.out.println("switches bad");
+    // }
   }
 
   public void printSwitchValues() {
@@ -271,17 +271,18 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    // if (autoSwitch1.get()) {
+    // if (!autoSwitch1.get()) {
     //   return doubleTarmacLineShot;
-    // } else if (autoSwitch2.get()) {
+    // } else if (!autoSwitch2.get()) {
     //   return doubleTarmacWithLL;
-    // } else if (autoSwitch3.get()) {
+    // } else if (!autoSwitch3.get()) {
     //   return doubleTarmac3;
-    // } else if (autoSwitch4.get()) {
+    // } else if (!autoSwitch4.get()) {
     //   return doubleHubShot;
-    // } else return shootMoveShoot;
+    // } else {
+    //   return shootMoveShoot;
+    // }
 
-
-    return doubleTarmacWithLL;
+    return doubleTarmacLineShot;
   }
 }
