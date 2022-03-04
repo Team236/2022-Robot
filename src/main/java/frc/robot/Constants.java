@@ -122,16 +122,16 @@ public final class Constants {
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
         public static final double DISTANCE = 44;
-        public static final double TURN_180 = 34;
+        public static final double TURN_180 = 38;
         public static final double TURN_90 = 22;
         public static final double TURN_15 = 3.2; // need to test this angle; should be able to head toward loading station ball during position 2 auto
         public static final double TURN_18 = 4.3;
         // distances
-        public static final double HUB_TO_BALL = 85;
+        public static final double HUB_TO_BALL = 95;
         public static final double TARMAC_TO_BALL = 55;
         public static final double TARMAC_TO_BALL_SHORT = 45; // short versions are for position 1 where the wall is close to ball
         public static final double BALL_TO_LINE = 12;
-        public static final double BALL_TO_LINE_SHORT = 3; // short versions are for position 1 where the wall is close to ball
+        public static final double BALL_TO_LINE_SHORT = 12; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
         public static final double TARMAC_TO_LOADING = 85; // need to get actual distance for this
 	    
@@ -165,15 +165,15 @@ public final class Constants {
         public static final double TOP_SPEED = 1125; // gear ratio is 18:32
         public static final double BOT_SPEED = 1125; // speed on wheels should be 2000
 
-        public static final double HIGH_HUB_TOP = 2800; //3234; //5750; //might need to swap these??
-        public static final double HIGH_HUB_BOT = 1600; //1530; //2720;
+        public static final double HIGH_HUB_TOP = 2750; //3234; //5750; //might need to swap these??
+        public static final double HIGH_HUB_BOT = 1650; //1530; //2720;
 
         public static final double LOW_HUB_TOP = 1913; //3400;
         public static final double LOW_HUB_BOT = 956; //1700;
 
         public static final double TARMAC_TOP = 2050; //1237; // wheel speed = 2200;
-        public static final double TARMAC_BOT = 1900; //2261; // wheel speed = 4020;
-// increase top and decrease bottom for more height and less depth
+        public static final double TARMAC_BOT = 1950; //2261; // wheel speed = 4020;
+// ***increase top and decrease bottom for more height and less depth!!
         public static final double LAUNCH_PAD_TOP = 6000;
         public static final double LAUNCH_PAD_BOT = 3000;
     }
