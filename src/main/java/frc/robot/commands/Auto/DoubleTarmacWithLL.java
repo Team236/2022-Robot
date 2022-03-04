@@ -34,29 +34,30 @@ public class DoubleTarmacWithLL extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeExtend(intake).withTimeout(1),
-      parallel(
-        new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
-        new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
-        new HoodExtend(hood)
-      ).withTimeout(2.2),
-      new WaitCommand(0.5),
-      new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
-      new WPI_PID(drive, -12).withTimeout(2),
-      // new AngleAndDistLL(drive).withTimeout(2),
       parallel(
         new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
         sequence(
-          new WaitCommand(0.5),
-          new SpoonCmdGroup(loadingSpoon),
-          new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
-          new SpoonCmdGroup(loadingSpoon)
+          new IntakeExtend(intake).withTimeout(1),
+          parallel(
+            new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
+            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
+            new HoodExtend(hood)
+          ).withTimeout(3),
+          new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
+          new WPI_PID(drive, -17).withTimeout(2),
+          // new AngleAndDistLL(drive).withTimeout(2),
+          parallel(
+            // new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+            sequence(
+              // new WaitCommand(3),
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1),
+              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1)
+            )
+          ).withTimeout(10),
+          new WPI_PID(drive, 10)
         )
-      ).withTimeout(7),
-      // new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(3),
-      // new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1),
-      // new SpoonAndShoot(loadingSpoon, shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(3),
-      new WPI_PID(drive, 10)
+      )
     );
   }
 }

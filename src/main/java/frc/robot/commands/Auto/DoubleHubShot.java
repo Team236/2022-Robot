@@ -37,23 +37,28 @@ public class DoubleHubShot extends SequentialCommandGroup {
 
     // hood at steeper angle
     addCommands(
-      new IntakeExtend(intake).withTimeout(1),
-      parallel(
-        new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
-        new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
-        new HoodRetract(hood)
-      ).withTimeout(2),
-      new WaitCommand(1),
-      new WPI_PID(drive, -DriveConstants.HUB_TO_BALL).withTimeout(3),
       parallel(
         new Shoot(shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP),
         sequence(
-          new WaitCommand(0.5),
-          new SpoonCmdGroup(loadingSpoon),
-          new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
-          new SpoonCmdGroup(loadingSpoon)
+          new IntakeExtend(intake).withTimeout(1),
+          parallel(
+            new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
+            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
+            new HoodRetract(hood)
+          ).withTimeout(1.5),
+          new WaitCommand(1),
+          new WPI_PID(drive, -DriveConstants.HUB_TO_BALL).withTimeout(3),
+          parallel(
+            // new Shoot(shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP),
+            sequence(
+              // new WaitCommand(2),
+              new SpoonCmdGroup(loadingSpoon),
+              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
+              new SpoonCmdGroup(loadingSpoon)
+            )
+          ).withTimeout(7)
         )
-      ).withTimeout(7)
+      )
     );
   }
 }
