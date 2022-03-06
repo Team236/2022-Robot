@@ -41,21 +41,18 @@ public class DoubleTarmac3 extends SequentialCommandGroup {
             new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
             new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
             new HoodExtend(hood)
-          ).withTimeout(2),
-          new WaitCommand(1),
-          new WPI_PID(drive, -(DriveConstants.BALL_TO_LINE)).withTimeout(1.5),
+          ).withTimeout(1.5),
+          new WPI_PID(drive, -(DriveConstants.BALL_TO_LINE)).withTimeout(1),
           parallel(
-            // new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
             sequence(
-              // new WaitCommand(0.5),
-              new SpoonCmdGroup(loadingSpoon),
-              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
-              new SpoonCmdGroup(loadingSpoon)
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1),
+              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1)
             )
-          ).withTimeout(7)
+          ).withTimeout(4)
         )
-      ),
-      new WPI_PID(drive, 10)
+      )
+      // new WPI_PID(drive, 10)
     );
   }
 }

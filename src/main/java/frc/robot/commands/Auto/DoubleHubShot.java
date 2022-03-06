@@ -46,17 +46,14 @@ public class DoubleHubShot extends SequentialCommandGroup {
             new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
             new HoodRetract(hood)
           ).withTimeout(1.5),
-          new WaitCommand(1),
           new WPI_PID(drive, -DriveConstants.HUB_TO_BALL).withTimeout(3),
           parallel(
-            // new Shoot(shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP),
             sequence(
-              // new WaitCommand(2),
-              new SpoonCmdGroup(loadingSpoon),
-              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(1.5),
-              new SpoonCmdGroup(loadingSpoon)
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1),
+              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1)
             )
-          ).withTimeout(7)
+          ).withTimeout(4)
         )
       )
     );

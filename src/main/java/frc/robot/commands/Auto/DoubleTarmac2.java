@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Drive.DriveWithPID;
+import frc.robot.commands.Drive.AngleAndDistLL;
 import frc.robot.commands.Drive.WPI_PID;
+import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
@@ -27,13 +28,11 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DoubleTarmacLineShot extends SequentialCommandGroup {
-  /** Creates a new DoubleTarmacShot. */
-  public DoubleTarmacLineShot(Drive drive, Shooter shooter, Hood hood, LoadingSpoon loadingSpoon, Intake intake) {
+public class DoubleTarmac2 extends SequentialCommandGroup {
+  /** Creates a new DoubleTarmacWithLL. */
+  public DoubleTarmac2(Drive drive, Intake intake, LoadingSpoon loadingSpoon, Shooter shooter, Hood hood) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-
-    // hood at lower angle
     addCommands(
       parallel(
         new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
@@ -41,22 +40,22 @@ public class DoubleTarmacLineShot extends SequentialCommandGroup {
           new IntakeExtend(intake).withTimeout(1),
           parallel(
             new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
-            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
+            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
             new HoodExtend(hood)
-          ).withTimeout(3),
-            new WaitCommand(0.5),
-            new WPI_PID(drive, -DriveConstants.BALL_TO_LINE_SHORT).withTimeout(1.5),
+          ).withTimeout(2),
+          new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
+          new WPI_PID(drive, -23).withTimeout(2), //was 17
           parallel(
-          // new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
             sequence(
-            // new WaitCommand(3),
-            new SpoonCmdGroup(loadingSpoon).withTimeout(1),
-            new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(3),
-            new SpoonCmdGroup(loadingSpoon).withTimeout(1)
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1),
+              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+              new SpoonCmdGroup(loadingSpoon).withTimeout(1)
             )
-          ).withTimeout(8)
+          ).withTimeout(4)
         )
-      )
+      ).withTimeout(10),
+      new WPI_Turn_PID(drive, DriveConstants.TURN_15).withTimeout(0.5),
+      new WPI_PID(drive, 24)
     );
   }
 }

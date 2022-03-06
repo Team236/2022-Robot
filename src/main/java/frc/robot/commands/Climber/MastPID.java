@@ -13,22 +13,21 @@ import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
-public class MastPIDUp extends CommandBase {
+public class MastPID extends CommandBase {
 
   private Climber climber;
-  private double mastDISTANCE;
-  private double mastMARGIN;
-  private double mastERROR;
+  private double mastDistance;
+  private double mastMargin;
+  private double mastError;
   
   /** Creates a new HangerMastPID. */
-  public MastPIDUp(Climber climber, double mastDISTANCE, double mastMARGIN) {
+  public MastPID(Climber climber, double mastDistance, double mastMargin) {
 
     this.climber = climber;
     addRequirements(climber);
     // Use addRequirements() here to declare subsystem dependencies.
-
-    this.mastDISTANCE = mastDISTANCE;
-    this.mastMARGIN = mastMARGIN;
+    this.mastDistance = mastDistance;
+    this.mastMargin = mastMargin;
   }
 
   // Called when the command is initially scheduled.
@@ -38,21 +37,25 @@ public class MastPIDUp extends CommandBase {
     climber.setMastkP(ClimberConstants.kPmast);
     climber.setMastkI(ClimberConstants.kImast);
     climber.setMastkD(ClimberConstants.kDmast);
+    climber.setMastOutputRange();
+    climber.setMastSetPointWlimit(mastDistance);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     climber.setMastOutputRange();
-    climber.setMastSetPoint(mastDISTANCE);
+    climber.setMastSetPointWlimit(mastDistance);
+    // climber.setMastSetPoint(mastDistance);
 
-    mastERROR = Math.abs(mastDISTANCE - climber.getMastDistance());
+    mastError = Math.abs(mastDistance - climber.getMastDistance());
     
     SmartDashboard.putNumber("PID mast revs", climber.getMastEncoder());
     SmartDashboard.putNumber("PID mast distance", climber.getMastDistance());
     SmartDashboard.putNumber("PID kPmast", ClimberConstants.kParm);
-    SmartDashboard.putNumber("PID mast setpoint", mastDISTANCE);
-    SmartDashboard.putNumber("PID mast ERROR", mastERROR);
+    SmartDashboard.putNumber("PID mast setpoint", mastDistance);
+    SmartDashboard.putNumber("PID mast ERROR", mastError);
+    // SmartDashboard.putBoolean("top limit", climber.isTopLimit());
   
   }
 
@@ -65,7 +68,7 @@ public class MastPIDUp extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //boolean isMastMargin = mastERROR < mastMARGIN;
+    //boolean isMastMargin = mastError < mastMargin;
     //SmartDashboard.putBoolean("mast PID finished", isMastMargin);
     return false;
   }
