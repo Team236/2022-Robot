@@ -4,33 +4,27 @@
 
 package frc.robot;
 
-import java.util.ResourceBundle.Control;
 
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.ControllerConstants.LogitechF310;
-import frc.robot.Constants.ControllerConstants.Thrustmaster;
 import frc.robot.commands.Auto.DoubleHubShot;
 import frc.robot.commands.Auto.DoubleTarmac3;
-import frc.robot.commands.Auto.DoubleTarmacLineShot;
-import frc.robot.commands.Auto.DoubleTarmacWithLL;
+import frc.robot.commands.Auto.DoubleTarmac1;
+import frc.robot.commands.Auto.DoubleTarmac2;
 import frc.robot.commands.Auto.ShootMoveShoot;
 import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.commands.Climber.ArmPID;
 import frc.robot.commands.Climber.ClimbSequence;
-import frc.robot.commands.Climber.MastPIDUp;
+import frc.robot.commands.Climber.MastPID;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
@@ -88,14 +82,17 @@ public class RobotContainer {
     // *AUTO
     private final TestCmdGroup testCmdGroup = new TestCmdGroup(drive);
     private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, loadingSpoon, intake);
-    private final DoubleTarmacLineShot doubleTarmacLineShot = new DoubleTarmacLineShot(drive, shooter, hood, loadingSpoon, intake);
-    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, loadingSpoon, intake);
-    private final DoubleTarmacWithLL doubleTarmacWithLL = new DoubleTarmacWithLL(drive, intake, loadingSpoon, shooter, hood);
+    private final DoubleTarmac1 doubleTarmac1 = new DoubleTarmac1(drive, shooter, hood, loadingSpoon, intake);
+    private final DoubleTarmac2 doubleTarmac2 = new DoubleTarmac2(drive, intake, loadingSpoon, shooter, hood);
     private final DoubleTarmac3 doubleTarmac3 = new DoubleTarmac3(intake, drive, hood, loadingSpoon, shooter);
+    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, loadingSpoon, intake);
+
     // *AUTO SWITCHES
-    private static DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
-    private boolean switchBoolean;
-    private int switchInt;
+    // private static DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
+    private static DigitalInput autoSwitch1 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_1);
+    private static DigitalInput autoSwitch2 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_2);
+    private static DigitalInput autoSwitch3 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_3);
+    private static DigitalInput autoSwitch4 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_4);
     // *DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
@@ -130,8 +127,8 @@ public class RobotContainer {
     private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
     private final SpoonCmdGroup extendWaitRetract = new SpoonCmdGroup(loadingSpoon);
     // *CLIMBER
-    private final ArmPID extendArm = new ArmPID(climber, 6, 1);
-    private final MastPIDUp raiseMast = new MastPIDUp(climber, 6, 1);
+    private final ArmPID extendArm = new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN);
+    private final MastPID raiseMast = new MastPID(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN);
     private final ClimbSequence climbSequence = new ClimbSequence(climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -141,6 +138,8 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+
+    
   }
 
   /**
@@ -198,71 +197,33 @@ public class RobotContainer {
     // *CONTROLLER
     x.whenPressed(new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN));
     b.whileActiveOnce(new ClimbSequence(climber));
-    y.whenPressed(new MastPIDUp(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN));
+    y.whenPressed(new MastPID(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
-    back.whenPressed(spoonExtendAndRetract); // need to make sure this button works
+    leftPress.whileActiveOnce(anglewithLL);
+    rightPress.whileActiveOnce(distancewithLL);
+    back.whenPressed(spoonExtendAndRetract);
+    start.whileActiveOnce(new WPI_PID(drive, 27)); // position robot so camera barely sees white line, use this button to move out of tarmac, then shoot
     // *LEFT STICK
     leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //spoonAndShootTarmac
     leftMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
     leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //spoonAndShootHigh
     leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //spoonAndShootLow
-    extraL1.whileActiveOnce(new WPI_PID(drive, 45)); //spoonAndShootLow
-    extraL5.whenPressed(spoonExtend);
-    extraL6.whenPressed(spoonRetract);
-    extraL7.whenPressed(hoodExtend);
-    extraL8.whenPressed(hoodRetract);
+    extraL1.whileActiveOnce(new WPI_PID(drive, 17));
+    extraL5.whenPressed(hoodExtend);
+    extraL6.whenPressed(hoodRetract);
+    extraL7.whenPressed(spoonExtend);
+    extraL8.whenPressed(spoonRetract);
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(intakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
     rightStickLeft.whileHeld(rawIntakeForward);
-    rightStickRight.whileActiveOnce(angleAndDistLL);
+    rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
     extraR7.whileActiveOnce(anglewithLL);
     extraR8.whileActiveOnce(distancewithLL);
-
-    // *TESTING
-    // rightMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
-    // b.whenPressed(testCmdGroup);
-    // x.whileActiveOnce(new WPI_PID(drive, DriveConstants.DISTANCE));
-    // y.whileHeld(new Shoot(shooter, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP));
-    // rb.whenPressed(spoonExtend);
-    // lb.whenPressed(spoonRetract);
-    // rightTrigger.whileHeld(intakeForward);
-    // rightTrigger.whileActiveOnce(intakeForward);
-    // leftTrigger.whileActiveOnce(angleAndDistLL);
   }
-
-  public void configAutos() {
-    autoSwitch1 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_1);
-    autoSwitch2 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_2);
-    autoSwitch3 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_3);
-    autoSwitch4 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_4);
-  }
-
-  public void doInPeriodic() {
-    // try {
-    //   SmartDashboard.putBoolean("switch1", autoSwitch1.get());
-    //   SmartDashboard.putBoolean("switch2", autoSwitch2.get());
-    //   SmartDashboard.putBoolean("switch3", autoSwitch3.get());
-    //   SmartDashboard.putBoolean("switch4", autoSwitch4.get());
-    // } catch (Exception e) {
-    //   // System.out.println("switches bad");
-    // }
-  }
-
-  public void printSwitchValues() {
-    SmartDashboard.putBoolean("switch1", autoSwitch1.get());
-  }
-
-  // private void getSwitchInt(boolean switchBoolean) {
-  //   if (switchBoolean) {
-  //     switchInt = 1;
-  //   } else {
-  //     switchInt = 0;
-  //   }
-  // }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -271,18 +232,18 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    // if (!autoSwitch1.get()) {
-    //   return doubleTarmacLineShot;
-    // } else if (!autoSwitch2.get()) {
-    //   return doubleTarmacWithLL;
-    // } else if (!autoSwitch3.get()) {
-    //   return doubleTarmac3;
-    // } else if (!autoSwitch4.get()) {
-    //   return doubleHubShot;
-    // } else {
-    //   return shootMoveShoot;
-    // }
+    if (!autoSwitch1.get()) {
+      return doubleTarmac1;
+    } else if (!autoSwitch2.get()) {
+      return doubleTarmac2;
+    } else if (!autoSwitch3.get()) {
+      return doubleTarmac3;
+    } else if (!autoSwitch4.get()) {
+      return doubleHubShot;
+    } else {
+      return shootMoveShoot;
+    }
 
-    return doubleTarmacLineShot;
+    // return doubleTarmac1;
   }
 }
