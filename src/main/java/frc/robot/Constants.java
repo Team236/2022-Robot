@@ -4,12 +4,6 @@
 
 package frc.robot;
 
-
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -52,10 +46,10 @@ public final class Constants {
             public static final int Y = 4;
             public static final int LB = 5;
             public static final int RB = 6;
-            public static final int BACK = 7;
-            public static final int START = 8;
-            public static final int LEFT_PRESS = 9;
-            public static final int RIGHT_PRESS = 10;
+            public static final int BACK = 9;
+            public static final int START = 10;
+            public static final int LEFT_PRESS = 7;
+            public static final int RIGHT_PRESS = 8;
             public class AxesController {
                 public static final int LEFT_X = 0;
                 public static final int LEFT_Y = 1;
@@ -122,16 +116,16 @@ public final class Constants {
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
         public static final double DISTANCE = 44;
-        public static final double TURN_180 = 38;
-        public static final double TURN_90 = 22;
+        public static final double TURN_180 = 43;
+        public static final double TURN_90 = 21.5;
         public static final double TURN_15 = 3.2; // need to test this angle; should be able to head toward loading station ball during position 2 auto
-        public static final double TURN_18 = 4.3;
+        public static final double TURN_18 = 4.5;
         // distances
         public static final double HUB_TO_BALL = 95;
         public static final double TARMAC_TO_BALL = 55;
         public static final double TARMAC_TO_BALL_SHORT = 45; // short versions are for position 1 where the wall is close to ball
-        public static final double BALL_TO_LINE = 12;
-        public static final double BALL_TO_LINE_SHORT = 12; // short versions are for position 1 where the wall is close to ball
+        public static final double BALL_TO_LINE = 22;
+        public static final double BALL_TO_LINE_SHORT = 18; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
         public static final double TARMAC_TO_LOADING = 85; // need to get actual distance for this
 	    
@@ -162,20 +156,26 @@ public final class Constants {
         public static final double kFFTop = 0.00018; //0.000215;//.00022
 
         // speeds for top and bottom rollers
-        public static final double TOP_SPEED = 1125; // gear ratio is 18:32
-        public static final double BOT_SPEED = 1125; // speed on wheels should be 2000
+        // gear ratio is 18:32
+        // speed on wheels should be greater than motor rpm
+        // (wheel * 18) / 32 = motor
+        public static final double TOP_SPEED = (2000 * 18) / 32; 
+        public static final double BOT_SPEED = (2000 * 18) / 32; 
 
-        public static final double HIGH_HUB_TOP = 2750; //3234; //5750; //might need to swap these??
-        public static final double HIGH_HUB_BOT = 1650; //1530; //2720;
+        public static final double HIGH_HUB_TOP = (6000 * 18) / 32; //-1800; //2790; //3234; //5750;
+        public static final double HIGH_HUB_BOT = (2200 * 18) / 32; //2220; //1600; //1530; //2720;
 
-        public static final double LOW_HUB_TOP = 1913; //3400;
-        public static final double LOW_HUB_BOT = 956; //1700;
+        public static final double TOP_BASKETBALL = (6000 * 18) / 32;
+        public static final double BOT_BASKETBALL = (3850 * 18) / 32;
 
-        public static final double TARMAC_TOP = 2050; //1237; // wheel speed = 2200;
-        public static final double TARMAC_BOT = 1950; //2261; // wheel speed = 4020;
-// ***increase top and decrease bottom for more height and less depth!!
-        public static final double LAUNCH_PAD_TOP = 6000;
-        public static final double LAUNCH_PAD_BOT = 3000;
+        public static final double LOW_HUB_TOP = (3400 * 18) / 32; //3400;
+        public static final double LOW_HUB_BOT = (1700 * 18) / 32; //1700;
+
+        public static final double TARMAC_TOP = (3650 * 18) / 32; //1237; // wheel speed = 2200;
+        public static final double TARMAC_BOT = (3466 * 18) / 32; //2261; // wheel speed = 4020;
+// ***increase top and decrease bottom for more height and less depth
+        public static final double LAUNCH_PAD_TOP = (6000 * 18) / 32;
+        public static final double LAUNCH_PAD_BOT = (3000 * 18) / 32;
     }
     public static class IntakeConstants {
         public static final int DIO_INTAKE_COUNTER = 5;
@@ -197,7 +197,7 @@ public final class Constants {
         public static double kDarm = 0;
         public static double kFarm = 0; // mooooooooo
 
-        public static double kPmast = 0;
+        public static double kPmast = 0.01;
         public static double kImast = 0;
         public static double kDmast = 0;
         public static double kFmast = 0;
@@ -225,6 +225,9 @@ public final class Constants {
 
         public static final double mastMARGIN = 2;
         public static final double mastDISTANCE = 48;
+
+        public static final int DIO_TOP_LIM = 1;
+        public static final int DIO_BOT_LIM = 2;
     }
 
 }
