@@ -16,7 +16,7 @@ public class ClimbSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MastPIDUp(climber, -6, 1).withTimeout(3),
+      new MastPID(climber, -6, 1).withTimeout(3),
       new ArmPID(climber, -6, 1).withTimeout(3),
       new ArmPID(climber, 32, 1).withTimeout(6),
       new ArmPID(climber, -4, 1).withTimeout(5)

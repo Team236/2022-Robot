@@ -32,7 +32,7 @@ public class SpoonAndShoot extends ParallelCommandGroup {
       new Shoot(shooter, botSpeed, topSpeed), 
       sequence(
         // new WaitCommand(1),
-        new HoodBeforeShoot(hood, botSpeed).withTimeout(1),
+        new HoodBeforeShoot(hood, botSpeed).withTimeout(1.5),
         new SpoonExtend(loadingSpoon).withTimeout(0.5), 
         new SpoonRetract(loadingSpoon).withTimeout(0.5)
           )

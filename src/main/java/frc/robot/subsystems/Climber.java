@@ -6,11 +6,14 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
@@ -21,6 +24,10 @@ public class Climber extends SubsystemBase {
   private CANSparkMax armMotor, mastMotor;
   private RelativeEncoder armEncoder, mastEncoder;
   private SparkMaxPIDController armPID, mastPID;
+
+  // private SparkMaxLimitSwitch bottomLimit;
+  private DigitalInput topLimit, bottomLimit;
+  private boolean isLimitUnplugged = false;
 
   /** Creates a new Climber. */
   public Climber() {
@@ -37,25 +44,27 @@ public class Climber extends SubsystemBase {
     mastEncoder = mastMotor.getEncoder();
     armEncoder = armMotor.getEncoder();
 
+    topLimit = new DigitalInput(ClimberConstants.DIO_TOP_LIM);
+    // try {
+    //   topLimit = new DigitalInput(ClimberConstants.DIO_TOP_LIM);
+    // } catch (Exception e) {
+    //   isLimitUnplugged = true;
+    // }
   }
 
   public void mastOut() {
-   // mastMotor.restoreFactoryDefaults();
     mastMotor.set(ClimberConstants.MAST_EX_SPEED);
   }
 
   public void armOut() {
-    //armMotor.restoreFactoryDefaults();
     armMotor.set(ClimberConstants.ARM_EX_SPEED);
   }
 
   public void mastIn() {
-   // mastMotor.setInverted(true);
     mastMotor.set(-ClimberConstants.MAST_RE_SPEED);
   }
 
   public void armIn() {
-    //armMotor.setInverted(true);
     armMotor.set(-ClimberConstants.ARM_RE_SPEED);
   }
 
@@ -90,14 +99,23 @@ public class Climber extends SubsystemBase {
   }
 
   //different distances for each instance of PID
-  //armDISTANCE is in INCHES not revs
-  public void setArmSetPoint(double armDISTANCE) {
-   armPID.setReference((armDISTANCE * ClimberConstants.armIN_TO_REV), ControlType.kPosition);
+  //armDistance is in INCHES not revs
+  public void setArmSetPoint(double armDistance) {
+   armPID.setReference((armDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition);
   }
  
-  public void setMastSetPoint(double mastDISTANCE) {
-    mastPID.setReference((mastDISTANCE * ClimberConstants.armIN_TO_REV), ControlType.kPosition); 
+  public void setMastSetPoint(double mastDistance) {
+    mastPID.setReference((mastDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition); 
   } 
+
+  public void setMastSetPointWlimit(double mastDistance) {
+    if (topLimit.get()) {
+      mastPID.setReference((mastDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition);
+      // mastIn();
+    } else {
+      mastStop();
+    }
+  }
 
   public void setMastkP(double kPmast) {
     mastPID.setP(kPmast);
@@ -134,14 +152,23 @@ public class Climber extends SubsystemBase {
   public void setArmOutputRange() {
     armPID.setOutputRange(ClimberConstants.climberMIN_OUTPUT, ClimberConstants.climberMAX_OUTPUT);
   }
+
   public void setMastOutputRange() {
     mastPID.setOutputRange(ClimberConstants.climberMIN_OUTPUT, ClimberConstants.climberMAX_OUTPUT);
   }
-  
+
+  // public boolean isTopLimit() {
+  //   if (isLimitUnplugged) {
+  //     return false;
+  //   } else {
+  //     return !topLimit.get(); //maybe should be !topLimit.get()
+  //   }
+  // }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("top limit", topLimit.get());
   }
 
 }

@@ -10,7 +10,6 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,7 +20,6 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax bottomRoller, topRoller;
   private SparkMaxPIDController botPidController, topPidController;
   private RelativeEncoder botEncoder, topEncoder;
-  private double currentSpeedBot, currentSpeedTop;
 
   /** Creates a new Shooter. */
   public Shooter() {
@@ -39,9 +37,6 @@ public class Shooter extends SubsystemBase {
 
     botEncoder = bottomRoller.getEncoder();
     topEncoder = topRoller.getEncoder();
-
-    currentSpeedBot = botEncoder.getVelocity();
-    currentSpeedTop = topEncoder.getVelocity();
   }
 
   // sets RPM velocity set point
