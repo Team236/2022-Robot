@@ -10,6 +10,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
+import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Intake.IntakeExtend;
@@ -39,10 +40,10 @@ public class DoubleTarmac3 extends SequentialCommandGroup {
           new IntakeExtend(intake).withTimeout(1),
           parallel(
             new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
-            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
+            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
             new HoodExtend(hood)
           ).withTimeout(1.5),
-          new WPI_PID(drive, -(DriveConstants.BALL_TO_LINE)).withTimeout(1),
+          new WPI_PID(drive, -(DriveConstants.BALL_TO_LINE_SHORT)).withTimeout(1),
           parallel(
             sequence(
               new SpoonCmdGroup(loadingSpoon).withTimeout(1),
@@ -50,9 +51,20 @@ public class DoubleTarmac3 extends SequentialCommandGroup {
               new SpoonCmdGroup(loadingSpoon).withTimeout(1)
             )
           ).withTimeout(4)
-        )
-      )
-      // new WPI_PID(drive, 10)
+        ).withTimeout(7.5)
+      ).withTimeout(7.5),
+      new WPI_Turn_PID(drive, DriveConstants.TURN_135).withTimeout(1),
+      parallel(
+        new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
+        sequence(
+          new WPI_PID(drive, 96).withTimeout(2),
+          new WPI_Turn_PID(drive, -DriveConstants.TURN_70).withTimeout(1),
+          parallel(
+            new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+            new WPI_PID(drive, -22)
+          ).withTimeout(2.5)
+          )
+        ).withTimeout(5.5)
     );
   }
 }
