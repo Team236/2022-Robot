@@ -116,7 +116,7 @@ public class Intake extends SubsystemBase {
 
   public int getDistance() {
     // large values mean object is close; small values mean object is far away
-    SmartDashboard.putNumber("color sensor distance", colorSensor.getProximity());
+    // SmartDashboard.putNumber("color sensor distance", colorSensor.getProximity());
     return colorSensor.getProximity();
   }
 
@@ -140,7 +140,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("optical sensor count", ballCounter.get());
+    // SmartDashboard.putNumber("optical sensor count", ballCounter.get());
     whatColor();
   }
 }

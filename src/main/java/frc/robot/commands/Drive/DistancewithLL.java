@@ -73,7 +73,7 @@ public DistancewithLL(Drive drive2) {
         drive.setRightSpeed(distanceAdjust);
 
     } else{
-    SmartDashboard.putNumber("No Target", tv);
+    // SmartDashboard.putNumber("No Target", tv);
     }
       //double a2 = (Math.atan(h2-h1)/dx)-a1 ;
       // }

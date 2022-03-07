@@ -19,7 +19,7 @@ public class WPI_Turn_PID extends CommandBase {
     this.pidController = new PIDController(DriveConstants.turnkP, 0, 0);
     pidController.setSetpoint(setpoint);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drive);
+    addRequirements(this.drive);
   }
 
   // Called when the command is initially scheduled.

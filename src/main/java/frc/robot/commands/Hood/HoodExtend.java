@@ -15,7 +15,7 @@ public class HoodExtend extends CommandBase {
   public HoodExtend(Hood hood) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.hood = hood;
-    addRequirements(hood);
+    addRequirements(this.hood);
   }
 
   // Called when the command is initially scheduled.
