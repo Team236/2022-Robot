@@ -62,7 +62,7 @@ public final class Constants {
     }
 
     public static class MotorControllers {
-        public static final int ID_LEFT_FRONT = 41; //10
+        public static final int ID_LEFT_FRONT = 40; //10
         public static final int ID_LEFT_REAR = 44; //11
         public static final int ID_RIGHT_FRONT = 43; //15
         public static final int ID_RIGHT_REAR = 45; //16
@@ -116,16 +116,19 @@ public final class Constants {
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
         public static final double DISTANCE = 44;
+        // one degree is 0.239 inches *if the relationship is linear*
         public static final double TURN_180 = 43;
+        public static final double TURN_135 = 25;
         public static final double TURN_90 = 21.5;
+        public static final double TURN_70 = 15;
         public static final double TURN_15 = 3.2; // need to test this angle; should be able to head toward loading station ball during position 2 auto
         public static final double TURN_18 = 4.5;
         // distances
         public static final double HUB_TO_BALL = 95;
         public static final double TARMAC_TO_BALL = 55;
-        public static final double TARMAC_TO_BALL_SHORT = 45; // short versions are for position 1 where the wall is close to ball
+        public static final double TARMAC_TO_BALL_SHORT = 47; // short versions are for position 1 where the wall is close to ball
         public static final double BALL_TO_LINE = 22;
-        public static final double BALL_TO_LINE_SHORT = 18; // short versions are for position 1 where the wall is close to ball
+        public static final double BALL_TO_LINE_SHORT = 16; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
         public static final double TARMAC_TO_LOADING = 85; // need to get actual distance for this
 	    
@@ -180,7 +183,9 @@ public final class Constants {
     public static class IntakeConstants {
         public static final int DIO_INTAKE_COUNTER = 5;
 
-        public static final double FORWARD_SPEED = 0.6; // 0.7 works well with purple fabric
+        public static final double FORWARD_SPEED = 0.8; // 0.7 works well with purple fabric
+        // 0.6 voltage = 930 RPM
+        // 0.8 voltage = 1280 RPM
         public static final double REVERSE_SPEED = -0.5;
     }
     public static class ColorSensorConstants {
