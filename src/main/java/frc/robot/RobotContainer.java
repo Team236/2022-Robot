@@ -25,6 +25,7 @@ import frc.robot.commands.Auto.TestCmdGroup;
 import frc.robot.commands.Climber.ArmPID;
 import frc.robot.commands.Climber.ClimbSequence;
 import frc.robot.commands.Climber.MastPID;
+import frc.robot.commands.Climber.MastWithAxis;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
@@ -128,7 +129,7 @@ public class RobotContainer {
     private final SpoonCmdGroup extendWaitRetract = new SpoonCmdGroup(loadingSpoon);
     // *CLIMBER
     private final ArmPID extendArm = new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN);
-    private final MastPID raiseMast = new MastPID(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN);
+    private final MastPID raiseMast = new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN);
     private final ClimbSequence climbSequence = new ClimbSequence(climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -197,7 +198,8 @@ public class RobotContainer {
     // *CONTROLLER
     x.whenPressed(new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN));
     b.whileActiveOnce(new ClimbSequence(climber));
-    y.whenPressed(new MastPID(climber, ClimberConstants.mastDISTANCE, ClimberConstants.mastMARGIN));
+    y.whenPressed(new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
+    a.whenPressed(new MastPID(climber, -ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
     leftPress.whileActiveOnce(anglewithLL);
