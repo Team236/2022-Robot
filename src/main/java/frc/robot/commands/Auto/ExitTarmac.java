@@ -6,6 +6,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
@@ -14,15 +15,13 @@ import frc.robot.subsystems.Drive;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestCmdGroup extends SequentialCommandGroup {
+public class ExitTarmac extends SequentialCommandGroup {
   
   /** Creates a new DriveWithPID. */
-  public TestCmdGroup(Drive drive) {
+  public ExitTarmac(Drive drive) {
 
     addCommands(
-      new WPI_PID(drive, 48).withTimeout(3),
-      new WaitCommand(2),
-      new WPI_PID(drive, -20).withTimeout(2)
+      new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT).withTimeout(3)
     );
   }
 }
