@@ -13,13 +13,14 @@ import frc.robot.subsystems.Climber;
 public class MastWithAxis extends CommandBase {
   private Climber climber;
   private Joystick controller;
+  private double speed;
 
   /** Creates a new ClimbWithAxis. */
   public MastWithAxis(Climber climber, Joystick controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
     this.controller = controller;
-    addRequirements(climber);
+    addRequirements(this.climber);
   }
 
   // Called when the command is initially scheduled.
@@ -29,16 +30,25 @@ public class MastWithAxis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setSpeed(controller.getRawAxis(ControllerConstants.LogitechF310.AxesController.RIGHT_Y));
+    climber.setSpeed(controller.getRawAxis(ControllerConstants.LogitechF310.AxesController.RIGHT_Y)); // speed might have to be negative
+    speed = controller.getRawAxis(ControllerConstants.LogitechF310.AxesController.RIGHT_Y);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    climber.mastStop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if ((speed > 0) && climber.isMExtendLimit()) {
+      return true;
+    } else if ((speed < 0) && climber.isMReturnLimit()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

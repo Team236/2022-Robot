@@ -24,7 +24,7 @@ public class MastPID extends CommandBase {
   public MastPID(Climber climber, double mastDistance, double mastMargin) {
 
     this.climber = climber;
-    addRequirements(climber);
+    addRequirements(this.climber);
     // Use addRequirements() here to declare subsystem dependencies.
     this.mastDistance = mastDistance;
     this.mastMargin = mastMargin;
@@ -64,6 +64,14 @@ public class MastPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.mastLimitTriggered();
+    // return climber.mastLimitTriggered();
+
+    if ((mastDistance > 0) && climber.isMExtendLimit()) {
+      return true;
+    } else if ((mastDistance < 0) && climber.isMReturnLimit()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

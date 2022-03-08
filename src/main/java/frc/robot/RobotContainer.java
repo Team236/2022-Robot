@@ -21,7 +21,7 @@ import frc.robot.commands.Auto.DoubleTarmac3;
 import frc.robot.commands.Auto.DoubleTarmac1;
 import frc.robot.commands.Auto.DoubleTarmac2;
 import frc.robot.commands.Auto.ShootMoveShoot;
-import frc.robot.commands.Auto.TestCmdGroup;
+import frc.robot.commands.Auto.ExitTarmac;
 import frc.robot.commands.Climber.ArmPID;
 import frc.robot.commands.Climber.ClimbSequence;
 import frc.robot.commands.Climber.MastPID;
@@ -81,7 +81,7 @@ public class RobotContainer {
  
   // **COMMANDS**
     // *AUTO
-    private final TestCmdGroup testCmdGroup = new TestCmdGroup(drive);
+    private final ExitTarmac exitTarmac = new ExitTarmac(drive);
     private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleTarmac1 doubleTarmac1 = new DoubleTarmac1(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleTarmac2 doubleTarmac2 = new DoubleTarmac2(drive, intake, loadingSpoon, shooter, hood);
@@ -131,6 +131,7 @@ public class RobotContainer {
     private final ArmPID extendArm = new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN);
     private final MastPID raiseMast = new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN);
     private final ClimbSequence climbSequence = new ClimbSequence(climber);
+    private final MastWithAxis mastWithAxis = new MastWithAxis(climber, controller);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -243,7 +244,7 @@ public class RobotContainer {
     } else if (!autoSwitch4.get()) {
       return doubleHubShot;
     } else {
-      return shootMoveShoot;
+      return exitTarmac;
     }
 
     // return doubleTarmac1;
