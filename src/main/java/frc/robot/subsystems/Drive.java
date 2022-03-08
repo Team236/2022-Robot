@@ -44,6 +44,8 @@ public class Drive extends SubsystemBase {
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
 
+    leftFront.clearFaults();
+
   }
 
   public void setLeftSpeed(double speed) {
