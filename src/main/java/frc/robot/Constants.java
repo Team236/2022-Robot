@@ -62,7 +62,7 @@ public final class Constants {
     }
 
     public static class MotorControllers {
-        public static final int ID_LEFT_FRONT = 40; //10
+        public static final int ID_LEFT_FRONT = 30; //30; //40; //10
         public static final int ID_LEFT_REAR = 44; //11
         public static final int ID_RIGHT_FRONT = 43; //15
         public static final int ID_RIGHT_REAR = 45; //16
@@ -215,12 +215,11 @@ public final class Constants {
        public static final double armIN_TO_REV = GEAR_RATIO / CIRCUMFERENCE;
        public static final double armREV_TO_IN = CIRCUMFERENCE / GEAR_RATIO;
     */
-        public static double armREV_TO_IN = 1.64; //gear ratio changed since these were updated, check with climber people
+        public static double armREV_TO_IN = 1.64;
         public static double armIN_TO_REV = 0.6097;
 
-        //GET from Mr. Doggart, unknown right now
-        public static double mastREV_TO_IN = 1;
-        public static double mastIN_TO_REV = 1;
+        public static double mastREV_TO_IN = 0.5;
+        public static double mastIN_TO_REV = 2;
 
         public static double climberMIN_OUTPUT = -1;
         public static double climberMAX_OUTPUT = 1;
@@ -229,10 +228,10 @@ public final class Constants {
         public static final double armDISTANCE = 18;
 
         public static final double mastMARGIN = 2;
-        public static final double mastDISTANCE = 48;
+        public static final double MAST_EXT_RET_DIST = 6;
 
-        public static final int DIO_TOP_LIM = 1;
-        public static final int DIO_BOT_LIM = 2;
+        public static final int DIO_MAST_RETURN = 3;
+        public static final int DIO_MAST_EXTEND = 4;
     }
 
 }
