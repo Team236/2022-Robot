@@ -45,13 +45,13 @@ public class DoubleTarmac2 extends SequentialCommandGroup {
           ).withTimeout(2),
           new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
           new WPI_PID(drive, -23).withTimeout(2), //was 17
-          parallel(
-            sequence(
-              new SpoonCmdGroup(loadingSpoon).withTimeout(1),
-              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
-              new SpoonCmdGroup(loadingSpoon).withTimeout(1)
-            )
-          ).withTimeout(4)
+          // parallel(
+            // sequence(
+          new SpoonCmdGroup(loadingSpoon).withTimeout(1),
+          new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+          new SpoonCmdGroup(loadingSpoon).withTimeout(1)
+            // )
+          // ).withTimeout(4)
         )
       ).withTimeout(10),
       new WPI_Turn_PID(drive, DriveConstants.TURN_15).withTimeout(0.5),

@@ -44,27 +44,23 @@ public class DoubleTarmac3 extends SequentialCommandGroup {
             new HoodExtend(hood)
           ).withTimeout(1.5),
           new WPI_PID(drive, -(DriveConstants.BALL_TO_LINE_SHORT)).withTimeout(1),
-          parallel(
-            sequence(
-              new SpoonCmdGroup(loadingSpoon).withTimeout(1),
-              new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
-              new SpoonCmdGroup(loadingSpoon).withTimeout(1)
-            )
-          ).withTimeout(4)
-        ).withTimeout(7.5)
+          new SpoonCmdGroup(loadingSpoon).withTimeout(1),
+          new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+          new SpoonCmdGroup(loadingSpoon).withTimeout(1)
+        )
       ).withTimeout(7.5),
-      new WPI_Turn_PID(drive, DriveConstants.TURN_135).withTimeout(1),
+      new WPI_Turn_PID(drive, DriveConstants.TURN_135).withTimeout(2),
       parallel(
         new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
         sequence(
-          new WPI_PID(drive, 96).withTimeout(2),
-          new WPI_Turn_PID(drive, -DriveConstants.TURN_70).withTimeout(1),
-          parallel(
-            new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
-            new WPI_PID(drive, -22)
-          ).withTimeout(2.5)
+          new WPI_PID(drive, 96).withTimeout(2.3),
+          new WPI_Turn_PID(drive, -DriveConstants.TURN_70).withTimeout(1.3)
           )
-        ).withTimeout(5.5)
+        ).withTimeout(3),
+      parallel(
+        new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+        new WPI_PID(drive, -22)
+      ).withTimeout(3)
     );
   }
 }
