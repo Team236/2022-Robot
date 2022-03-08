@@ -33,20 +33,17 @@ public class MastPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override 
   public void initialize() {
-    climber.resetEncoders();
+    // climber.resetEncoders();
     climber.setMastkP(ClimberConstants.kPmast);
     climber.setMastkI(ClimberConstants.kImast);
     climber.setMastkD(ClimberConstants.kDmast);
-    climber.setMastOutputRange();
-    climber.setMastSetPointWlimit(mastDistance);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     climber.setMastOutputRange();
-    climber.setMastSetPointWlimit(mastDistance);
-    // climber.setMastSetPoint(mastDistance);
+    climber.setMastSetPoint(mastDistance);
 
     mastError = Math.abs(mastDistance - climber.getMastDistance());
     
@@ -55,7 +52,6 @@ public class MastPID extends CommandBase {
     SmartDashboard.putNumber("PID kPmast", ClimberConstants.kParm);
     SmartDashboard.putNumber("PID mast setpoint", mastDistance);
     SmartDashboard.putNumber("PID mast ERROR", mastError);
-    // SmartDashboard.putBoolean("top limit", climber.isTopLimit());
   
   }
 
@@ -68,8 +64,6 @@ public class MastPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //boolean isMastMargin = mastError < mastMargin;
-    //SmartDashboard.putBoolean("mast PID finished", isMastMargin);
-    return false;
+    return climber.mastLimitTriggered();
   }
 }

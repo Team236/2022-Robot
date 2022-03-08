@@ -24,10 +24,9 @@ public class Climber extends SubsystemBase {
   private CANSparkMax armMotor, mastMotor;
   private RelativeEncoder armEncoder, mastEncoder;
   private SparkMaxPIDController armPID, mastPID;
-
-  // private SparkMaxLimitSwitch bottomLimit;
-  private DigitalInput topLimit, bottomLimit;
-  private boolean isLimitUnplugged = false;
+  private DigitalInput mastReturnLimit, mastExtendLimit;
+  private boolean isMReturnUnplugged = false;
+  private boolean isMExtendUnplugged = false;
 
   /** Creates a new Climber. */
   public Climber() {
@@ -44,12 +43,20 @@ public class Climber extends SubsystemBase {
     mastEncoder = mastMotor.getEncoder();
     armEncoder = armMotor.getEncoder();
 
-    topLimit = new DigitalInput(ClimberConstants.DIO_TOP_LIM);
-    // try {
-    //   topLimit = new DigitalInput(ClimberConstants.DIO_TOP_LIM);
-    // } catch (Exception e) {
-    //   isLimitUnplugged = true;
-    // }
+    mastReturnLimit = new DigitalInput(ClimberConstants.DIO_MAST_RETURN);
+    mastExtendLimit = new DigitalInput(ClimberConstants.DIO_MAST_EXTEND);
+
+    try {
+      mastReturnLimit = new DigitalInput(ClimberConstants.DIO_MAST_RETURN);
+    } catch (Exception e) {
+      isMReturnUnplugged = true;
+    }
+
+    try {
+      mastExtendLimit = new DigitalInput(ClimberConstants.DIO_MAST_EXTEND);
+    } catch (Exception e) {
+      isMExtendUnplugged = true;
+    }
   }
 
   public void mastOut() {
@@ -81,6 +88,14 @@ public class Climber extends SubsystemBase {
     armEncoder.setPosition(0);
   }
 
+  public void resetMastEncoder() {
+    mastEncoder.setPosition(0);
+  }
+
+  public void resetArmEncoder() {
+    armEncoder.setPosition(0);
+  }
+
   //returns encoder position in REVOLUTIONS 
   public double getMastEncoder() {
      return mastEncoder.getPosition();
@@ -106,15 +121,6 @@ public class Climber extends SubsystemBase {
  
   public void setMastSetPoint(double mastDistance) {
     mastPID.setReference((mastDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition); 
-  } 
-
-  public void setMastSetPointWlimit(double mastDistance) {
-    if (topLimit.get()) {
-      mastPID.setReference((mastDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition);
-      // mastIn();
-    } else {
-      mastStop();
-    }
   }
 
   public void setMastkP(double kPmast) {
@@ -157,18 +163,74 @@ public class Climber extends SubsystemBase {
     mastPID.setOutputRange(ClimberConstants.climberMIN_OUTPUT, ClimberConstants.climberMAX_OUTPUT);
   }
 
-  // public boolean isTopLimit() {
-  //   if (isLimitUnplugged) {
-  //     return false;
-  //   } else {
-  //     return !topLimit.get(); //maybe should be !topLimit.get()
-  //   }
-  // }
+  public boolean isMReturnUnplugged() {
+    if (isMReturnUnplugged) {
+      return true;
+    } else {
+      return !mastReturnLimit.get();
+    }
+  }
+  
+  public boolean isMExtendUnplugged() {
+    if (isMExtendUnplugged) {
+      return true;
+    } else {
+      return !mastExtendLimit.get();
+    }
+  }
+
+  public void setSpeed(double speed) {
+    if (speed > 0) {
+      if (mastExtendLimit.get()) {
+        // mast going up and top limit is tripped, stop
+        mastStop();
+      } else {
+        // mast going up but top limit is not tripped, go at commanded speed
+        mastMotor.set(speed);
+      }
+    } else {
+      if (mastReturnLimit.get()) {
+        // mast going down and bottom limit is tripped, stop and zero encoder
+        mastStop();
+        resetMastEncoder();
+      } else {
+        // mast going down but bottom limit is not tripped, go at commanded speed
+        mastMotor.set(speed);
+      }
+    }
+  }
+
+  public void setMastSetPointWlimit(double mastDistance) {
+    if (mastExtendLimit.get() || mastReturnLimit.get()) {
+      mastStop();
+    } else {
+      mastPID.setReference((mastDistance * ClimberConstants.mastIN_TO_REV), ControlType.kPosition);
+    }
+  }
+
+  public boolean mastLimitTriggered() {
+    if (mastExtendLimit.get() || mastReturnLimit.get()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /*
+  public void setArmSetPointWlimit(double armDistance) {
+    if (armExtendLimit.get() || armReturnLimit.get()) {
+      armStop();
+    } else {
+      mastPID.setReference((armDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition);
+    }
+  }
+  */
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("top limit", topLimit.get());
+    SmartDashboard.putBoolean("top limit", mastExtendLimit.get());
+    SmartDashboard.putBoolean("bottom limit", mastReturnLimit.get());
   }
 
 }
