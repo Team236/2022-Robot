@@ -53,8 +53,6 @@ public class Shoot extends CommandBase {
     
     SmartDashboard.putNumber("bot wheel setpoint", ((botSpeed * 32) / 18));
     SmartDashboard.putNumber("top wheel setpoint", ((topSpeed * 32) / 18));
-    SmartDashboard.putNumber("bot shoot setpoint", shooterSub.getBotVelocity());
-    SmartDashboard.putNumber("top shoot setpoint", shooterSub.getTopVelocity());
   }
 
   // Called once the command ends or is interrupted.
