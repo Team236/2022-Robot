@@ -43,8 +43,11 @@ public class Climber extends SubsystemBase {
     mastEncoder = mastMotor.getEncoder();
     armEncoder = armMotor.getEncoder();
 
-    mastReturnLimit = new DigitalInput(ClimberConstants.DIO_MAST_RETURN);
-    mastExtendLimit = new DigitalInput(ClimberConstants.DIO_MAST_EXTEND);
+    // mastReturnLimit = new DigitalInput(ClimberConstants.DIO_MAST_RETURN);
+    // mastExtendLimit = new DigitalInput(ClimberConstants.DIO_MAST_EXTEND);
+
+    // right now, both limits are wired as normally open
+    // when they are open, the limit.get = true
 
     try {
       mastReturnLimit = new DigitalInput(ClimberConstants.DIO_MAST_RETURN);
@@ -163,7 +166,7 @@ public class Climber extends SubsystemBase {
     mastPID.setOutputRange(ClimberConstants.climberMIN_OUTPUT, ClimberConstants.climberMAX_OUTPUT);
   }
 
-  public boolean isMReturnUnplugged() {
+  public boolean isMReturnLimit() {
     if (isMReturnUnplugged) {
       return true;
     } else {
@@ -171,7 +174,7 @@ public class Climber extends SubsystemBase {
     }
   }
   
-  public boolean isMExtendUnplugged() {
+  public boolean isMExtendLimit() {
     if (isMExtendUnplugged) {
       return true;
     } else {
@@ -229,8 +232,9 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("top limit", mastExtendLimit.get());
-    SmartDashboard.putBoolean("bottom limit", mastReturnLimit.get());
+    SmartDashboard.putBoolean("mast extend limit", mastExtendLimit.get());
+    SmartDashboard.putBoolean("mast return limit", mastReturnLimit.get());
+    SmartDashboard.putBoolean("extend limit is unplugged", isMExtendUnplugged);
   }
 
 }
