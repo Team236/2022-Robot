@@ -121,7 +121,7 @@ public final class Constants {
         public static final double TURN_135 = 25;
         public static final double TURN_90 = 21.5;
         public static final double TURN_70 = 15;
-        public static final double TURN_15 = 3.2; // need to test this angle; should be able to head toward loading station ball during position 2 auto
+        public static final double TURN_15 = 9; // need to test this angle; should be able to head toward loading station ball during position 2 auto
         public static final double TURN_18 = 4.5;
         // distances
         public static final double HUB_TO_BALL = 95;
@@ -130,7 +130,7 @@ public final class Constants {
         public static final double BALL_TO_LINE = 22;
         public static final double BALL_TO_LINE_SHORT = 16; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
-        public static final double TARMAC_TO_LOADING = 85; // need to get actual distance for this
+        public static final double TARMAC_TO_LOADING = 160;
 	    
 	    public static class limelight {
         // public static final double CATAPULTLEGNTH = ?;
@@ -174,8 +174,10 @@ public final class Constants {
         public static final double LOW_HUB_TOP = (3400 * 18) / 32; //3400;
         public static final double LOW_HUB_BOT = (1700 * 18) / 32; //1700;
 
+        // **** good tarmac shot: rollers should be at top:3650 and bot: 3466 ****
         public static final double TARMAC_TOP = (3650 * 18) / 32; //1237; // wheel speed = 2200;
-        public static final double TARMAC_BOT = (3466 * 18) / 32; //2261; // wheel speed = 4020;
+        public static final double TARMAC_BOT = (3350 * 18) / 32; //2261; // wheel speed = 4020;
+
 // ***increase top and decrease bottom for more height and less depth
         public static final double LAUNCH_PAD_TOP = (6000 * 18) / 32;
         public static final double LAUNCH_PAD_BOT = (3000 * 18) / 32;
@@ -192,8 +194,8 @@ public final class Constants {
         public static final int DIST = 300;
     }
     public static class ClimberConstants {
-        public static final double MAST_EX_SPEED = 0.5;
-        public static final double MAST_RE_SPEED = 0.5;
+        public static final double MAST_EX_SPEED = 0.3;
+        public static final double MAST_RE_SPEED = 0.3;
         public static final double ARM_EX_SPEED = 0.5;
         public static final double ARM_RE_SPEED = 0.5;
 
@@ -202,19 +204,11 @@ public final class Constants {
         public static double kDarm = 0;
         public static double kFarm = 0; // mooooooooo
 
-        public static double kPmast = 0.01;
+        public static double kPmast = 0.02;
         public static double kImast = 0;
         public static double kDmast = 0;
         public static double kFmast = 0;
 
-        //2.4 rotations = 100 millimeters
-        //2020 ratios for testing
-     /*  public static final double DIAMETER = 4.0;
-       public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
-       public static final double GEAR_RATIO = 8.71; 
-       public static final double armIN_TO_REV = GEAR_RATIO / CIRCUMFERENCE;
-       public static final double armREV_TO_IN = CIRCUMFERENCE / GEAR_RATIO;
-    */
         public static double armREV_TO_IN = 1.64;
         public static double armIN_TO_REV = 0.6097;
 
@@ -228,7 +222,7 @@ public final class Constants {
         public static final double armDISTANCE = 18;
 
         public static final double mastMARGIN = 2;
-        public static final double MAST_EXT_RET_DIST = 6;
+        public static final double MAST_EXT_RET_DIST = 50;
 
         public static final int DIO_MAST_RETURN = 3;
         public static final int DIO_MAST_EXTEND = 4;
