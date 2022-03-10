@@ -49,14 +49,14 @@ public class DoubleTarmac3 extends SequentialCommandGroup {
           new SpoonCmdGroup(loadingSpoon).withTimeout(1)
         )
       ).withTimeout(7.5),
-      new WPI_Turn_PID(drive, DriveConstants.TURN_135).withTimeout(2),
+      new WPI_Turn_PID(drive, DriveConstants.TURN_135).withTimeout(1.5),
       parallel(
         new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
         sequence(
-          new WPI_PID(drive, 96).withTimeout(2.3),
+          new WPI_PID(drive, 96).withTimeout(2.7),
           new WPI_Turn_PID(drive, -DriveConstants.TURN_70).withTimeout(1.3)
           )
-        ).withTimeout(3),
+      ).withTimeout(4),
       parallel(
         new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
         new WPI_PID(drive, -22)

@@ -129,7 +129,7 @@ public class RobotContainer {
     private final SpoonCmdGroup extendWaitRetract = new SpoonCmdGroup(loadingSpoon);
     // *CLIMBER
     private final ArmPID extendArm = new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN);
-    private final MastPID raiseMast = new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN);
+    // private final MastPID raiseMast = new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN);
     private final ClimbSequence climbSequence = new ClimbSequence(climber);
     private final MastWithAxis mastWithAxis = new MastWithAxis(climber, controller);
 
@@ -141,7 +141,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    
   }
 
   /**
@@ -199,12 +198,12 @@ public class RobotContainer {
     // *CONTROLLER
     x.whenPressed(new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN));
     b.whileActiveOnce(new ClimbSequence(climber));
-    y.whenPressed(new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
-    a.whenPressed(new MastPID(climber, -ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
+    y.whileActiveOnce(new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
+    a.whileActiveOnce(new MastPID(climber, -ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
-    leftPress.whileActiveOnce(anglewithLL);
-    rightPress.whileActiveOnce(distancewithLL);
+    leftPress.whileHeld(anglewithLL);
+    rightPress.whileHeld(distancewithLL);
     back.whenPressed(spoonExtendAndRetract);
     start.whileActiveOnce(new WPI_PID(drive, 27)); // position robot so camera barely sees white line, use this button to move out of tarmac, then shoot
     // *LEFT STICK
@@ -213,10 +212,10 @@ public class RobotContainer {
     leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //spoonAndShootHigh
     leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //spoonAndShootLow
     extraL1.whileActiveOnce(new WPI_PID(drive, 17));
-    extraL5.whenPressed(hoodExtend);
-    extraL6.whenPressed(hoodRetract);
-    extraL7.whenPressed(spoonExtend);
-    extraL8.whenPressed(spoonRetract);
+    extraL5.whenPressed(spoonExtend);
+    extraL6.whenPressed(spoonRetract);
+    extraL7.whenPressed(hoodExtend);
+    extraL8.whenPressed(hoodRetract);
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(intakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
@@ -224,8 +223,8 @@ public class RobotContainer {
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
-    extraR7.whileActiveOnce(anglewithLL);
-    extraR8.whileActiveOnce(distancewithLL);
+    extraR7.whileHeld(anglewithLL);
+    extraR8.whileHeld(distancewithLL);
   }
 
   /**
@@ -246,7 +245,5 @@ public class RobotContainer {
     } else {
       return exitTarmac;
     }
-
-    // return doubleTarmac1;
   }
 }

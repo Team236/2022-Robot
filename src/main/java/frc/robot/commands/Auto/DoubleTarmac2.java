@@ -54,8 +54,8 @@ public class DoubleTarmac2 extends SequentialCommandGroup {
           // ).withTimeout(4)
         )
       ).withTimeout(10),
-      new WPI_Turn_PID(drive, DriveConstants.TURN_15).withTimeout(0.5),
-      new WPI_PID(drive, 24)
+      new WPI_Turn_PID(drive, DriveConstants.TURN_15).withTimeout(1.3),
+      new WPI_PID(drive, DriveConstants.TARMAC_TO_LOADING)
     );
   }
 }
