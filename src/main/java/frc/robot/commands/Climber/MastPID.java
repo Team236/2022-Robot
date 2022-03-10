@@ -33,7 +33,7 @@ public class MastPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override 
   public void initialize() {
-    // climber.resetEncoders();
+    climber.resetEncoders();
     climber.setMastkP(ClimberConstants.kPmast);
     climber.setMastkI(ClimberConstants.kImast);
     climber.setMastkD(ClimberConstants.kDmast);
@@ -49,7 +49,7 @@ public class MastPID extends CommandBase {
     
     SmartDashboard.putNumber("PID mast revs", climber.getMastEncoder());
     SmartDashboard.putNumber("PID mast distance", climber.getMastDistance());
-    SmartDashboard.putNumber("PID kPmast", ClimberConstants.kParm);
+    SmartDashboard.putNumber("PID kPmast", ClimberConstants.kPmast);
     SmartDashboard.putNumber("PID mast setpoint", mastDistance);
     SmartDashboard.putNumber("PID mast ERROR", mastError);
   
@@ -66,12 +66,14 @@ public class MastPID extends CommandBase {
   public boolean isFinished() {
     // return climber.mastLimitTriggered();
 
-    if ((mastDistance > 0) && climber.isMExtendLimit()) {
+    if ((mastDistance > 0) && !climber.isMExtendLimit()) {
       return true;
-    } else if ((mastDistance < 0) && climber.isMReturnLimit()) {
+    } else if ((mastDistance < 0) && !climber.isMReturnLimit()) {
       return true;
     } else {
       return false;
     }
+
+    // return false;
   }
 }

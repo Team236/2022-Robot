@@ -30,8 +30,9 @@ public class MastWithAxis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setSpeed(controller.getRawAxis(ControllerConstants.LogitechF310.AxesController.RIGHT_Y)); // speed might have to be negative
-    speed = controller.getRawAxis(ControllerConstants.LogitechF310.AxesController.RIGHT_Y);
+    // climber.setSpeed(controller.getRawAxis((ControllerConstants.LogitechF310.AxesController.LEFT_Y)/2)); // speed might have to be negative
+    // climber.setMastSpeed(controller.getRawAxis((ControllerConstants.LogitechF310.AxesController.LEFT_Y)));
+    climber.setMastSpeed(controller.getY());
   }
 
   // Called once the command ends or is interrupted.
@@ -43,12 +44,13 @@ public class MastWithAxis extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((speed > 0) && climber.isMExtendLimit()) {
-      return true;
-    } else if ((speed < 0) && climber.isMReturnLimit()) {
-      return true;
-    } else {
-      return false;
-    }
+    // if ((speed > 0) && !climber.isMExtendLimit()) {
+    //   return true;
+    // } else if ((speed < 0) && !climber.isMReturnLimit()) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return false;
   }
 }

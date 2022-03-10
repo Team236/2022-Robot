@@ -123,7 +123,7 @@ public class Climber extends SubsystemBase {
   }
  
   public void setMastSetPoint(double mastDistance) {
-    mastPID.setReference((mastDistance * ClimberConstants.armIN_TO_REV), ControlType.kPosition); 
+    mastPID.setReference((mastDistance * ClimberConstants.mastIN_TO_REV), ControlType.kPosition); 
   }
 
   public void setMastkP(double kPmast) {
@@ -170,8 +170,7 @@ public class Climber extends SubsystemBase {
     if (isMReturnUnplugged) {
       return true;
     } else {
-      // returns the opposite of limit.get because the limit is true when opened and should be true when closed
-      return !mastReturnLimit.get();
+      return mastReturnLimit.get();
     }
   }
   
@@ -179,7 +178,7 @@ public class Climber extends SubsystemBase {
     if (isMExtendUnplugged) {
       return true;
     } else {
-      return !mastExtendLimit.get();
+      return mastExtendLimit.get();
     }
   }
 
@@ -202,6 +201,10 @@ public class Climber extends SubsystemBase {
         mastMotor.set(speed);
       }
     }
+  }
+
+  public void setMastSpeed(double speed) {
+    mastMotor.set(speed);
   }
 
   public void setMastSetPointWlimit(double mastDistance) {
@@ -233,8 +236,8 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("mast extend limit", mastExtendLimit.get());
-    SmartDashboard.putBoolean("mast return limit", mastReturnLimit.get());
+    SmartDashboard.putBoolean("mast extend limit", isMExtendLimit());
+    SmartDashboard.putBoolean("mast return limit", isMReturnLimit());
   }
 
 }
