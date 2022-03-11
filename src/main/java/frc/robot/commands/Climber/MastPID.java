@@ -24,7 +24,7 @@ public class MastPID extends CommandBase {
   public MastPID(Climber climber, double mastDistance, double mastMargin) {
 
     this.climber = climber;
-    addRequirements(this.climber);
+    addRequirements(climber);
     // Use addRequirements() here to declare subsystem dependencies.
     this.mastDistance = mastDistance;
     this.mastMargin = mastMargin;
@@ -73,7 +73,5 @@ public class MastPID extends CommandBase {
     } else {
       return false;
     }
-
-    // return false;
   }
 }

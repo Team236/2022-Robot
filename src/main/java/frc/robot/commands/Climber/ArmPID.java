@@ -25,7 +25,7 @@ public class ArmPID extends CommandBase {
   public ArmPID(Climber climber, double armDISTANCE, double armMARGIN) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
-    addRequirements(this.climber);
+    addRequirements(climber);
 
     this.armDISTANCE = armDISTANCE;
     this.armMARGIN = armMARGIN;

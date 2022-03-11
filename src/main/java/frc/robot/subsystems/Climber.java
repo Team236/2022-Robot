@@ -123,7 +123,8 @@ public class Climber extends SubsystemBase {
   }
  
   public void setMastSetPoint(double mastDistance) {
-    mastPID.setReference((mastDistance * ClimberConstants.mastIN_TO_REV), ControlType.kPosition); 
+    // mastPID.setReference((mastDistance * ClimberConstants.mastIN_TO_REV), ControlType.kPosition); 
+    mastPID.setReference(mastDistance, ControlType.kPosition);
   }
 
   public void setMastkP(double kPmast) {
@@ -215,13 +216,13 @@ public class Climber extends SubsystemBase {
     }
   }
 
-  public boolean mastLimitTriggered() {
-    if (mastExtendLimit.get() || mastReturnLimit.get()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // public boolean mastLimitTriggered() {
+  //   if (mastExtendLimit.get() || mastReturnLimit.get()) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   /*
   public void setArmSetPointWlimit(double armDistance) {
@@ -238,6 +239,7 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("mast extend limit", isMExtendLimit());
     SmartDashboard.putBoolean("mast return limit", isMReturnLimit());
+    SmartDashboard.putNumber("mast encoder", mastEncoder.getPosition());
   }
 
 }

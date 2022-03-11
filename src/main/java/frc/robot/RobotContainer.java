@@ -17,14 +17,16 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.DoubleHubShot;
-import frc.robot.commands.Auto.DoubleTarmac3;
+import frc.robot.commands.Auto.TriplePosition3;
 import frc.robot.commands.Auto.DoubleTarmac1;
 import frc.robot.commands.Auto.DoubleTarmac2;
 import frc.robot.commands.Auto.ShootMoveShoot;
+import frc.robot.commands.Auto.TriplePosition2;
 import frc.robot.commands.Auto.ExitTarmac;
 import frc.robot.commands.Climber.ArmPID;
 import frc.robot.commands.Climber.ClimbSequence;
 import frc.robot.commands.Climber.MastPID;
+import frc.robot.commands.Climber.MastSetHeight;
 import frc.robot.commands.Climber.MastWithAxis;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
@@ -82,11 +84,12 @@ public class RobotContainer {
   // **COMMANDS**
     // *AUTO
     private final ExitTarmac exitTarmac = new ExitTarmac(drive);
+    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleTarmac1 doubleTarmac1 = new DoubleTarmac1(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleTarmac2 doubleTarmac2 = new DoubleTarmac2(drive, intake, loadingSpoon, shooter, hood);
-    private final DoubleTarmac3 doubleTarmac3 = new DoubleTarmac3(intake, drive, hood, loadingSpoon, shooter);
-    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, loadingSpoon, intake);
+    private final TriplePosition3 triplePosition3 = new TriplePosition3(intake, drive, hood, loadingSpoon, shooter);
+    private final TriplePosition2 triplePosition2 = new TriplePosition2(drive, intake, loadingSpoon, shooter, hood);
 
     // *AUTO SWITCHES
     // private static DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
@@ -132,7 +135,8 @@ public class RobotContainer {
     // private final MastPID raiseMast = new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN);
     private final ClimbSequence climbSequence = new ClimbSequence(climber);
     private final MastWithAxis mastWithAxis = new MastWithAxis(climber, controller);
-
+    // private final MastSetHeight mastUp = new MastSetHeight(climber, mastHeight, 0.4);
+    private final MastSetHeight mastDown = new MastSetHeight(climber, 16.9, -0.3);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -196,19 +200,24 @@ public class RobotContainer {
 
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
-    x.whenPressed(new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN));
-    b.whileActiveOnce(new ClimbSequence(climber));
-    y.whileActiveOnce(new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
-    a.whileActiveOnce(new MastPID(climber, -ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
+    b.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
+    // y.whileActiveOnce(new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
+    // a.whileActiveOnce(new MastPID(climber, -ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
+    a.whileActiveOnce(new MastPID(climber, -152, 1));
+    y.whileActiveOnce(new MastPID(climber, 152, 1));
+    x.whileActiveOnce(new MastPID(climber, 17.5, 1));
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
     leftPress.whileHeld(anglewithLL);
     rightPress.whileHeld(distancewithLL);
     back.whenPressed(spoonExtendAndRetract);
-    start.whileActiveOnce(new WPI_PID(drive, 27)); // position robot so camera barely sees white line, use this button to move out of tarmac, then shoot
+    start.whileActiveOnce(mastWithAxis);
+
+    // move command below to the joysticks maybe
+    // start.whileActiveOnce(new WPI_PID(drive, 27)); // position robot so camera barely sees white line, use this button to move out of tarmac, then shoot
     // *LEFT STICK
     leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //spoonAndShootTarmac
-    leftMiddle.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
+    leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP));
     leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //spoonAndShootHigh
     leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //spoonAndShootLow
     extraL1.whileActiveOnce(new WPI_PID(drive, 17));
@@ -219,7 +228,7 @@ public class RobotContainer {
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(intakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
-    rightStickLeft.whileHeld(rawIntakeForward);
+    rightStickLeft.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180));
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
@@ -239,11 +248,11 @@ public class RobotContainer {
     } else if (!autoSwitch2.get()) {
       return doubleTarmac2;
     } else if (!autoSwitch3.get()) {
-      return doubleTarmac3;
+      return triplePosition3;
     } else if (!autoSwitch4.get()) {
-      return doubleHubShot;
+      return triplePosition2;
     } else {
-      return exitTarmac;
+      return doubleHubShot;
     }
   }
 }

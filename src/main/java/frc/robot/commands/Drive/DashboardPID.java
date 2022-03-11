@@ -24,7 +24,7 @@ public class DashboardPID extends CommandBase {
   
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
-    addRequirements(this.drive);
+    addRequirements(drive);
 
     this.dist = dist;
     this.margin = margin;

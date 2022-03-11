@@ -35,7 +35,7 @@ public AnglewithLL(Drive drive2) {
 
    // this.drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(this.drive);
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
