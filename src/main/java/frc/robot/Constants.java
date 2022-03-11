@@ -121,7 +121,7 @@ public final class Constants {
         public static final double TURN_135 = 25;
         public static final double TURN_90 = 21.5;
         public static final double TURN_70 = 15;
-        public static final double TURN_15 = 9; // need to test this angle; should be able to head toward loading station ball during position 2 auto
+        public static final double TURN_15 = 6.5; // need to test this angle; should be able to head toward loading station ball during position 2 auto
         public static final double TURN_18 = 4.5;
         // distances
         public static final double HUB_TO_BALL = 95;
@@ -130,7 +130,7 @@ public final class Constants {
         public static final double BALL_TO_LINE = 22;
         public static final double BALL_TO_LINE_SHORT = 16; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
-        public static final double TARMAC_TO_LOADING = 160;
+        public static final double TARMAC_TO_LOADING = 166;
 	    
 	    public static class limelight {
         // public static final double CATAPULTLEGNTH = ?;
@@ -204,7 +204,7 @@ public final class Constants {
         public static double kDarm = 0;
         public static double kFarm = 0; // mooooooooo
 
-        public static double kPmast = 0.02;
+        public static double kPmast = 0.025;
         public static double kImast = 0;
         public static double kDmast = 0;
         public static double kFmast = 0;
