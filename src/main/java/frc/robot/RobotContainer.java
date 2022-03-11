@@ -201,8 +201,6 @@ public class RobotContainer {
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
     b.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
-    // y.whileActiveOnce(new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
-    // a.whileActiveOnce(new MastPID(climber, -ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN));
     a.whileActiveOnce(new MastPID(climber, -152, 1));
     y.whileActiveOnce(new MastPID(climber, 152, 1));
     x.whileActiveOnce(new MastPID(climber, 17.5, 1));
@@ -211,16 +209,15 @@ public class RobotContainer {
     leftPress.whileHeld(anglewithLL);
     rightPress.whileHeld(distancewithLL);
     back.whenPressed(spoonExtendAndRetract);
-    start.whileActiveOnce(mastWithAxis);
+    start.whileActiveOnce(mastWithAxis); // hold down start while using left joystick on controller
 
-    // move command below to the joysticks maybe
-    // start.whileActiveOnce(new WPI_PID(drive, 27)); // position robot so camera barely sees white line, use this button to move out of tarmac, then shoot
     // *LEFT STICK
     leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //spoonAndShootTarmac
     leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP));
     leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //spoonAndShootHigh
     leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //spoonAndShootLow
     extraL1.whileActiveOnce(new WPI_PID(drive, 17));
+    extraL2.whileActiveOnce(new WPI_PID(drive, 27));
     extraL5.whenPressed(spoonExtend);
     extraL6.whenPressed(spoonRetract);
     extraL7.whenPressed(hoodExtend);
@@ -252,7 +249,7 @@ public class RobotContainer {
     } else if (!autoSwitch4.get()) {
       return triplePosition2;
     } else {
-      return doubleHubShot;
+      return doubleTarmac1;
     }
   }
 }
