@@ -7,15 +7,16 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class SetIntakeSpeed extends CommandBase {
+public class SetFeedSpeeds extends CommandBase {
 
   private Intake intake;
-  private double speed;
+  private double firstSpeed, secondSpeed;
 
-  /** Creates a new SetIntakeSpeed. */
-  public SetIntakeSpeed(Intake intake, double speed) {
+  /** Creates a new SetFeedSpeeds. */
+  public SetFeedSpeeds(Intake intake, double firstSpeed, double secondSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.speed = speed;
+    this.firstSpeed = firstSpeed;
+    this.secondSpeed = secondSpeed;
     this.intake = intake;
     addRequirements(intake);
   }
@@ -27,18 +28,27 @@ public class SetIntakeSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setIntakeSpeed(speed);
+    intake.setFirstFeedSpeed(firstSpeed);
+    intake.setSecondFeedSpeed(secondSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopIntake();
+    intake.stopFirstFeed();
+    intake.stopSecondFeed();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+
+    // if feeder eye senses ball, stop feed wheels
+    // else keep feed wheels on
+    if (intake.getFeederCount() == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

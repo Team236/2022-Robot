@@ -24,11 +24,12 @@ import frc.robot.Constants.Solenoids;;
 
 public class Intake extends SubsystemBase {
 
-  private CANSparkMax intakeMotor;
+  private CANSparkMax intakeMotor, firstFeeder, secondFeeder;
   private DoubleSolenoid intakeSolenoid;
-  private boolean isCounterUnplugged = false;
+  private boolean isIntkCounterUnplugged = false;
+  private boolean isFeedCounterUnplugged = false;
   private ColorSensorV3 colorSensor;
-  private Counter ballCounter;
+  private Counter intakeEye, feederEye;
  
   /** Creates a new Intake. */
   public Intake() {
@@ -36,13 +37,25 @@ public class Intake extends SubsystemBase {
     intakeMotor = new CANSparkMax(MotorControllers.INTAKE, MotorType.kBrushless);
     intakeMotor.setInverted(true);
 
+    firstFeeder = new CANSparkMax(MotorControllers.FIRST_FEEDER, MotorType.kBrushless);
+    firstFeeder.setInverted(false);
+    secondFeeder = new CANSparkMax(MotorControllers.SECOND_FEEDER, MotorType.kBrushless);
+    secondFeeder.setInverted(false);
+
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoids.INTAKE_SOL_FOR, Solenoids.INTAKE_SOL_REV);
 
     try {
-      ballCounter = new Counter();
-      ballCounter.setUpSource(IntakeConstants.DIO_INTAKE_COUNTER);
+      intakeEye = new Counter();
+      intakeEye.setUpSource(IntakeConstants.DIO_INTAKE_EYE);
     } catch (Exception e) {
-      isCounterUnplugged = true;
+      isIntkCounterUnplugged = true;
+    }
+
+    try {
+      feederEye = new Counter();
+      feederEye.setUpSource(IntakeConstants.DIO_FEEDER_EYE);
+    } catch (Exception e) {
+      isFeedCounterUnplugged = true;
     }
 
     // I2C port on the NavX Gyro is known to be more reliable than the I2C port directly on the RoboRio
@@ -50,15 +63,31 @@ public class Intake extends SubsystemBase {
     I2C.Port onRio = I2C.Port.kOnboard;
     colorSensor = new ColorSensorV3(onGyro);
 
-    ballCounter.reset();
+    intakeEye.reset();
   }
 
-  public void setSpeed(double speed) {
+  public void setIntakeSpeed(double speed) {
     intakeMotor.set(speed);
   }
 
-  public void stop() {
+  public void setFirstFeedSpeed(double speed) {
+    firstFeeder.set(speed);
+  }
+
+  public void setSecondFeedSpeed(double speed) {
+    secondFeeder.set(speed);
+  }
+
+  public void stopIntake() {
     intakeMotor.set(0);
+  }
+
+  public void stopFirstFeed() {
+    firstFeeder.set(0);
+  }
+
+  public void stopSecondFeed() {
+    secondFeeder.set(0);
   }
 
   public void extend() {
@@ -77,16 +106,31 @@ public class Intake extends SubsystemBase {
     }
   }
 
-  public int getBallCount() {
-    if (isCounterUnplugged) {
+  public int getIntakeCount() {
+    if (isIntkCounterUnplugged) {
+      SmartDashboard.putBoolean("intake eye unplugged", isIntkCounterUnplugged);
       return 0;
     } else {
-      return ballCounter.get();
+      return intakeEye.get();
     }
   }
 
-  public void resetCounter() {
-    ballCounter.reset();
+  public int getFeederCount() {
+    if (isFeedCounterUnplugged) {
+      SmartDashboard.putBoolean("feed eye unplugged", isFeedCounterUnplugged);
+      return 0;
+    } 
+    else {
+      return feederEye.get();
+    }
+  }
+
+  public void resetIntkCounter() {
+    intakeEye.reset();
+  }
+
+  public void resetFeedCounter() {
+    feederEye.reset();
   }
 
   public void getColor() {
@@ -116,7 +160,6 @@ public class Intake extends SubsystemBase {
 
   public int getDistance() {
     // large values mean object is close; small values mean object is far away
-    // SmartDashboard.putNumber("color sensor distance", colorSensor.getProximity());
     return colorSensor.getProximity();
   }
 
@@ -140,7 +183,9 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("optical sensor count", ballCounter.get());
+    // SmartDashboard.putNumber("optical sensor count", getIntakeCount());
+    // SmartDashboard.putNumber("feeder sensor count", getFeederCount());
+    // SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
     whatColor();
   }
 }

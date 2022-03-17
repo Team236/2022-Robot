@@ -28,14 +28,14 @@ public class IntakeReverse extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setSpeed(speed);
-    intake.resetCounter();
+    intake.setIntakeSpeed(speed);
+    intake.resetIntkCounter();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stop();
+    intake.stopIntake();
   }
 
   // Returns true when the command should end.

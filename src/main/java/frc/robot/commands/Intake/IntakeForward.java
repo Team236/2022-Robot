@@ -25,53 +25,21 @@ public class IntakeForward extends CommandBase {
   // Called when the command is initially scheduled.
 @Override
   public void initialize() {
-    intake.resetCounter();
+    intake.resetIntkCounter();
     SmartDashboard.putBoolean("FULL", false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setSpeed(speed);
-
-    // if ((intake.getBallCount() == 0) && (!colorSensor.isBallInSpoon())) {
-    //   intake.setSpeed(speed);
-    // } else if ((intake.getBallCount() == 0) && (colorSensor.isBallInSpoon())) {
-    //   intake.setSpeed(speed);
-    // } else if ((intake.getBallCount() == 1) && (colorSensor.isBallInSpoon())) {
-    //   intake.setSpeed(0);
-    //   intake.resetCounter();
-    // } else if ((intake.getBallCount() == 1) && (!colorSensor.isBallInSpoon())) {
-    //   intake.setSpeed(speed);
-    // }
-
-    // if (intake.getBallCount() == 1) {
-    //   intake.setSpeed(0);
-    // } else if (intake.getBallCount() == 2) {
-    //   intake.setSpeed(0);
-    // } else if (intake.getBallCount() == 0) {
-    //   intake.setSpeed(speed);
-    // }
-
-    // if ball is in intake and ball is NOT in spoon, then keep intake running
-    // if ((intake.getBallCount() == (previousCount + 1)) && (colorSensor.getDistance() < 1000)) {
-    //   intake.setSpeed(speed);
-    // } 
-    // // else if ball is in intake and ball IS in spoon, then stop intake
-    // else if ((intake.getBallCount() == previousCount +1) && (colorSensor.getDistance() > 1100)) {
-    //   intake.setSpeed(0);
-    // } 
-    // // else, keep intake running
-    // else {
-    //   intake.setSpeed(speed);
-    // }
+    intake.setIntakeSpeed(speed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stop();
+    intake.stopIntake();
     SmartDashboard.putBoolean("FULL", true);
   }
 
@@ -79,14 +47,14 @@ public class IntakeForward extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    if (intake.getBallCount() == 0) { // no ball in intake
+    if (intake.getIntakeCount() == 0) { // no ball in intake
       return false;
-    } else if ((intake.getBallCount() == 1) && (!intake.isBallInSpoon())) { // ball in intake and no ball in spoon
-      intake.resetCounter();
+    } else if ((intake.getIntakeCount() == 1) && (!intake.isBallInSpoon())) { // ball in intake and no ball in spoon
+      intake.resetIntkCounter();
       return false;
-    } else if ((intake.getBallCount() == 1) && (intake.isBallInSpoon())) { // ball in intake and ball in spoon
+    } else if ((intake.getIntakeCount() == 1) && (intake.isBallInSpoon())) { // ball in intake and ball in spoon
       return true;
-    } else if (intake.getBallCount() == 2) {
+    } else if (intake.getIntakeCount() == 2) {
       return true;
     } else {
       return false;

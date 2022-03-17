@@ -7,13 +7,13 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class SetIntakeSpeed extends CommandBase {
+public class NewIntakeForward extends CommandBase {
 
   private Intake intake;
   private double speed;
-
-  /** Creates a new SetIntakeSpeed. */
-  public SetIntakeSpeed(Intake intake, double speed) {
+  
+  /** Creates a new NewIntakeForward. */
+  public NewIntakeForward(Intake intake, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.speed = speed;
     this.intake = intake;
@@ -22,7 +22,9 @@ public class SetIntakeSpeed extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intake.resetIntkCounter();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -39,6 +41,28 @@ public class SetIntakeSpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    
+    // if intake count = 1, keep intake running
+    // if intake count = 2 and feed count = 1, stop intake and retract intake
+    // else, keep intake running
+
+    if (intake.getIntakeCount() == 1) {
+      return false;
+    } else if ((intake.getIntakeCount() == 2) && (intake.getFeederCount() == 1)) {
+      return true;
+    } else {
+      return false;
+    }
+
+
+    // overall logic: 
+    // turn on intake motor and first feeder motor
+    // when feed counter = 1, turn off first feed motor
+    // when intake counter = 1 and feed count = 1, turn off intake motor and retract intake
+    // when intake counter = 2, turn off intake motor and retract intake
+
+    // questions:
+    // need to keep the color sensor?
+    // when / where reset counters?
   }
 }
