@@ -31,7 +31,6 @@ public class ShootMoveShoot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    // hood at lower angle
     addCommands(
       new WPI_PID(drive, DriveConstants.TARMAC_TO_LINE).withTimeout(2),
       new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP).withTimeout(3),

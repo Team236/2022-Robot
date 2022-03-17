@@ -21,7 +21,9 @@ public class ExitTarmac extends SequentialCommandGroup {
   public ExitTarmac(Drive drive) {
 
     addCommands(
+      new WaitCommand(0),
       new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT).withTimeout(3)
+      // new WPI_PID(drive, -DriveConstants.TARMAC_TO_BALL_SHORT).withTimeout(3)
     );
   }
 }

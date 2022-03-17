@@ -37,6 +37,7 @@ import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Hood.HoodExtendAndRetract;
 import frc.robot.commands.Hood.HoodRetract;
+import frc.robot.commands.Intake.IntakeAndFeed;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
 import frc.robot.commands.Intake.IntakeRetract;
@@ -125,6 +126,7 @@ public class RobotContainer {
     private final IntakeForward intakeForward = new IntakeForward(intake, IntakeConstants.FORWARD_SPEED);
     private final IntakeReverse intakeReverse = new IntakeReverse(intake, IntakeConstants.REVERSE_SPEED);
     private final SetIntakeSpeed rawIntakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
+    private final IntakeAndFeed intakeAndFeed = new IntakeAndFeed(intake);
     // *LOADING SPOON
     private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
     private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
@@ -214,10 +216,13 @@ public class RobotContainer {
     // *LEFT STICK
     leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //spoonAndShootTarmac
     leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP));
+    // leftMiddle.whileHeld(new Shoot(shooter, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP));
     leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //spoonAndShootHigh
     leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //spoonAndShootLow
-    extraL1.whileActiveOnce(new WPI_PID(drive, 17));
-    extraL2.whileActiveOnce(new WPI_PID(drive, 27));
+    extraL1.whileActiveOnce(new WPI_PID(drive, 27));
+    extraL2.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_ABOT, ShooterConstants.TARMAC_ATOP));
+    extraL3.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT_LONG, ShooterConstants.TARMAC_TOP_LONG));
+    extraL4.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT_SHORT, ShooterConstants.TARMAC_TOP_SHORT));
     extraL5.whenPressed(spoonExtend);
     extraL6.whenPressed(spoonRetract);
     extraL7.whenPressed(hoodExtend);
