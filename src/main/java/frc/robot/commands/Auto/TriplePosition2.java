@@ -43,7 +43,7 @@ public class TriplePosition2 extends SequentialCommandGroup {
             new HoodExtend(hood)
           ).withTimeout(2),
           new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
-          new WPI_PID(drive, -23).withTimeout(2), //was 17
+          new WPI_PID(drive, -DriveConstants.BALL_TO_LINE).withTimeout(2),
           new SpoonCmdGroup(loadingSpoon).withTimeout(1),
           new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
           new SpoonCmdGroup(loadingSpoon).withTimeout(1)

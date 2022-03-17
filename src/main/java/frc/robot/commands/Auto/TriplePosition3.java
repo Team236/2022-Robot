@@ -35,7 +35,7 @@ public class TriplePosition3 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       parallel(
-        new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+        new Shoot(shooter, ShooterConstants.TARMAC_ABOT, ShooterConstants.TARMAC_ATOP),
         sequence(
           new IntakeExtend(intake).withTimeout(1),
           parallel(
@@ -45,7 +45,10 @@ public class TriplePosition3 extends SequentialCommandGroup {
           ).withTimeout(1.5),
           new WPI_PID(drive, -(DriveConstants.BALL_TO_LINE_SHORT)).withTimeout(1),
           new SpoonCmdGroup(loadingSpoon).withTimeout(1),
-          new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
+          parallel(
+            new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED),
+            new WPI_PID(drive, 5)
+          ).withTimeout(2),
           new SpoonCmdGroup(loadingSpoon).withTimeout(1)
         )
       ).withTimeout(7.5),
@@ -57,10 +60,11 @@ public class TriplePosition3 extends SequentialCommandGroup {
           new WPI_Turn_PID(drive, -DriveConstants.TURN_70).withTimeout(1.3)
           )
       ).withTimeout(4),
-      parallel(
-        new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
-        new WPI_PID(drive, -22)
-      ).withTimeout(3)
+      new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)
+      // parallel(
+      //   new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_ABOT, ShooterConstants.TARMAC_ATOP),
+      //   new WPI_PID(drive, -19)
+      // ).withTimeout(3)
     );
   }
 }
