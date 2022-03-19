@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Drive;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drive;
 
@@ -21,12 +22,15 @@ public class TargetBall extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
