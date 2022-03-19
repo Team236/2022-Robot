@@ -31,6 +31,9 @@ public class Drive extends SubsystemBase {
     leftRear = new CANSparkMax(MotorControllers.ID_LEFT_REAR, MotorType.kBrushless);
     rightFront = new CANSparkMax(MotorControllers.ID_RIGHT_FRONT, MotorType.kBrushless);
     rightRear = new CANSparkMax(MotorControllers.ID_RIGHT_REAR, MotorType.kBrushless);
+
+    leftFront.restoreFactoryDefaults();
+    rightFront.restoreFactoryDefaults();
     
     leftFront.setInverted(false);
     rightFront.setInverted(true);
@@ -38,13 +41,16 @@ public class Drive extends SubsystemBase {
     leftRear.follow(leftFront, false);
     rightRear.follow(rightFront, false);
 
+    leftFront.setSmartCurrentLimit(DriveConstants.CURRENT_LIMIT);
+    leftRear.setSmartCurrentLimit(DriveConstants.CURRENT_LIMIT);
+    rightFront.setSmartCurrentLimit(DriveConstants.CURRENT_LIMIT);
+    rightRear.setSmartCurrentLimit(DriveConstants.CURRENT_LIMIT);
+
     leftPID = leftFront.getPIDController();
     rightPID = rightFront.getPIDController();
 
     leftEncoder = leftFront.getEncoder();
     rightEncoder = rightFront.getEncoder();
-
-    leftFront.clearFaults();
 
   }
 
