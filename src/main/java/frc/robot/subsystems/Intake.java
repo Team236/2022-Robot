@@ -61,7 +61,7 @@ public class Intake extends SubsystemBase {
     // I2C port on the NavX Gyro is known to be more reliable than the I2C port directly on the RoboRio
     I2C.Port onGyro = I2C.Port.kMXP;
     I2C.Port onRio = I2C.Port.kOnboard;
-    colorSensor = new ColorSensorV3(onGyro);
+    // colorSensor = new ColorSensorV3(onGyro);
 
     intakeEye.reset();
   }
@@ -186,6 +186,6 @@ public class Intake extends SubsystemBase {
     // SmartDashboard.putNumber("optical sensor count", getIntakeCount());
     // SmartDashboard.putNumber("feeder sensor count", getFeederCount());
     // SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
-    whatColor();
+    // whatColor();
   }
 }

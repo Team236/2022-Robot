@@ -43,12 +43,6 @@ public class SetFeedSpeeds extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    // if feeder eye senses ball, stop feed wheels
-    // else keep feed wheels on
-    if (intake.getFeederCount() == 1) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
 }

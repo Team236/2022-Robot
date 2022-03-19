@@ -10,12 +10,13 @@ import frc.robot.subsystems.Intake;
 public class NewIntakeForward extends CommandBase {
 
   private Intake intake;
-  private double speed;
+  private double intakeSpeed, feedSpeed;
   
   /** Creates a new NewIntakeForward. */
-  public NewIntakeForward(Intake intake, double speed) {
+  public NewIntakeForward(Intake intake, double intakeSpeed, double feedSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.speed = speed;
+    this.intakeSpeed = intakeSpeed;
+    this.feedSpeed = feedSpeed;
     this.intake = intake;
     addRequirements(intake);
   }
@@ -29,7 +30,15 @@ public class NewIntakeForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setIntakeSpeed(speed);
+
+    if (intake.getFeederCount() == 0) {
+      intake.setIntakeSpeed(intakeSpeed);
+      intake.setFirstFeedSpeed(feedSpeed);
+    } else {
+      intake.setIntakeSpeed(intakeSpeed);
+      intake.setFirstFeedSpeed(0);
+    }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -49,6 +58,8 @@ public class NewIntakeForward extends CommandBase {
     if (intake.getIntakeCount() == 1) {
       return false;
     } else if ((intake.getIntakeCount() == 2) && (intake.getFeederCount() == 1)) {
+      intake.retract();
+      intake.resetFeedCounter();
       return true;
     } else {
       return false;
