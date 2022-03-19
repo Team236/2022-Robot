@@ -69,8 +69,8 @@ public final class Constants {
 
         public static final int INTAKE = 39;
 
-        public static final int FIRST_FEEDER = 46;
-        public static final int SECOND_FEEDER = 47;
+        public static final int FIRST_FEEDER = 3;
+        public static final int SECOND_FEEDER = 16;
 
         public static final int BOTTOM_SHOOTER = 36;
         public static final int TOP_SHOOTER = 33;
@@ -99,6 +99,10 @@ public final class Constants {
     public static class DriveConstants {
         public static final double LEFT_DEADZONE = 0.15;
         public static final double RIGHT_DEADZONE = 0.15;
+
+        public static final int CURRENT_LIMIT = 40;
+        // public static final int PEAK_CURRENT_LIMIT = 45;
+        // public static final int PEAK_CURRENT_LIMIT_DURATION_MILLS = 100;
 
         public static final double DIAMETER = 4;
         public static final double CIRCUMFERENCE = Math.PI * DIAMETER;
@@ -132,7 +136,7 @@ public final class Constants {
         public static final double TARMAC_TO_BALL = 55;
         public static final double TARMAC_TO_BALL_SHORT = 47; // short versions are for position 1 where the wall is close to ball
         public static final double BALL_TO_LINE = 23 - AUTO_MARGIN;
-        public static final double BALL_TO_LINE_SHORT = 16 - AUTO_MARGIN; // short versions are for position 1 where the wall is close to ball
+        public static final double BALL_TO_LINE_SHORT = 9 - AUTO_MARGIN; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
         public static final double TARMAC_TO_LOADING = 156;
 	  
@@ -195,7 +199,7 @@ public final class Constants {
     }
     public static class IntakeConstants {
         public static final int DIO_INTAKE_EYE = 5;
-        public static final int DIO_FEEDER_EYE = 2;
+        public static final int DIO_FEEDER_EYE = 0;
 
         public static final double FORWARD_SPEED = 0.85;
         // 0.6 voltage = 930 RPM
@@ -241,6 +245,10 @@ public final class Constants {
 
         public static final int DIO_MAST_RETURN = 3;
         public static final int DIO_MAST_EXTEND = 4;
+
+        public static final int DIO_ARM_RETRACT = 1;
+        public static final int DIO_ARM_EXTEND = 2;
+
     }
 
 }
