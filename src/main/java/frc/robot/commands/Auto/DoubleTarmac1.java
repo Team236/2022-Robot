@@ -14,7 +14,10 @@ import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
+import frc.robot.commands.Intake.IntakeRetract;
+import frc.robot.commands.Intake.NewIntakeForward;
 import frc.robot.commands.Intake.SetIntakeSpeed;
+import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.SpoonAndShoot;
 import frc.robot.commands.Spoon.SpoonCmdGroup;
@@ -33,29 +36,21 @@ public class DoubleTarmac1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      parallel(
-        // keeps shooter on throughout whole auto routine
-        new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
-        sequence(
-          // extend intake
-          new IntakeExtend(intake).withTimeout(1),
-          parallel(
-            // drive to ball while intaking and extending hood
-            new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
-            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
-            new HoodExtend(hood)
-          ).withTimeout(1.5),
-            // drive to tarmac line
-            new WPI_PID(drive, -DriveConstants.BALL_TO_LINE_SHORT).withTimeout(1),
-          parallel(
-            sequence(
-            // raise and lower spoon, intake second ball, raise and lower spoon
-            new SpoonCmdGroup(loadingSpoon).withTimeout(1),
-            new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
-            new SpoonCmdGroup(loadingSpoon).withTimeout(1)
-            )
-          ).withTimeout(8)
-        )
+      sequence(
+        // extend intake
+        new IntakeExtend(intake).withTimeout(1),
+        parallel(
+          // drive to ball while intaking and extending hood
+          new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED),
+          new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
+          new HoodExtend(hood)
+        ).withTimeout(1.5),
+        // drive to tarmac line
+        new WPI_PID(drive, -DriveConstants.BALL_TO_LINE_SHORT).withTimeout(1),
+        // shoot two balls using feed wheels
+        new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(4),
+        // extend intake for teleop
+        new IntakeExtend(intake).withTimeout(1)
       )
     );
   }
