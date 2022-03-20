@@ -11,12 +11,17 @@ import frc.robot.subsystems.Drive;
 public class TargetBall extends CommandBase {
 
   private Drive drive;
+  private double proportional, integral, derivative;
+  private double speed, error, errorT, lastError;
+  private double kP = 0;
+  private double kI = 0;
+  private double kD = 0;
+  private double integralActiveZone = 5;
 
   /** Creates a new TargetBall. */
   public TargetBall(Drive drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
-    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
@@ -28,13 +33,46 @@ public class TargetBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+
+    double angle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    error = angle;
+
+    // proportional
+    proportional = error * kP;
+
+    // integral
+    if ((error < integralActiveZone) && (error > -integralActiveZone)) {
+      errorT += error;
+    } else {
+      errorT = 0;
+    }
+
+    if (errorT > (50 / kI)) {
+      errorT = 50 / kI;
+    }
+
+    integral = errorT * kI;
+
+    // derivative
+    derivative = (error - lastError) * kD;
+
+    if (error == 0) {
+      derivative = 0;
+    }
+
+    lastError = error;
+
+    speed = (proportional + integral + derivative);
+
+    drive.setLeftSpeed(speed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    drive.stop();
+  }
 
   // Returns true when the command should end.
   @Override

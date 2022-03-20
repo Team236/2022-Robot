@@ -31,6 +31,7 @@ import frc.robot.commands.Climber.MastWithAxis;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
+import frc.robot.commands.Drive.TargetBall;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
@@ -112,11 +113,12 @@ public class RobotContainer {
     private final SpoonAndShoot spoonAndShootLaunchPad = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
     private final ShootWithLL shootHighWithLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
     private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
-    private final FeedAndShoot feedAndShoot = new  FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
+    private final FeedAndShoot feedAndShootTarmac = new  FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
     private final AngleAndDistLL angleAndDistLL = new AngleAndDistLL(drive);
+    private final TargetBall targetBall = new TargetBall(drive);
     // *HOOD
     private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
     private final HoodExtend hoodExtend = new HoodExtend(hood);
@@ -219,7 +221,7 @@ public class RobotContainer {
     start.whileActiveOnce(mastWithAxis); // hold down start while using left joystick on controller
 
     // *LEFT STICK
-    leftTrigger.whileHeld(feedAndShoot);
+    leftTrigger.whileHeld(feedAndShootTarmac);
     // leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //shoot from tarmac
     // leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)); //shoot high from safety zone
     // leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //shoot high from hub
@@ -239,6 +241,7 @@ public class RobotContainer {
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
+    extraL6.whileHeld(targetBall);
     extraR7.whileHeld(anglewithLL);
     extraR8.whileHeld(distancewithLL);
   }
