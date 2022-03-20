@@ -34,17 +34,22 @@ public class DoubleTarmac1 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       parallel(
+        // keeps shooter on throughout whole auto routine
         new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
         sequence(
+          // extend intake
           new IntakeExtend(intake).withTimeout(1),
           parallel(
+            // drive to ball while intaking and extending hood
             new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
             new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
             new HoodExtend(hood)
           ).withTimeout(1.5),
+            // drive to tarmac line
             new WPI_PID(drive, -DriveConstants.BALL_TO_LINE_SHORT).withTimeout(1),
           parallel(
             sequence(
+            // raise and lower spoon, intake second ball, raise and lower spoon
             new SpoonCmdGroup(loadingSpoon).withTimeout(1),
             new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
             new SpoonCmdGroup(loadingSpoon).withTimeout(1)
