@@ -41,7 +41,7 @@ public AnglewithLL(Drive drive2) {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(6);
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("pipeline").setNumber(6);
 
   }
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,10 +49,10 @@ public AnglewithLL(Drive drive2) {
   public void execute() {
   //aims with limelight 
     //NetworkTable table = NetworkTableInstance.getDefault().getTable("limelght");
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(3);
+    double tv = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tv").getDouble(0);
     //tx is the angle on the x axis of the target
-    double errorX = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    double errorX = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tx").getDouble(0);
     //confirms a target 
     if(tv==1){
 
@@ -67,7 +67,7 @@ public AnglewithLL(Drive drive2) {
       }
      
     } else{
-    SmartDashboard.putNumber("No Target", tv);
+    SmartDashboard.putNumber("No Shoot Target", tv);
     }
       //double a2 = (Math.atan(h2-h1)/dx)-a1 ;
       // }
@@ -85,6 +85,8 @@ public AnglewithLL(Drive drive2) {
   @Override
   public void end(boolean interrupted) {
     drive.stop();
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(0);
+
   }
 
   // Returns true when the command should end.

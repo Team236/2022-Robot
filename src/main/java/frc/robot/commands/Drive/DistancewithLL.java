@@ -48,17 +48,17 @@ public DistancewithLL(Drive drive2) {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+     NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(3);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override 
   public void execute() {
   //aims with limelight 
     //NetworkTable table = NetworkTableInstance.getDefault().getTable("limelght");
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(3);
+    double tv = NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("tv").getDouble(0);
     //tx is the angle on the x axis of the target
-    double disY= NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+    double disY= NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ty").getDouble(0);
     //confirms a target 
     if(tv==1){
       
@@ -94,6 +94,8 @@ public DistancewithLL(Drive drive2) {
   @Override
   public void end(boolean interrupted) {
     drive.stop();
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(0);
+
   }
 
   // Returns true when the command should end.
@@ -102,5 +104,3 @@ public DistancewithLL(Drive drive2) {
     return false;
   }
 }
-
-

@@ -31,7 +31,7 @@ import frc.robot.commands.Climber.MastWithAxis;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.DriveWithPID;
-import frc.robot.commands.Drive.TargetBall;
+import frc.robot.commands.Drive.TrackBall;
 import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
@@ -63,6 +63,7 @@ import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.commands.Drive.AngleAndDistLL;
 import frc.robot.commands.Drive.AnglewithLL;
 import frc.robot.commands.Drive.DistancewithLL;
+import frc.robot.commands.Drive.DriveForward;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -105,6 +106,7 @@ public class RobotContainer {
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
     private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
+    private final DriveForward driveForward = new DriveForward(drive, 0.3);
     // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
     // *SHOOTER
     private final SpoonAndShoot spoonAndShootHigh = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
@@ -118,7 +120,7 @@ public class RobotContainer {
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
     private final AngleAndDistLL angleAndDistLL = new AngleAndDistLL(drive);
-    private final TargetBall targetBall = new TargetBall(drive);
+    private final TrackBall trackBall = new TrackBall(drive);
     // *HOOD
     private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
     private final HoodExtend hoodExtend = new HoodExtend(hood);
@@ -226,7 +228,8 @@ public class RobotContainer {
     // leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)); //shoot high from safety zone
     // leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //shoot high from hub
     // leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //shoot low from hub
-    extraL1.whileActiveOnce(new WPI_PID(drive, 27));
+    // extraL1.whileActiveOnce(new WPI_PID(drive, 27));
+    extraL1.whileHeld(driveForward);
     // extraL2.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_ABOT, ShooterConstants.TARMAC_ATOP)); //xshort shot
     // extraL3.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT_LONG, ShooterConstants.TARMAC_TOP_LONG)); //longer shot
     // extraL4.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT_SHORT, ShooterConstants.TARMAC_TOP_SHORT)); //shorter shot
@@ -241,7 +244,7 @@ public class RobotContainer {
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
-    extraL6.whileHeld(targetBall);
+    extraL6.whileHeld(trackBall);
     extraR7.whileHeld(anglewithLL);
     extraR8.whileHeld(distancewithLL);
   }
