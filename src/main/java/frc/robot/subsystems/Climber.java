@@ -34,8 +34,14 @@ public class Climber extends SubsystemBase {
     armMotor = new CANSparkMax(Constants.MotorControllers.ID_ARM, MotorType.kBrushless);
     mastMotor = new CANSparkMax(Constants.MotorControllers.ID_MAST, MotorType.kBrushless);
 
+    armMotor.restoreFactoryDefaults();
+    mastMotor.restoreFactoryDefaults();
+
     mastMotor.setInverted(false);
     armMotor.setInverted(false);
+
+    armMotor.setSmartCurrentLimit(ClimberConstants.CURRENT_LIMIT_CLIMB);
+    mastMotor.setSmartCurrentLimit(ClimberConstants.CURRENT_LIMIT_CLIMB);
 
     mastPID = mastMotor.getPIDController();
     armPID = armMotor.getPIDController();

@@ -32,6 +32,7 @@ public class DriveWithJoysticks extends CommandBase {
   public void initialize() {
     
     this.isDeadzone = true;
+    drive.openRampRate();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

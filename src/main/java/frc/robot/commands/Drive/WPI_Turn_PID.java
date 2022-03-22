@@ -27,6 +27,7 @@ public class WPI_Turn_PID extends CommandBase {
   public void initialize() {
     pidController.reset();
     drive.resetEncoders();
+    drive.closedRampRate();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
+import edu.wpi.first.hal.simulation.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -92,6 +93,16 @@ public class Drive extends SubsystemBase {
     setLeftSpeed(0);
     setRightSpeed(0);
   }
+
+  public void closedRampRate() {
+    leftFront.setClosedLoopRampRate(0.08);
+    rightFront.setClosedLoopRampRate(0.08);
+  }
+
+  public void openRampRate() {
+    leftFront.setOpenLoopRampRate(0.08);
+    rightFront.setOpenLoopRampRate(0.08);
+  }
   
   // getEncoder methods return encoder position in ROTATIONS of motor
   public double getLeftEncoder() {
@@ -164,6 +175,9 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
+    
+    SmartDashboard.putNumber("brownout voltage", RoboRioDataJNI.getBrownoutVoltage());
+    SmartDashboard.putNumber("v in current", RoboRioDataJNI.getVInCurrent());
+    SmartDashboard.putNumber("v in voltage", RoboRioDataJNI.getVInVoltage());
   }
 }
