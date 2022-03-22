@@ -97,8 +97,8 @@ public final class Constants {
         public static final int DIO_SWITCH_4 = 9;
     }
     public static class DriveConstants {
-        public static final double LEFT_DEADZONE = 0.15;
-        public static final double RIGHT_DEADZONE = 0.15;
+        public static final double LEFT_DEADZONE = 0.17; //0.15
+        public static final double RIGHT_DEADZONE = 0.17;
 
         public static final int CURRENT_LIMIT = 40;
         // public static final int PEAK_CURRENT_LIMIT = 45;
@@ -248,6 +248,8 @@ public final class Constants {
 
         public static final int DIO_ARM_RETRACT = 1;
         public static final int DIO_ARM_EXTEND = 2;
+
+        public static final int CURRENT_LIMIT_CLIMB = 40;
 
     }
 
