@@ -27,7 +27,8 @@ private Drive drive;
 private double h1 = 13.5;
 private double h2 = 105.6;
 private double a1 = 0.8340573450259819; //47.78 degrees or 17.98
-private double d = 166 * 65 / 70;
+private double d = 69 * 65 / 70;
+// safety is 166
 // first number is the inches value that you put in
 // 1.0769 factor from 
 // limelight is positioned at 40 degrees from horizontal

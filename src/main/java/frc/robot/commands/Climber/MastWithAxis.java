@@ -31,8 +31,8 @@ public class MastWithAxis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setMastSpeed(-controller.getRawAxis(1) *0.6);
-    speed = -controller.getRawAxis(1) * 0.6;
+    climber.setMastSpeed(-controller.getRawAxis(1));
+    speed = -controller.getRawAxis(1);
     // axis 1 is the left joystick thingy on the logitech controller
 
     // SmartDashboard.putNumber("mast speed", speed);

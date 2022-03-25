@@ -175,9 +175,5 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
-    SmartDashboard.putNumber("brownout voltage", RoboRioDataJNI.getBrownoutVoltage());
-    SmartDashboard.putNumber("v in current", RoboRioDataJNI.getVInCurrent());
-    SmartDashboard.putNumber("v in voltage", RoboRioDataJNI.getVInVoltage());
   }
 }

@@ -17,10 +17,12 @@ public class Hood extends SubsystemBase {
   /** Creates a new Hood. */
   public Hood() {}
 
+  // safety shot (launch pad)
   public void hoodExtend() {
     hoodDoubleSolenoid.set(Value.kForward);
   }
 
+  // tarmac and low hub shot
   public void hoodRetract() {
     hoodDoubleSolenoid.set(Value.kReverse);
   }

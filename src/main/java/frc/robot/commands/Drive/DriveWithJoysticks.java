@@ -48,10 +48,10 @@ public class DriveWithJoysticks extends CommandBase {
       drive.setRightSpeed(-rightStick.getY());
     }
 
-    SmartDashboard.putNumber("DWJ getLeftEncoder", drive.getLeftEncoder());
-    SmartDashboard.putNumber("DWJ getRightEncoder", drive.getRightEncoder());
-    SmartDashboard.putNumber("DWJ L Distance", drive.getLeftDistance());
-    SmartDashboard.putNumber("DWJ R Distance", drive.getRightDistance());
+    // SmartDashboard.putNumber("DWJ getLeftEncoder", drive.getLeftEncoder());
+    // SmartDashboard.putNumber("DWJ getRightEncoder", drive.getRightEncoder());
+    // SmartDashboard.putNumber("DWJ L Distance", drive.getLeftDistance());
+    // SmartDashboard.putNumber("DWJ R Distance", drive.getRightDistance());
   }
 
   // Called once the command ends or is interrupted.

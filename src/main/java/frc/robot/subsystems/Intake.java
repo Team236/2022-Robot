@@ -24,7 +24,7 @@ import frc.robot.Constants.Solenoids;;
 
 public class Intake extends SubsystemBase {
 
-  private CANSparkMax intakeMotor, firstFeeder, secondFeeder;
+  private CANSparkMax intakeMotor, firstFeeder;
   private DoubleSolenoid intakeSolenoid;
   private boolean isIntkCounterUnplugged = false;
   private boolean isFeedCounterUnplugged = false;
@@ -39,8 +39,6 @@ public class Intake extends SubsystemBase {
 
     firstFeeder = new CANSparkMax(MotorControllers.FIRST_FEEDER, MotorType.kBrushless);
     firstFeeder.setInverted(false);
-    secondFeeder = new CANSparkMax(MotorControllers.SECOND_FEEDER, MotorType.kBrushless);
-    secondFeeder.setInverted(false);
 
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoids.INTAKE_SOL_FOR, Solenoids.INTAKE_SOL_REV);
 
@@ -74,20 +72,12 @@ public class Intake extends SubsystemBase {
     firstFeeder.set(speed);
   }
 
-  public void setSecondFeedSpeed(double speed) {
-    secondFeeder.set(speed);
-  }
-
   public void stopIntake() {
     intakeMotor.set(0);
   }
 
   public void stopFirstFeed() {
     firstFeeder.set(0);
-  }
-
-  public void stopSecondFeed() {
-    secondFeeder.set(0);
   }
 
   public void extend() {
@@ -183,8 +173,8 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("optical sensor count", getIntakeCount());
-    // SmartDashboard.putNumber("feeder sensor count", getFeederCount());
+    SmartDashboard.putNumber("intake sensor count", getIntakeCount());
+    SmartDashboard.putNumber("feeder sensor count", getFeederCount());
     // SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
     // whatColor();
   }
