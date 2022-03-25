@@ -12,6 +12,7 @@ import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodExtend;
+import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
@@ -36,11 +37,11 @@ public class TriplePosition2 extends SequentialCommandGroup {
       parallel(
         new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
         sequence(
-          new IntakeExtend(intake).withTimeout(1),
+          new IntakeExtend(intake, true).withTimeout(1),
           parallel(
             new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
             new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
-            new HoodExtend(hood)
+            new HoodRetract(hood)
           ).withTimeout(2),
           new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
           new WPI_PID(drive, -DriveConstants.BALL_TO_LINE).withTimeout(2),

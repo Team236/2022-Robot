@@ -35,7 +35,7 @@ public class ShootMoveShoot extends SequentialCommandGroup {
       new WPI_PID(drive, DriveConstants.TARMAC_TO_LINE).withTimeout(2),
       new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP).withTimeout(3),
       new WaitCommand(1),
-      new IntakeExtend(intake).withTimeout(1),
+      new IntakeExtend(intake, true).withTimeout(1),
       parallel(
         new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED),
         new WPI_PID(drive, DriveConstants.BALL_TO_LINE)
