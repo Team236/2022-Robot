@@ -45,13 +45,13 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("compressor current", compressor.getCurrent());
     
     // USB camera
-      try {
-      usbCamera0 = CameraServer.startAutomaticCapture(0);
-    } catch (Exception e) {
-      // System.out.println("camera capture failed");
-      // System.out.println(e.getStackTrace());
-      SmartDashboard.putString("camera capture failed", "failed");
-    }
+    //   try {
+    //   usbCamera0 = CameraServer.startAutomaticCapture(0);
+    // } catch (Exception e) {
+    //   // System.out.println("camera capture failed");
+    //   // System.out.println(e.getStackTrace());
+    //   SmartDashboard.putString("camera capture failed", "failed");
+    // }
 
   }
 
