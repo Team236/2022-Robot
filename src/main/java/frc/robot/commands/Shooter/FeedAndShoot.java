@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Intake.SetFeedSpeeds;
+import frc.robot.commands.Intake.ResetFeedCount;
+import frc.robot.commands.Intake.SetFeedSpeed;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -25,7 +26,7 @@ public class FeedAndShoot extends ParallelCommandGroup {
       new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
       sequence(
         new WaitCommand(1),
-        new SetFeedSpeeds(intake, IntakeConstants.FIRST_FEED_SPEED, IntakeConstants.SECOND_FEED_SPEED)
+        new SetFeedSpeed(intake, IntakeConstants.FIRST_FEED_SPEED)
       )
     );
   }

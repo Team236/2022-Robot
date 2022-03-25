@@ -45,6 +45,7 @@ public class NewIntakeForward extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intake.stopIntake();
+    intake.stopFirstFeed();
   }
 
   // Returns true when the command should end.
