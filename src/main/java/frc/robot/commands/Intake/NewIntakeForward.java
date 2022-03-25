@@ -24,19 +24,19 @@ public class NewIntakeForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.resetIntkCounter();
+    // intake.resetIntkCounter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (intake.getFeederCount() == 0) {
-      intake.setIntakeSpeed(intakeSpeed);
-      intake.setFirstFeedSpeed(feedSpeed);
-    } else {
+    if (intake.isBallInSpoon()) {
       intake.setIntakeSpeed(intakeSpeed);
       intake.setFirstFeedSpeed(0);
+    } else {
+      intake.setIntakeSpeed(intakeSpeed);
+      intake.setFirstFeedSpeed(feedSpeed);
     }
 
   }
@@ -56,11 +56,19 @@ public class NewIntakeForward extends CommandBase {
     // if intake count = 2 and feed count = 1, stop intake and retract intake
     // else, keep intake running
 
-    if (intake.getIntakeCount() == 1) {
-      return false;
-    } else if ((intake.getIntakeCount() == 2) && (intake.getFeederCount() == 1)) {
+    // if (intake.getIntakeCount() == 1) {
+    //   return false;
+    // } else if ((intake.getIntakeCount() == 2) && (intake.getFeederCount() == 1)) {
+    //   intake.retract();
+    //   intake.resetFeedCounter();
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+
+    if ((intake.isBallInSpoon()) && (intake.getIntakeCount() == 2)) {
+      intake.resetIntkCounter();
       intake.retract();
-      intake.resetFeedCounter();
       return true;
     } else {
       return false;
@@ -73,8 +81,15 @@ public class NewIntakeForward extends CommandBase {
     // when intake counter = 1 and feed count = 1, turn off intake motor and retract intake
     // when intake counter = 2, turn off intake motor and retract intake
 
-    // questions:
-    // need to keep the color sensor?
-    // when / where reset counters?
+    // when no ball in robot, run intake and feed wheel
+    // when ball in robot, run intake only
+    // return true if:
+    // ball in spoon and intake = 2
+
+    // return false but reset counter if:
+    // ball in spoon and intake = 1
+
+    // when ball in spoon and intake = 2, return true and reset intake counter
+
   }
 }
