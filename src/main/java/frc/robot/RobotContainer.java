@@ -43,7 +43,8 @@ import frc.robot.commands.Intake.IntakeExtendAndRetract;
 import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.NewIntakeForward;
-import frc.robot.commands.Intake.SetFeedSpeeds;
+import frc.robot.commands.Intake.ResetFeedCount;
+import frc.robot.commands.Intake.SetFeedSpeed;
 import frc.robot.commands.Intake.SetIntakeSpeed;
 import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
@@ -116,6 +117,7 @@ public class RobotContainer {
     private final ShootWithLL shootHighWithLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
     private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     private final FeedAndShoot feedAndShootTarmac = new  FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
+    private final FeedAndShoot feedAndShootLow = new FeedAndShoot(intake, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
@@ -127,15 +129,14 @@ public class RobotContainer {
     private final HoodRetract hoodRetract = new HoodRetract(hood);
     // *INTAKE
     private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract(intake);
-    private final IntakeExtend intakeExtend = new IntakeExtend(intake);
+    private final IntakeExtend intakeExtend = new IntakeExtend(intake, false);
     private final IntakeRetract intakeRetract = new IntakeRetract(intake);
     private final IntakeForward intakeForward = new IntakeForward(intake, IntakeConstants.FORWARD_SPEED);
     private final IntakeReverse intakeReverse = new IntakeReverse(intake, IntakeConstants.REVERSE_SPEED);
     private final SetIntakeSpeed rawIntakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
-    private final SetFeedSpeeds setFeedSpeeds = new SetFeedSpeeds(intake, IntakeConstants.FIRST_FEED_SPEED, IntakeConstants.SECOND_FEED_SPEED);
-    private final SetFeedSpeeds firstFeed = new SetFeedSpeeds(intake, IntakeConstants.FIRST_FEED_SPEED, 0);
-    private final SetFeedSpeeds secondFeed = new SetFeedSpeeds(intake, 0, IntakeConstants.SECOND_FEED_SPEED);
+    private final SetFeedSpeed firstFeed = new SetFeedSpeed(intake, IntakeConstants.FIRST_FEED_SPEED);
     private final NewIntakeForward newIntakeForward = new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED);
+    private final SetFeedSpeed reverseFeed = new SetFeedSpeed(intake, -IntakeConstants.FIRST_FEED_SPEED);
     // *LOADING SPOON
     private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
     private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
@@ -219,29 +220,27 @@ public class RobotContainer {
     rb.whenPressed(intakeExtendAndRetract);
     leftPress.whileHeld(anglewithLL);
     rightPress.whileHeld(distancewithLL);
-    // back.whenPressed(spoonExtendAndRetract);
+    back.whenPressed(firstFeed);
     start.whileActiveOnce(mastWithAxis); // hold down start while using left joystick on controller
 
     // *LEFT STICK
     leftTrigger.whileHeld(feedAndShootTarmac);
-    // leftTrigger.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)); //shoot from tarmac
     // leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)); //shoot high from safety zone
     // leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //shoot high from hub
     // leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //shoot low from hub
     // extraL1.whileActiveOnce(new WPI_PID(drive, 27));
     extraL1.whileHeld(driveForward);
-    // extraL2.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_ABOT, ShooterConstants.TARMAC_ATOP)); //xshort shot
-    // extraL3.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT_LONG, ShooterConstants.TARMAC_TOP_LONG)); //longer shot
-    // extraL4.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT_SHORT, ShooterConstants.TARMAC_TOP_SHORT)); //shorter shot
-    extraL5.whenPressed(firstFeed); //spoonExtend
-    extraL6.whenPressed(secondFeed); //spoonRetract
-    extraL7.whenPressed(hoodExtend);
-    extraL8.whenPressed(hoodRetract);
+    extraL2.whileHeld(new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP));
+    extraL5.whileHeld(firstFeed); //spoonExtend
+    extraL7.whenPressed(hoodExtend); //safety shot
+    extraL8.whenPressed(hoodRetract); //tarmac shot
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(newIntakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
     rightStickLeft.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180)); //turns clockwise
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
+    extraR1.whileHeld(reverseFeed);
+    extraR2.whenPressed(new ResetFeedCount(intake));
     extraR3.whenPressed(intakeExtend);
     extraR4.whenPressed(intakeRetract);
     extraL6.whileHeld(trackBall);
