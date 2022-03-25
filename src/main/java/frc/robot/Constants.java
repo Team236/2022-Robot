@@ -70,7 +70,6 @@ public final class Constants {
         public static final int INTAKE = 39;
 
         public static final int FIRST_FEEDER = 3;
-        public static final int SECOND_FEEDER = 16;
 
         public static final int BOTTOM_SHOOTER = 36;
         public static final int TOP_SHOOTER = 33;
@@ -169,7 +168,7 @@ public final class Constants {
         public static final double LOW_HUB_BOT = (1700 * 18) / 32;
 
         // **** good tarmac shot: rollers should be at top:3650 and bot: 3466 ****
-        public static final double TARMAC_TOP = (5000 * 18) / 32; //started with 5000
+        public static final double TARMAC_TOP = (5000 * 18) / 32; //started with 5000 added 250
         public static final double TARMAC_BOT = (2500 * 32) / 18; // 2500
         // with waterbury pulley ratio
         // public static final double TARMAC_TOP = (3650 * 18) / 32; //1237; // wheel speed = 2200; //3650
@@ -206,8 +205,7 @@ public final class Constants {
         // 0.8 voltage = 1280 RPM
         public static final double REVERSE_SPEED = -0.5;
 
-        public static final double FIRST_FEED_SPEED = 0.3;
-        public static final double SECOND_FEED_SPEED = 0.3;
+        public static final double FIRST_FEED_SPEED = 1;
     }
     public static class ColorSensorConstants {
         public static final int DIST = 300;
