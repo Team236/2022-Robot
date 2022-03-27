@@ -24,7 +24,7 @@ public class NewIntakeForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // intake.resetIntkCounter();
+    intake.resetIntkCounter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -51,45 +51,26 @@ public class NewIntakeForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-    // if intake count = 1, keep intake running
-    // if intake count = 2 and feed count = 1, stop intake and retract intake
-    // else, keep intake running
 
-    // if (intake.getIntakeCount() == 1) {
-    //   return false;
-    // } else if ((intake.getIntakeCount() == 2) && (intake.getFeederCount() == 1)) {
-    //   intake.retract();
-    //   intake.resetFeedCounter();
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-
-    if ((intake.isBallInSpoon()) && (intake.getIntakeCount() == 2)) {
+    if ((intake.getIntakeCount() == 1) && (!intake.isBallInSpoon())) {
       intake.resetIntkCounter();
+      return false;
+    } else if ((intake.getIntakeCount() == 1) && (intake.isBallInSpoon())) {
+      intake.retract();
+      return true;
+    } else if (intake.getIntakeCount() == 2) {
       intake.retract();
       return true;
     } else {
       return false;
     }
-
-
-    // overall logic: 
-    // turn on intake motor and first feeder motor
-    // when feed counter = 1, turn off first feed motor
-    // when intake counter = 1 and feed count = 1, turn off intake motor and retract intake
-    // when intake counter = 2, turn off intake motor and retract intake
-
-    // when no ball in robot, run intake and feed wheel
-    // when ball in robot, run intake only
-    // return true if:
-    // ball in spoon and intake = 2
-
-    // return false but reset counter if:
-    // ball in spoon and intake = 1
-
-    // when ball in spoon and intake = 2, return true and reset intake counter
-
+    
+    // code using on saturday
+    // if ((intake.isBallInSpoon()) && (intake.getIntakeCount() == 2)) {
+    //   intake.retract();
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 }
