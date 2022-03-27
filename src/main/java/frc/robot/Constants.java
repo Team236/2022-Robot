@@ -166,16 +166,17 @@ public final class Constants {
 
         public static final double LOW_HUB_TOP = (3400 * 18) / 32;
         public static final double LOW_HUB_BOT = (1700 * 18) / 32;
-
+// 4500 and 2600 was 
+// last at 4600 and 2200
         // **** good tarmac shot: rollers should be at top:3650 and bot: 3466 ****
-        public static final double TARMAC_TOP = (5000 * 18) / 32; //started with 5000 added 250
-        public static final double TARMAC_BOT = (2500 * 32) / 18; // 2500
+        public static final double TARMAC_TOP = (4600 * 18) / 32; //started with 5000 added 250
+        public static final double TARMAC_BOT = (2200 * 32) / 18; // 2500
         // with waterbury pulley ratio
         // public static final double TARMAC_TOP = (3650 * 18) / 32; //1237; // wheel speed = 2200; //3650
         // public static final double TARMAC_BOT = (3350 * 18) / 32; //2261; // wheel speed = 4020;
 
         public static final double TARMAC_ATOP = (3350 * 18) / 32; //1237; // wheel speed = 2200; //3650
-        public static final double TARMAC_ABOT = (3325 * 18) / 32; //2261; // wheel speed = 4020;
+        public static final double TARMAC_ABOT = (3325 * 32) / 18; //2261; // wheel speed = 4020;
 
         // 3650, 3075
         // 3350, 3325
@@ -183,17 +184,17 @@ public final class Constants {
 
         // increase bottom for more loft, decrease top to make shorter & less backspin
         public static final double TARMAC_TOP_XSHORT = (3400 * 18) / 32; //1237; // wheel speed = 2200; //3650
-        public static final double TARMAC_BOT_XSHORT = (3600 * 18) / 32; //2261; // wheel speed = 4020;
+        public static final double TARMAC_BOT_XSHORT = (3600 * 32) / 18; //2261; // wheel speed = 4020;
 
         public static final double TARMAC_TOP_SHORT = (3500 * 18) / 32; //1237; // wheel speed = 2200; //3650
-        public static final double TARMAC_BOT_SHORT = (3600 * 18) / 32; //2261; // wheel speed = 4020;
+        public static final double TARMAC_BOT_SHORT = (3600 * 32) / 18; //2261; // wheel speed = 4020;
 
         public static final double TARMAC_TOP_LONG = (3670 * 18) / 32; //1237; // wheel speed = 2200; //3650
-        public static final double TARMAC_BOT_LONG = (3520 * 18) / 32; //2261; // wheel speed = 4020;
+        public static final double TARMAC_BOT_LONG = (3520 * 32) / 18; //2261; // wheel speed = 4020;
 
         // ***increase top and decrease bottom for more height and less depth
-        public static final double LAUNCH_PAD_TOP = (7450 * 18) / 32; //6050
-        public static final double LAUNCH_PAD_BOT = (3450 * 18) / 32; //2850
+        public static final double LAUNCH_PAD_TOP = (8000 * 18) / 32; //6050
+        public static final double LAUNCH_PAD_BOT = (3250 * 32) / 18; //2850
         // 7510, 3500 was too long
     }
     public static class IntakeConstants {
