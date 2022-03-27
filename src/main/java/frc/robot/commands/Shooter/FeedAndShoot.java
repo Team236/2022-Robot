@@ -23,7 +23,7 @@ public class FeedAndShoot extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+      new Shoot(shooter, botSpeed, topSpeed),
       sequence(
         new WaitCommand(1),
         new SetFeedSpeed(intake, IntakeConstants.FIRST_FEED_SPEED)
