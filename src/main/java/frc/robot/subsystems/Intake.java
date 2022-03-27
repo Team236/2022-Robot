@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
@@ -25,6 +26,7 @@ import frc.robot.Constants.Solenoids;;
 public class Intake extends SubsystemBase {
 
   private CANSparkMax intakeMotor, firstFeeder;
+  private RelativeEncoder feedEncoder;
   private DoubleSolenoid intakeSolenoid;
   private boolean isIntkCounterUnplugged = false;
   private boolean isFeedCounterUnplugged = false;
@@ -39,6 +41,8 @@ public class Intake extends SubsystemBase {
 
     firstFeeder = new CANSparkMax(MotorControllers.FIRST_FEEDER, MotorType.kBrushless);
     firstFeeder.setInverted(false);
+
+    feedEncoder = firstFeeder.getEncoder();
 
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoids.INTAKE_SOL_FOR, Solenoids.INTAKE_SOL_REV);
 
@@ -170,12 +174,17 @@ public class Intake extends SubsystemBase {
     }
   }
 
+  public double getFeedVelocity() {
+    return feedEncoder.getVelocity();
+  } 
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("intake sensor count", getIntakeCount());
     SmartDashboard.putNumber("feeder sensor count", getFeederCount());
-    // SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
+    SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
+    SmartDashboard.putNumber("feed wheel speed", getFeedVelocity());
     // whatColor();
   }
 }

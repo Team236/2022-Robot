@@ -29,6 +29,7 @@ public class IntakeExtend extends CommandBase {
     if (!isAuto) {
       intake.resetFeedCounter();
     }
+    intake.resetIntkCounter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

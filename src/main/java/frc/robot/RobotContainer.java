@@ -118,6 +118,7 @@ public class RobotContainer {
     private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     private final FeedAndShoot feedAndShootTarmac = new  FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     private final FeedAndShoot feedAndShootLow = new FeedAndShoot(intake, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
+    private final FeedAndShoot feedAndShootSafe = new FeedAndShoot(intake, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
     // *LIMELIGHT
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
@@ -225,6 +226,8 @@ public class RobotContainer {
 
     // *LEFT STICK
     leftTrigger.whileHeld(feedAndShootTarmac);
+    leftMiddle.whileHeld(feedAndShootSafe);
+    leftStickRight.whileHeld(feedAndShootLow);
     // leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)); //shoot high from safety zone
     // leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //shoot high from hub
     // leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //shoot low from hub
