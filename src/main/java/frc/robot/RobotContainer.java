@@ -17,12 +17,13 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.DoubleHubShot;
-import frc.robot.commands.Auto.TriplePosition3;
+import frc.robot.commands.Auto.TriplePosition1;
 import frc.robot.commands.Auto.DoubleTarmac1;
 import frc.robot.commands.Auto.DoubleTarmac2;
 import frc.robot.commands.Auto.ShootMoveShoot;
 import frc.robot.commands.Auto.TriplePosition2;
 import frc.robot.commands.Auto.ExitTarmac;
+import frc.robot.commands.Auto.QuadruplePosition1;
 import frc.robot.commands.Climber.ArmPID;
 import frc.robot.commands.Climber.ClimbSequence;
 import frc.robot.commands.Climber.MastPID;
@@ -30,9 +31,8 @@ import frc.robot.commands.Climber.MastSetHeight;
 import frc.robot.commands.Climber.MastWithAxis;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
-import frc.robot.commands.Drive.DriveWithPID;
+import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.TrackBall;
-import frc.robot.commands.Drive.TurnWithPID;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodExtend;
@@ -94,8 +94,9 @@ public class RobotContainer {
     private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleTarmac1 doubleTarmac1 = new DoubleTarmac1(drive, shooter, hood, loadingSpoon, intake);
     private final DoubleTarmac2 doubleTarmac2 = new DoubleTarmac2(drive, intake, loadingSpoon, shooter, hood);
-    private final TriplePosition3 triplePosition3 = new TriplePosition3(intake, drive, hood, loadingSpoon, shooter);
+    private final TriplePosition1 triplePosition1 = new TriplePosition1(intake, drive, hood, loadingSpoon, shooter);
     private final TriplePosition2 triplePosition2 = new TriplePosition2(drive, intake, loadingSpoon, shooter, hood);
+    private final QuadruplePosition1 quadruplePosition1 = new QuadruplePosition1(drive, intake, hood, shooter);
 
     // *AUTO SWITCHES
     // private static DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
@@ -105,7 +106,6 @@ public class RobotContainer {
     private static DigitalInput autoSwitch4 = new DigitalInput(Constants.AutoConstants.DIO_SWITCH_4);
     // *DRIVE
     private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drive, leftStick, rightStick);
-    private final DriveWithPID driveWithPID = new DriveWithPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DashboardPID dashboardPID = new DashboardPID(drive, DriveConstants.DISTANCE, DriveConstants.MARGIN);
     private final DriveForward driveForward = new DriveForward(drive, 0.3);
     // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
@@ -130,7 +130,7 @@ public class RobotContainer {
     private final HoodRetract hoodRetract = new HoodRetract(hood);
     // *INTAKE
     private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract(intake);
-    private final IntakeExtend intakeExtend = new IntakeExtend(intake, false);
+    private final IntakeExtend intakeExtend = new IntakeExtend(intake);
     private final IntakeRetract intakeRetract = new IntakeRetract(intake);
     private final IntakeForward intakeForward = new IntakeForward(intake, IntakeConstants.FORWARD_SPEED);
     private final IntakeReverse intakeReverse = new IntakeReverse(intake, IntakeConstants.REVERSE_SPEED);
@@ -232,7 +232,7 @@ public class RobotContainer {
     // leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //shoot high from hub
     // leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //shoot low from hub
     // extraL1.whileActiveOnce(new WPI_PID(drive, 27));
-    extraL1.whileHeld(driveForward);
+    extraL1.whileHeld(new WPI_PID(drive, 80));
     extraL2.whileHeld(new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP));
     extraL5.whileHeld(firstFeed); //spoonExtend
     extraL7.whenPressed(hoodExtend); //safety shot
@@ -240,8 +240,8 @@ public class RobotContainer {
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(newIntakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
-    rightStickLeft.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_180)); //turns clockwise
-    rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
+    rightStickLeft.whileActiveOnce(new WPI_Turn_PID(drive, 169)); //turns clockwise/to the left
+    rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, 91));
     extraR1.whileHeld(reverseFeed);
     extraR2.whenPressed(new ResetFeedCount(intake));
     extraR3.whenPressed(intakeExtend);
@@ -258,12 +258,16 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    if (!autoSwitch1.get()) {
+    // an auto switch is "on" if the autoSwitch.get is false
+
+    if (!autoSwitch1.get() && !autoSwitch3.get()) {
+      return quadruplePosition1;
+    } else if (!autoSwitch1.get()) {
       return doubleTarmac1;
     } else if (!autoSwitch2.get()) {
       return doubleTarmac2;
     } else if (!autoSwitch3.get()) {
-      return triplePosition3;
+      return triplePosition1;
     } else if (!autoSwitch4.get()) {
       return triplePosition2;
     } else {
