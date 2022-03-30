@@ -6,20 +6,13 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
-import frc.robot.commands.Drive.WPI_Turn_PID;
-import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Hood.HoodRetract;
-import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
-import frc.robot.commands.Intake.IntakeForward;
-import frc.robot.commands.Intake.SetIntakeSpeed;
-import frc.robot.commands.Shooter.Shoot;
-import frc.robot.commands.Spoon.SpoonCmdGroup;
+import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -35,23 +28,15 @@ public class TriplePosition2 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new IntakeExtend(intake).withTimeout(0.5),
       parallel(
-        new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
-        sequence(
-          new IntakeExtend(intake, true).withTimeout(1),
-          parallel(
-            new AutoIntake(intake),
-            new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
-            new HoodRetract(hood)
-          ).withTimeout(2),
-          new WPI_Turn_PID(drive, -DriveConstants.TURN_18).withTimeout(0.5),
-          new WPI_PID(drive, -DriveConstants.BALL_TO_LINE).withTimeout(2),
-          new SpoonCmdGroup(loadingSpoon).withTimeout(1),
-          new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED).withTimeout(2),
-          new SpoonCmdGroup(loadingSpoon).withTimeout(1)
-        )
-      ).withTimeout(10),
-      new WPI_Turn_PID(drive, DriveConstants.TURN_15).withTimeout(1.3),
+        new AutoIntake(intake),
+        new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
+        new HoodRetract(hood)
+      ).withTimeout(1.5),
+      new WPI_Turn_PID(drive, -19).withTimeout(0.5),
+      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(4),
+      new WPI_Turn_PID(drive, 27).withTimeout(1.3),
       parallel(
         new WPI_PID(drive, DriveConstants.TARMAC_TO_LOADING),
         new AutoIntake(intake)

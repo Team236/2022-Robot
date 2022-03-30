@@ -5,21 +5,16 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Intake.SetIntakeSpeed;
 import frc.robot.commands.Shooter.Shoot;
-import frc.robot.commands.Shooter.SpoonAndShoot;
 import frc.robot.commands.Spoon.SpoonCmdGroup;
-import frc.robot.commands.Spoon.SpoonExtend;
-import frc.robot.commands.Spoon.SpoonRetract;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -40,7 +35,7 @@ public class DoubleHubShot extends SequentialCommandGroup {
       parallel(
         new Shoot(shooter, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP),
         sequence(
-          new IntakeExtend(intake, true).withTimeout(1),
+          new IntakeExtend(intake).withTimeout(1),
           parallel(
             new IntakeForward(intake, IntakeConstants.FORWARD_SPEED),
             new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),

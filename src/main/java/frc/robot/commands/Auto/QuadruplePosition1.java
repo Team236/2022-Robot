@@ -5,38 +5,56 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
+import frc.robot.commands.Intake.NewIntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DoubleTarmac2 extends SequentialCommandGroup {
-  /** Creates a new DoubleTarmacWithLL. */
-  public DoubleTarmac2(Drive drive, Intake intake, LoadingSpoon loadingSpoon, Shooter shooter, Hood hood) {
+public class QuadruplePosition1 extends SequentialCommandGroup {
+  /** Creates a new QuadruplePosition1. */
+  public QuadruplePosition1(Drive drive, Intake intake, Hood hood, Shooter shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new IntakeExtend(intake).withTimeout(0.5),
       parallel(
         new AutoIntake(intake),
-        new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
+        new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
         new HoodRetract(hood)
       ).withTimeout(1.5),
-      new WPI_Turn_PID(drive, -19).withTimeout(0.5),
-      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
-      new IntakeExtend(intake)
+      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(1.8),
+      new WPI_Turn_PID(drive, 110).withTimeout(1),
+      new IntakeExtend(intake).withTimeout(0.5),
+      parallel(
+        new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED),
+        sequence(
+          new WPI_PID(drive, 100).withTimeout(1.5),
+          new WPI_PID(drive, 70).withTimeout(1.2),
+          new WPI_Turn_PID(drive, -60).withTimeout(1),
+          new WPI_PID(drive, 100).withTimeout(2)
+        )
+      ).withTimeout(5.7),
+      parallel(
+        new WPI_PID(drive, -103),
+        sequence(
+          new WaitCommand(0.5),
+          new FeedAndShoot(intake, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)
+        )
+      )
     );
   }
 }

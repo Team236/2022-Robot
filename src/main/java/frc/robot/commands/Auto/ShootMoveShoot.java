@@ -4,18 +4,14 @@
 
 package frc.robot.commands.Auto;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Drive.DriveWithPID;
 import frc.robot.commands.Drive.WPI_PID;
+import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
-import frc.robot.commands.Intake.IntakeForward;
-import frc.robot.commands.Intake.SetIntakeSpeed;
-import frc.robot.commands.Shooter.SpoonAndShoot;
+import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -33,16 +29,15 @@ public class ShootMoveShoot extends SequentialCommandGroup {
 
     addCommands(
       new WPI_PID(drive, DriveConstants.TARMAC_TO_LINE).withTimeout(2),
-      new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP).withTimeout(3),
-      new WaitCommand(1),
-      new IntakeExtend(intake, true).withTimeout(1),
+      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+      new IntakeExtend(intake).withTimeout(1),
       parallel(
-        new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED),
+        new AutoIntake(intake),
         new WPI_PID(drive, DriveConstants.BALL_TO_LINE)
       ).withTimeout(4),
-      new WaitCommand(1),
+      new WaitCommand(0.5),
       new WPI_PID(drive, -DriveConstants.BALL_TO_LINE).withTimeout(2),
-      new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(6)
+      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(3)
     );
   }
 }
