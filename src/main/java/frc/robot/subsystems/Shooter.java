@@ -71,8 +71,8 @@ public class Shooter extends SubsystemBase {
 
   // sets max and min rpm setpoints of motors
   public void setOutputRange() {
-    topPidController.setOutputRange(0, 8000);
-    botPidController.setOutputRange(0, 8000);
+    topPidController.setOutputRange(0, 6000);
+    botPidController.setOutputRange(0, 6000);
   }
 
   public void resetEncoders() {

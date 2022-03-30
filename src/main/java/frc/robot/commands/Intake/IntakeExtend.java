@@ -10,14 +10,12 @@ import frc.robot.subsystems.Intake;
 public class IntakeExtend extends CommandBase {
 
   private Intake intake;
-  private boolean isAuto;
 
   /** Creates a new IntakeExtend. */
-  public IntakeExtend(Intake intake, boolean isAuto) {
+  public IntakeExtend(Intake intake) {
 
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;
-    this.isAuto = isAuto;
     addRequirements(intake);
   }
 
@@ -26,10 +24,6 @@ public class IntakeExtend extends CommandBase {
   public void initialize() {
 
     intake.extend();
-    if (!isAuto) {
-      intake.resetFeedCounter();
-    }
-    intake.resetIntkCounter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

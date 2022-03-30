@@ -51,6 +51,7 @@ public class AutoIntake extends CommandBase {
   public boolean isFinished() {
 
     if (intake.getIntakeCount() == 1) {
+      intake.retract();
       return true;
     } else {
       return false;

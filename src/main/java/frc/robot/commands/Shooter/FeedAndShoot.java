@@ -25,7 +25,7 @@ public class FeedAndShoot extends ParallelCommandGroup {
     addCommands(
       new Shoot(shooter, botSpeed, topSpeed),
       sequence(
-        new WaitCommand(1),
+        new WaitCommand(0.5),
         new SetFeedSpeed(intake, IntakeConstants.FIRST_FEED_SPEED)
       )
     );

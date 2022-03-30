@@ -39,6 +39,14 @@ public class NewIntakeForward extends CommandBase {
       intake.setFirstFeedSpeed(feedSpeed);
     }
 
+    // if (intake.getFeederCount() == 1) {
+    //   intake.setIntakeSpeed(intakeSpeed);
+    //   intake.setFirstFeedSpeed(0);
+    // } else {
+    //   intake.setIntakeSpeed(intakeSpeed);
+    //   intake.setFirstFeedSpeed(feedSpeed);
+    // }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -65,7 +73,7 @@ public class NewIntakeForward extends CommandBase {
       return false;
     }
     
-    // code using on saturday
+    // code using on saturday 3/260
     // if ((intake.isBallInSpoon()) && (intake.getIntakeCount() == 2)) {
     //   intake.retract();
     //   return true;
