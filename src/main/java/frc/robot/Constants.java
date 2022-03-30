@@ -114,26 +114,32 @@ public final class Constants {
 
         // PID
         public static double kP = 0.01;
+        public static double kPLeft = 0.0107;
+        public static double kPRight = 0.01;
         public static double turnkP = 0.016;
+        public static double kPTurnL = 0.016;
+        public static double kPTurnR = 0.016;
         public static double kI = 0;
         public static double kD = 0;
-   
         public static double MIN_OUTPUT = -1;
         public static double MAX_OUTPUT = 1;
         public static final double MARGIN = 2;
         public static final double DISTANCE = 44;
+
+        // angles
         // one degree is 0.239 inches *if the relationship is linear*
         public static final double TURN_180 = 43;
-        public static final double TURN_135 = 25.7;
+        public static final double TURN_135 = 27;
         public static final double TURN_90 = 21.5;
-        public static final double TURN_70 = 16;
+        public static final double TURN_70 = 19;
         public static final double TURN_15 = 6.5; // need to test this angle; should be able to head toward loading station ball during position 2 auto
         public static final double TURN_18 = 4.5;
+
         // distances
         public static final double AUTO_MARGIN = 0;
         public static final double HUB_TO_BALL = 95;
         public static final double TARMAC_TO_BALL = 55;
-        public static final double TARMAC_TO_BALL_SHORT = 47; // short versions are for position 1 where the wall is close to ball
+        public static final double TARMAC_TO_BALL_SHORT = 41; // short versions are for position 1 where the wall is close to ball
         public static final double BALL_TO_LINE = 23 - AUTO_MARGIN;
         public static final double BALL_TO_LINE_SHORT = 9 - AUTO_MARGIN; // short versions are for position 1 where the wall is close to ball
         public static final double TARMAC_TO_LINE = 20;
@@ -156,24 +162,27 @@ public final class Constants {
         // speed on wheels should be greater than motor rpm
         // (wheel * 18) / 32 = motor
         public static final double TOP_SPEED = (2000 * 18) / 32; 
-        public static final double BOT_SPEED = (2000 * 18) / 32; 
+        public static final double BOT_SPEED = (2000 * 32) / 18; 
 
         public static final double HIGH_HUB_TOP = (6000 * 18) / 32;
-        public static final double HIGH_HUB_BOT = (2200 * 18) / 32;
+        public static final double HIGH_HUB_BOT = (2200 * 32) / 18;
 
         public static final double TOP_BASKETBALL = (6000 * 18) / 32;
-        public static final double BOT_BASKETBALL = (3850 * 18) / 32;
+        public static final double BOT_BASKETBALL = (3850 * 32) / 18;
 
         public static final double LOW_HUB_TOP = (3400 * 18) / 32;
-        public static final double LOW_HUB_BOT = (1700 * 18) / 32;
+        public static final double LOW_HUB_BOT = (1700 * 32) / 18;
 // 4500 and 2600 was 
 // last at 4600 and 2200
-        // **** good tarmac shot: rollers should be at top:3650 and bot: 3466 ****
-        public static final double TARMAC_TOP = (4600 * 18) / 32; //started with 5000 added 250
-        public static final double TARMAC_BOT = (2200 * 32) / 18; // 2500
+        // **** waterbury tarmac shot: rollers should be at top:3650 and bot: 3466 ****
+        public static final double TARMAC_TOP = (4300 * 18) / 32; //started with 5000 added 250
+        public static final double TARMAC_BOT = (2550 * 32) / 18; // 2200
+
+// with limelight distance (86.5 inches), 4300 and 2550 on 2.5 ball was just short of center, 3.5 ball just long of center
+
         // with waterbury pulley ratio
-        // public static final double TARMAC_TOP = (3650 * 18) / 32; //1237; // wheel speed = 2200; //3650
-        // public static final double TARMAC_BOT = (3350 * 18) / 32; //2261; // wheel speed = 4020;
+        // public static final double TARMAC_TOP = (3650 * 18) / 32; //1237;
+        // public static final double TARMAC_BOT = (3350 * 18) / 32; //2261;
 
         public static final double TARMAC_ATOP = (3350 * 18) / 32; //1237; // wheel speed = 2200; //3650
         public static final double TARMAC_ABOT = (3325 * 32) / 18; //2261; // wheel speed = 4020;
@@ -193,9 +202,9 @@ public final class Constants {
         public static final double TARMAC_BOT_LONG = (3520 * 32) / 18; //2261; // wheel speed = 4020;
 
         // ***increase top and decrease bottom for more height and less depth
-        public static final double LAUNCH_PAD_TOP = (8000 * 18) / 32; //6050
-        public static final double LAUNCH_PAD_BOT = (3250 * 32) / 18; //2850
-        // 7510, 3500 was too long
+        public static final double LAUNCH_PAD_TOP = (5400 * 18) / 32; //6050
+        public static final double LAUNCH_PAD_BOT = (3000 * 32) / 18; //2850
+// good launch pad is 5400 and 3000
     }
     public static class IntakeConstants {
         public static final int DIO_INTAKE_EYE = 5;
@@ -212,10 +221,10 @@ public final class Constants {
         public static final int DIST = 300;
     }
     public static class ClimberConstants {
-        public static final double MAST_EX_SPEED = 0.3;
-        public static final double MAST_RE_SPEED = 0.3;
-        public static final double ARM_EX_SPEED = 0.5;
-        public static final double ARM_RE_SPEED = 0.5;
+        public static final double MAST_EX_SPEED = 0.6;
+        public static final double MAST_RE_SPEED = 0.6;
+        public static final double ARM_EX_SPEED = 0.6;
+        public static final double ARM_RE_SPEED = 0.6;
 
         public static double kParm = 0;
         public static double kIarm = 0;
