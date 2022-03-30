@@ -11,21 +11,24 @@ import frc.robot.subsystems.Drive;
 
 public class WPI_PID extends CommandBase {
   private final Drive drive;
-  private final PIDController pidController;
+  private final PIDController leftPidController, rightPidController;
 
-  /** Creates a new WPI_PID. */
-  public WPI_PID(Drive drive, double setpoint) {
-    this.drive = drive;
-    this.pidController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
-    pidController.setSetpoint(setpoint);
+  /** Creates a new SeparatePID. */
+  public WPI_PID(Drive drive, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(this.drive);
+    this.drive = drive;
+    this.leftPidController = new PIDController(DriveConstants.kPLeft, DriveConstants.kI, DriveConstants.kD);
+    this.rightPidController = new PIDController(DriveConstants.kPRight, DriveConstants.kI, DriveConstants.kD);
+    leftPidController.setSetpoint(setPoint);
+    rightPidController.setSetpoint(setPoint);
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pidController.reset();
+    rightPidController.reset();
+    leftPidController.reset();
     drive.resetEncoders();
     drive.closedRampRate();
   }
@@ -33,9 +36,10 @@ public class WPI_PID extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // sets speed of drive motors based on the distance that they have travelled
-    double speed = pidController.calculate(drive.getAvgDistance());
-    drive.setBothSpeeds(speed);
+    double leftSpeed = leftPidController.calculate(drive.getLeftDistance());
+    double rightSpeed = rightPidController.calculate(drive.getRightDistance());
+    drive.setLeftSpeed(leftSpeed);
+    drive.setRightSpeed(rightSpeed);
   }
 
   // Called once the command ends or is interrupted.

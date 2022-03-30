@@ -11,13 +11,17 @@ import frc.robot.subsystems.Drive;
 
 public class WPI_Turn_PID extends CommandBase {
   private final Drive drive;
-  private final PIDController pidController;
+  private final PIDController leftPidController, rightPidController;
 
   /** Creates a new WPI_Turn_PID. */
-  public WPI_Turn_PID(Drive drive, double setpoint) {
+  public WPI_Turn_PID(Drive drive, double setpointDegrees) {
     this.drive = drive;
-    this.pidController = new PIDController(DriveConstants.turnkP, 0, 0);
-    pidController.setSetpoint(setpoint);
+    this.leftPidController = new PIDController(DriveConstants.kPTurnL, 0, 0);
+    this.rightPidController = new PIDController(DriveConstants.kPTurnR, 0, 0);
+
+    leftPidController.setSetpoint(setpointDegrees * 0.239); // this converts the setpoint in degrees to inches
+    rightPidController.setSetpoint(setpointDegrees * 0.239);
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.drive);
   }
@@ -25,7 +29,8 @@ public class WPI_Turn_PID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pidController.reset();
+    leftPidController.reset();
+    rightPidController.reset();
     drive.resetEncoders();
     drive.closedRampRate();
   }
@@ -35,8 +40,8 @@ public class WPI_Turn_PID extends CommandBase {
   public void execute() {
     // sets speeds of left and right drive motors based on distance they have travelled
     // robot turns CLOCKWISE
-    double leftSpeed = pidController.calculate(drive.getLeftDistance());
-    double rightSpeed = pidController.calculate(-drive.getRightDistance());
+    double leftSpeed = leftPidController.calculate(drive.getLeftDistance());
+    double rightSpeed = rightPidController.calculate(-drive.getRightDistance());
     drive.setLeftSpeed(leftSpeed);
     drive.setRightSpeed(-rightSpeed);
   }
