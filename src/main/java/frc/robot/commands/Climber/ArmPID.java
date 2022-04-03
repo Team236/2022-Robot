@@ -17,18 +17,18 @@ import frc.robot.subsystems.Climber;
 public class ArmPID extends CommandBase {
 
   private Climber climber;
-  private double armDISTANCE;
-  private double armMARGIN;
-  private double armERROR;
+  private double armDistance;
+  private double armMargin;
+  private double armError;
 
   /** Creates a new climberArmPID. */
-  public ArmPID(Climber climber, double armDISTANCE, double armMARGIN) {
+  public ArmPID(Climber climber, double armDistance, double armMargin) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
     addRequirements(climber);
 
-    this.armDISTANCE = armDISTANCE;
-    this.armMARGIN = armMARGIN;
+    this.armDistance = armDistance;
+    this.armMargin = armMargin;
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +36,6 @@ public class ArmPID extends CommandBase {
   public void initialize() {
 
     climber.resetEncoders();
-
     climber.setArmkP(ClimberConstants.kParm);
     climber.setArmkI(ClimberConstants.kIarm);
     climber.setArmkD(ClimberConstants.kDarm);
@@ -48,15 +47,16 @@ public class ArmPID extends CommandBase {
   public void execute() {
 
     climber.setArmOutputRange();
-    climber.setArmSetPoint(armDISTANCE);
+    climber.setArmSetPoint(armDistance);
 
-    armERROR = Math.abs(armDISTANCE - climber.getArmDistance());
+    armError = Math.abs(armDistance - climber.getArmDistance());
 
     SmartDashboard.putNumber("PID arm revs", climber.getArmEncoder());
     SmartDashboard.putNumber("PID arm distance", climber.getArmDistance());
     SmartDashboard.putNumber("PID kParm", ClimberConstants.kParm);
-    SmartDashboard.putNumber("PID arm setpoint1", armDISTANCE);
-    SmartDashboard.putNumber("PID arm ERROR", armERROR);
+    SmartDashboard.putNumber("PID arm setpoint1", armDistance);
+    SmartDashboard.putNumber("PID arm ERROR", armError
+);
   }
 
   // Called once the command ends or is interrupted.
@@ -68,10 +68,14 @@ public class ArmPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-   // boolean isArmMargin = armERROR < armMARGIN;
-   // SmartDashboard.putBoolean("arm PID finished", isArmMargin);
     
-    return false;
+    if ((armDistance > 0) && !climber.isAExtendLimit()) {
+    return true;
+    } else if ((armDistance < 0) && !climber.isAReturnLimit()) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 }

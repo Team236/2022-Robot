@@ -5,18 +5,16 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.Climber;
 
-public class MastWithAxis extends CommandBase {
+public class ArmWithAxis extends CommandBase {
   private Climber climber;
   private Joystick controller;
   private double speed;
 
-  /** Creates a new ClimbWithAxis. */
-  public MastWithAxis(Climber climber, Joystick controller) {
+  /** Creates a new ArmWithAxis. */
+  public ArmWithAxis(Climber climber, Joystick controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
     this.controller = controller;
@@ -30,29 +28,23 @@ public class MastWithAxis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setMastSpeed(-controller.getRawAxis(1));
-    speed = -controller.getRawAxis(1);
-    // axis 1 is the left joystick thingy on the logitech controller
-
-    SmartDashboard.putNumber("mast speed", speed);
-    // SmartDashboard.putNumber("controller getY", controller.getY());
-    
+    climber.setArmSpeed(-controller.getRawAxis(3)); //might be 4 or 3
+    speed = -controller.getRawAxis(3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.mastStop();
+    climber.armStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((speed > 0.008) && !climber.isMExtendLimit()) {
-      // if mast is going up and top limit is triggered
+    if ((speed > 0.008) && !climber.isAExtendLimit()) {
       // the 0.008 is because when the axis is at rest, it reads 0.0078125 so doing speed > 0.008 acts as a deadzone
       return true;
-    } else if ((speed < 0) && !climber.isMReturnLimit()) {
+    } else if ((speed < 0) && !climber.isAReturnLimit()) {
       return true;
     } else {
       return false;
