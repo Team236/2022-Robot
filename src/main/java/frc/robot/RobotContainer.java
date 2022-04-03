@@ -23,44 +23,33 @@ import frc.robot.commands.Auto.DoubleTarmac2;
 import frc.robot.commands.Auto.ShootMoveShoot;
 import frc.robot.commands.Auto.TriplePosition2;
 import frc.robot.commands.Auto.ExitTarmac;
+import frc.robot.commands.Auto.ExtendedTriple1;
 import frc.robot.commands.Auto.QuadruplePosition1;
 import frc.robot.commands.Climber.ArmPID;
+import frc.robot.commands.Climber.ArmWithAxis;
 import frc.robot.commands.Climber.ClimbSequence;
 import frc.robot.commands.Climber.MastPID;
 import frc.robot.commands.Climber.MastSetHeight;
 import frc.robot.commands.Climber.MastWithAxis;
+import frc.robot.commands.Climber.SetArmSpeed;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.TrackBall;
-import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
-import frc.robot.commands.Hood.HoodExtend;
 import frc.robot.commands.Hood.HoodExtendAndRetract;
-import frc.robot.commands.Hood.HoodRetract;
-import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
-import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.NewIntakeForward;
-import frc.robot.commands.Intake.ResetFeedCount;
 import frc.robot.commands.Intake.SetFeedSpeed;
 import frc.robot.commands.Intake.SetIntakeSpeed;
-import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.commands.Shooter.Shoot;
-import frc.robot.commands.Shooter.ShootWithLL;
-import frc.robot.commands.Shooter.SpoonAndShoot;
-import frc.robot.commands.Spoon.SpoonCmdGroup;
-import frc.robot.commands.Spoon.SpoonExtend;
-import frc.robot.commands.Spoon.SpoonExtendAndRetract;
-import frc.robot.commands.Spoon.SpoonRetract;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.commands.Drive.AngleAndDistLL;
 import frc.robot.commands.Drive.AnglewithLL;
 import frc.robot.commands.Drive.DistancewithLL;
@@ -83,20 +72,20 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
-    private final LoadingSpoon loadingSpoon = new LoadingSpoon();
     private final Hood hood = new Hood();
     private final Climber climber = new Climber();
- 
+
   // **COMMANDS**
     // *AUTO
     private final ExitTarmac exitTarmac = new ExitTarmac(drive);
-    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, loadingSpoon, intake);
-    private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, loadingSpoon, intake);
-    private final DoubleTarmac1 doubleTarmac1 = new DoubleTarmac1(drive, shooter, hood, loadingSpoon, intake);
-    private final DoubleTarmac2 doubleTarmac2 = new DoubleTarmac2(drive, intake, loadingSpoon, shooter, hood);
-    private final TriplePosition1 triplePosition1 = new TriplePosition1(intake, drive, hood, loadingSpoon, shooter);
-    private final TriplePosition2 triplePosition2 = new TriplePosition2(drive, intake, loadingSpoon, shooter, hood);
+    private final ShootMoveShoot shootMoveShoot = new ShootMoveShoot(drive, shooter, hood, intake);
+    private final DoubleHubShot doubleHubShot = new DoubleHubShot(drive, shooter, hood, intake);
+    private final DoubleTarmac1 doubleTarmac1 = new DoubleTarmac1(drive, shooter, hood, intake);
+    private final DoubleTarmac2 doubleTarmac2 = new DoubleTarmac2(drive, intake, shooter, hood);
+    private final TriplePosition1 triplePosition1 = new TriplePosition1(intake, drive, hood, shooter);
+    private final TriplePosition2 triplePosition2 = new TriplePosition2(drive, intake, shooter, hood);
     private final QuadruplePosition1 quadruplePosition1 = new QuadruplePosition1(drive, intake, hood, shooter);
+    private final ExtendedTriple1 extendedTriple1 = new ExtendedTriple1(intake, drive, hood, shooter);
 
     // *AUTO SWITCHES
     // private static DigitalInput autoSwitch1, autoSwitch2, autoSwitch3, autoSwitch4;
@@ -110,12 +99,7 @@ public class RobotContainer {
     private final DriveForward driveForward = new DriveForward(drive, 0.3);
     // private final TurnWithPID turnWithPID = new TurnWithPID(drive, DriveConstants.TURN_DISTANCE, DriveConstants.MARGIN);
     // *SHOOTER
-    private final SpoonAndShoot spoonAndShootHigh = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
-    private final SpoonAndShoot spoonAndShootLow = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
-    private final SpoonAndShoot spoonAndShootTarmac = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
-    private final SpoonAndShoot spoonAndShootLaunchPad = new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
-    private final ShootWithLL shootHighWithLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP);
-    private final ShootWithLL shootTarmacWLL = new ShootWithLL(drive, loadingSpoon, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
+    
     private final FeedAndShoot feedAndShootTarmac = new  FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP);
     private final FeedAndShoot feedAndShootLow = new FeedAndShoot(intake, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP);
     private final FeedAndShoot feedAndShootSafe = new FeedAndShoot(intake, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP);
@@ -126,30 +110,18 @@ public class RobotContainer {
     private final TrackBall trackBall = new TrackBall(drive);
     // *HOOD
     private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
-    private final HoodExtend hoodExtend = new HoodExtend(hood);
-    private final HoodRetract hoodRetract = new HoodRetract(hood);
     // *INTAKE
     private final IntakeExtendAndRetract intakeExtendAndRetract = new IntakeExtendAndRetract(intake);
-    private final IntakeExtend intakeExtend = new IntakeExtend(intake);
-    private final IntakeRetract intakeRetract = new IntakeRetract(intake);
-    private final IntakeForward intakeForward = new IntakeForward(intake, IntakeConstants.FORWARD_SPEED);
     private final IntakeReverse intakeReverse = new IntakeReverse(intake, IntakeConstants.REVERSE_SPEED);
     private final SetIntakeSpeed rawIntakeForward = new SetIntakeSpeed(intake, IntakeConstants.FORWARD_SPEED);
     private final SetFeedSpeed firstFeed = new SetFeedSpeed(intake, IntakeConstants.FIRST_FEED_SPEED);
     private final NewIntakeForward newIntakeForward = new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED);
     private final SetFeedSpeed reverseFeed = new SetFeedSpeed(intake, -IntakeConstants.FIRST_FEED_SPEED);
-    // *LOADING SPOON
-    private final SpoonExtend spoonExtend = new SpoonExtend(loadingSpoon);
-    private final SpoonRetract spoonRetract = new SpoonRetract(loadingSpoon);
-    private final SpoonExtendAndRetract spoonExtendAndRetract = new SpoonExtendAndRetract(loadingSpoon);
-    private final SpoonCmdGroup extendWaitRetract = new SpoonCmdGroup(loadingSpoon);
     // *CLIMBER
     private final ArmPID extendArm = new ArmPID(climber, ClimberConstants.armDISTANCE, ClimberConstants.armMARGIN);
-    // private final MastPID raiseMast = new MastPID(climber, ClimberConstants.MAST_EXT_RET_DIST, ClimberConstants.mastMARGIN);
     private final ClimbSequence climbSequence = new ClimbSequence(climber);
     private final MastWithAxis mastWithAxis = new MastWithAxis(climber, controller);
-    // private final MastSetHeight mastUp = new MastSetHeight(climber, mastHeight, 0.4);
-    private final MastSetHeight mastDown = new MastSetHeight(climber, 16.9, -0.3);
+    private final ArmWithAxis armWithAxis = new ArmWithAxis(climber, controller);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -213,40 +185,34 @@ public class RobotContainer {
 
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
-    b.whileActiveOnce(new WPI_Turn_PID(drive, DriveConstants.TURN_90));
-    a.whileActiveOnce(new MastPID(climber, -152, 1)); //retracts climber to climb on mid rung
-    y.whileActiveOnce(new MastPID(climber, 152, 1)); //raises climber for mid rung
-    x.whileActiveOnce(new MastPID(climber, 17.5, 1)); //pit button--preps climber for match
+    b.whileActiveOnce(new ArmPID(climber, 50, 1));
+    a.whileActiveOnce(new MastPID(climber, -165, 1)); //retracts climber to climb on mid rung
+    y.whileActiveOnce(new MastPID(climber, 169.5, 1)); //raises climber for mid rung
+    x.whileActiveOnce(new ArmPID(climber, -50, 1));
+    // x.whileActiveOnce(new MastPID(climber, 17.5, 1)); //pit button--preps climber for match
     lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
     leftPress.whileHeld(anglewithLL);
     rightPress.whileHeld(distancewithLL);
-    back.whenPressed(firstFeed);
-    start.whileActiveOnce(mastWithAxis); // hold down start while using left joystick on controller
+    back.whileHeld(armWithAxis);
+    start.whileHeld(mastWithAxis); // hold down start while using left joystick on controller
 
     // *LEFT STICK
     leftTrigger.whileHeld(feedAndShootTarmac);
     leftMiddle.whileHeld(feedAndShootSafe);
     leftStickRight.whileHeld(feedAndShootLow);
-    // leftMiddle.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)); //shoot high from safety zone
-    // leftStickLeft.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.HIGH_HUB_BOT, ShooterConstants.HIGH_HUB_TOP)); //shoot high from hub
-    // leftStickRight.whileActiveOnce(new SpoonAndShoot(loadingSpoon, shooter, hood, ShooterConstants.LOW_HUB_BOT, ShooterConstants.LOW_HUB_TOP)); //shoot low from hub
-    // extraL1.whileActiveOnce(new WPI_PID(drive, 27));
-    extraL1.whileHeld(new WPI_PID(drive, 80));
+    extraL1.whileHeld(new WPI_PID(drive, 50));
     extraL2.whileHeld(new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP));
-    extraL5.whileHeld(firstFeed); //spoonExtend
-    extraL7.whenPressed(hoodExtend); //safety shot
-    extraL8.whenPressed(hoodRetract); //tarmac shot
+    extraL5.whileHeld(firstFeed);
+    extraL8.whenPressed(hoodExtendAndRetract);
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(newIntakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
     rightStickLeft.whileActiveOnce(new WPI_Turn_PID(drive, 169)); //turns clockwise/to the left
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, 91));
     extraR1.whileHeld(reverseFeed);
-    extraR2.whenPressed(new ResetFeedCount(intake));
-    extraR3.whenPressed(intakeExtend);
-    extraR4.whenPressed(intakeRetract);
-    extraL6.whileHeld(trackBall);
+    extraR4.whenPressed(intakeExtendAndRetract);
+    extraR6.whileHeld(trackBall);
     extraR7.whileHeld(anglewithLL);
     extraR8.whileHeld(distancewithLL);
   }
@@ -259,9 +225,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     // an auto switch is "on" if the autoSwitch.get is false
-
-    if (!autoSwitch1.get() && !autoSwitch3.get()) {
+    if (!autoSwitch1.get() && !autoSwitch2.get() && !autoSwitch3.get() && !autoSwitch4.get()) {
+      return exitTarmac;
+    } else if (!autoSwitch1.get() && !autoSwitch3.get()) {
       return quadruplePosition1;
+    } else if (!autoSwitch1.get() && !autoSwitch4.get()) {
+      return extendedTriple1;
     } else if (!autoSwitch1.get()) {
       return doubleTarmac1;
     } else if (!autoSwitch2.get()) {
