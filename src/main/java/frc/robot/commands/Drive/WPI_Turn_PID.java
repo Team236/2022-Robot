@@ -20,7 +20,7 @@ public class WPI_Turn_PID extends CommandBase {
     this.rightPidController = new PIDController(DriveConstants.kPTurnR, 0, 0);
 
     leftPidController.setSetpoint(setpointDegrees * 0.239); // this converts the setpoint in degrees to inches
-    rightPidController.setSetpoint(setpointDegrees * 0.239);
+    rightPidController.setSetpoint(-setpointDegrees * 0.239);
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.drive);
@@ -41,9 +41,9 @@ public class WPI_Turn_PID extends CommandBase {
     // sets speeds of left and right drive motors based on distance they have travelled
     // robot turns CLOCKWISE
     double leftSpeed = leftPidController.calculate(drive.getLeftDistance());
-    double rightSpeed = rightPidController.calculate(-drive.getRightDistance());
+    double rightSpeed = rightPidController.calculate(drive.getRightDistance());
     drive.setLeftSpeed(leftSpeed);
-    drive.setRightSpeed(-rightSpeed);
+    drive.setRightSpeed(rightSpeed);
   }
 
   // Called once the command ends or is interrupted.
