@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Intake.ResetFeedCount;
 import frc.robot.commands.Intake.SetFeedSpeed;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;

@@ -182,9 +182,9 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("intake sensor count", getIntakeCount());
-    SmartDashboard.putNumber("feeder sensor count", getFeederCount());
-    SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
-    SmartDashboard.putNumber("feed wheel speed", getFeedVelocity());
+    // SmartDashboard.putNumber("feeder sensor count", getFeederCount());
+    // SmartDashboard.putNumber("color sense dist", colorSensor.getProximity());
+    // SmartDashboard.putNumber("feed wheel speed", getFeedVelocity());
     // whatColor();
   }
 }
