@@ -37,21 +37,21 @@ public class QuadruplePosition1 extends SequentialCommandGroup {
         new HoodRetract(hood)
       ).withTimeout(1.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(1.8),
-      new WPI_Turn_PID(drive, 110).withTimeout(1),
+      new WPI_Turn_PID(drive, 103).withTimeout(1),
       new IntakeExtend(intake).withTimeout(0.5),
       parallel(
         new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED),
         sequence(
           new WPI_PID(drive, 100).withTimeout(1.5),
           new WPI_PID(drive, 70).withTimeout(1.2),
-          new WPI_Turn_PID(drive, -60).withTimeout(1),
-          new WPI_PID(drive, 100).withTimeout(2)
+          new WPI_Turn_PID(drive, -63).withTimeout(1),
+          new WPI_PID(drive, 103).withTimeout(2)
         )
-      ).withTimeout(5.7),
+      ).withTimeout(6),
       parallel(
-        new WPI_PID(drive, -103),
+        new WPI_PID(drive, -100),
         sequence(
-          new WaitCommand(0.5),
+          new WaitCommand(1),
           new FeedAndShoot(intake, shooter, hood, ShooterConstants.LAUNCH_PAD_BOT, ShooterConstants.LAUNCH_PAD_TOP)
         )
       )

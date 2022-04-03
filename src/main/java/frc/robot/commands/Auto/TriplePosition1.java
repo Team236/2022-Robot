@@ -16,7 +16,6 @@ import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -24,7 +23,7 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TriplePosition1 extends SequentialCommandGroup {
   /** Creates a new DoubleTarmac3. */
-  public TriplePosition1(Intake intake, Drive drive, Hood hood, LoadingSpoon loadingSpoon, Shooter shooter) {
+  public TriplePosition1(Intake intake, Drive drive, Hood hood, Shooter shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -36,14 +35,14 @@ public class TriplePosition1 extends SequentialCommandGroup {
       ).withTimeout(1.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(2.2),
       parallel(
-        new WPI_Turn_PID(drive, 98),
+        new WPI_Turn_PID(drive, 101), // 98 without climber, 102 with climber
         new IntakeExtend(intake)
       ).withTimeout(1),
       parallel(
         new AutoIntake(intake),
         sequence(
           new WPI_PID(drive, 95).withTimeout(1.5),
-          new WPI_Turn_PID(drive, -67).withTimeout(1)
+          new WPI_Turn_PID(drive, -76).withTimeout(1)
         )
       ).withTimeout(2.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)

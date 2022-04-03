@@ -16,7 +16,6 @@ import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LoadingSpoon;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -24,7 +23,7 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DoubleTarmac2 extends SequentialCommandGroup {
   /** Creates a new DoubleTarmacWithLL. */
-  public DoubleTarmac2(Drive drive, Intake intake, LoadingSpoon loadingSpoon, Shooter shooter, Hood hood) {
+  public DoubleTarmac2(Drive drive, Intake intake, Shooter shooter, Hood hood) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -34,9 +33,9 @@ public class DoubleTarmac2 extends SequentialCommandGroup {
         new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL),
         new HoodRetract(hood)
       ).withTimeout(1.5),
-      new WPI_Turn_PID(drive, -19).withTimeout(0.5),
-      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
-      new IntakeExtend(intake)
+      new WPI_Turn_PID(drive, -22).withTimeout(1),
+      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(4),
+      new IntakeExtend(intake).withTimeout(0.5)
     );
   }
 }
