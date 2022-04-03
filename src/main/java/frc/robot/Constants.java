@@ -82,9 +82,6 @@ public final class Constants {
         public static final int INTAKE_SOL_FOR = 1;
         public static final int INTAKE_SOL_REV = 0;
 
-        public static final int SPOON_SOL_FOR = 3;
-        public static final int SPOON_SOL_REV = 2;
-
         public static final int HOOD_EXTEND = 4;
         public static final int HOOD_RETRACT = 5;
     }
@@ -113,12 +110,12 @@ public final class Constants {
         public static final boolean IS_DEADZONE = true;
 
         // PID
-        public static double kP = 0.01;
-        public static double kPLeft = 0.0107;
-        public static double kPRight = 0.01;
+        public static double kP = 0.01; //ratio = 1.209
+        public static double kPLeft = 0.0107; // side with climber
+        public static double kPRight = 0.0096;
         public static double turnkP = 0.016;
-        public static double kPTurnL = 0.016;
-        public static double kPTurnR = 0.016;
+        public static double kPTurnL = 0.018; //left turn kP from 0.016 to 0.018
+        public static double kPTurnR = 0.018;
         public static double kI = 0;
         public static double kD = 0;
         public static double MIN_OUTPUT = -1;
@@ -176,7 +173,7 @@ public final class Constants {
 // last at 4600 and 2200
         // **** waterbury tarmac shot: rollers should be at top:3650 and bot: 3466 ****
         public static final double TARMAC_TOP = (4300 * 18) / 32; //started with 5000 added 250
-        public static final double TARMAC_BOT = (2550 * 32) / 18; // 2200
+        public static final double TARMAC_BOT = (2300 * 32) / 18; // 2200
 
 // with limelight distance (86.5 inches), 4300 and 2550 on 2.5 ball was just short of center, 3.5 ball just long of center
 
@@ -226,7 +223,7 @@ public final class Constants {
         public static final double ARM_EX_SPEED = 0.6;
         public static final double ARM_RE_SPEED = 0.6;
 
-        public static double kParm = 0;
+        public static double kParm = 0.02;
         public static double kIarm = 0;
         public static double kDarm = 0;
         public static double kFarm = 0; // mooooooooo
