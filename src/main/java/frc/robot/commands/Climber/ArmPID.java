@@ -12,20 +12,20 @@ import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Arm;
 
 public class ArmPID extends CommandBase {
 
-  private Climber climber;
+  private Arm arm;
   private double armDistance;
   private double armMargin;
   private double armError;
 
   /** Creates a new climberArmPID. */
-  public ArmPID(Climber climber, double armDistance, double armMargin) {
+  public ArmPID(Arm arm, double armDistance, double armMargin) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.climber = climber;
-    addRequirements(climber);
+    this.arm = arm;
+    addRequirements(arm);
 
     this.armDistance = armDistance;
     this.armMargin = armMargin;
@@ -35,10 +35,9 @@ public class ArmPID extends CommandBase {
   @Override
   public void initialize() {
 
-    climber.resetEncoders();
-    climber.setArmkP(ClimberConstants.kParm);
-    climber.setArmkI(ClimberConstants.kIarm);
-    climber.setArmkD(ClimberConstants.kDarm);
+    arm.setArmkP(ClimberConstants.kParm);
+    arm.setArmkI(ClimberConstants.kIarm);
+    arm.setArmkD(ClimberConstants.kDarm);
 
   }
 
@@ -46,32 +45,27 @@ public class ArmPID extends CommandBase {
   @Override
   public void execute() {
 
-    climber.setArmOutputRange();
-    climber.setArmSetPoint(armDistance);
+    arm.setArmOutputRange();
+    arm.setArmSetPoint(armDistance);
 
-    armError = Math.abs(armDistance - climber.getArmDistance());
+    armError = Math.abs(armDistance - arm.getArmEncoder());
 
-    SmartDashboard.putNumber("PID arm revs", climber.getArmEncoder());
-    SmartDashboard.putNumber("PID arm distance", climber.getArmDistance());
-    SmartDashboard.putNumber("PID kParm", ClimberConstants.kParm);
-    SmartDashboard.putNumber("PID arm setpoint1", armDistance);
-    SmartDashboard.putNumber("PID arm ERROR", armError
-);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.armStop();
+    arm.armStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     
-    if ((armDistance > 0) && !climber.isAExtendLimit()) {
-    return true;
-    } else if ((armDistance < 0) && !climber.isAReturnLimit()) {
+    if ((armDistance > 0) && arm.isAReturnLimit()) {
+      arm.resetArmEncoder();
+      return true;
+    } else if ((armDistance < 0) && arm.isAExtendLimit()) {
       return true;
     } else {
       return false;

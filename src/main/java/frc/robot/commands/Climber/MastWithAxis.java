@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Mast;
 
 public class MastWithAxis extends CommandBase {
-  private Climber climber;
+  private Mast mast;
   private Joystick controller;
   private double speed;
 
   /** Creates a new ClimbWithAxis. */
-  public MastWithAxis(Climber climber, Joystick controller) {
+  public MastWithAxis(Mast mast, Joystick controller) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.climber = climber;
+    this.mast = mast;
     this.controller = controller;
-    addRequirements(climber);
+    addRequirements(mast);
   }
 
   // Called when the command is initially scheduled.
@@ -30,29 +30,28 @@ public class MastWithAxis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setMastSpeed(-controller.getRawAxis(1));
+    mast.setMastSpeed(-controller.getRawAxis(1));
     speed = -controller.getRawAxis(1);
     // axis 1 is the left joystick thingy on the logitech controller
-
     SmartDashboard.putNumber("mast speed", speed);
-    // SmartDashboard.putNumber("controller getY", controller.getY());
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.mastStop();
+    mast.mastStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((speed > 0.008) && !climber.isMExtendLimit()) {
+    if ((speed > 0.008) && mast.isMExtendLimit()) {
       // if mast is going up and top limit is triggered
       // the 0.008 is because when the axis is at rest, it reads 0.0078125 so doing speed > 0.008 acts as a deadzone
       return true;
-    } else if ((speed < 0) && !climber.isMReturnLimit()) {
+    } else if ((speed < 0) && mast.isMReturnLimit()) {
+      mast.resetMastEncoder();
       return true;
     } else {
       return false;

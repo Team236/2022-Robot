@@ -11,20 +11,20 @@ import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Mast;
 
 public class MastPID extends CommandBase {
 
-  private Climber climber;
+  private Mast mast;
   private double mastDistance;
   private double mastMargin;
   private double mastError;
   
   /** Creates a new HangerMastPID. */
-  public MastPID(Climber climber, double mastDistance, double mastMargin) {
+  public MastPID(Mast mast, double mastDistance, double mastMargin) {
 
-    this.climber = climber;
-    addRequirements(climber);
+    this.mast = mast;
+    addRequirements(mast);
     // Use addRequirements() here to declare subsystem dependencies.
     this.mastDistance = mastDistance;
     this.mastMargin = mastMargin;
@@ -33,43 +33,37 @@ public class MastPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override 
   public void initialize() {
-    climber.resetEncoders();
-    climber.setMastkP(ClimberConstants.kPmast);
-    climber.setMastkI(ClimberConstants.kImast);
-    climber.setMastkD(ClimberConstants.kDmast);
+    mast.setMastkP(ClimberConstants.kPmast);
+    mast.setMastkI(ClimberConstants.kImast);
+    mast.setMastkD(ClimberConstants.kDmast);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     
-    climber.setMastOutputRange();
-    climber.setMastSetPoint(mastDistance);
+    mast.setMastOutputRange();
+    mast.setMastSetPoint(mastDistance);
 
-    mastError = Math.abs(mastDistance - climber.getMastDistance());
-    
-    SmartDashboard.putNumber("PID mast revs", climber.getMastEncoder());
-    SmartDashboard.putNumber("PID mast distance", climber.getMastDistance());
-    SmartDashboard.putNumber("PID kPmast", ClimberConstants.kPmast);
-    SmartDashboard.putNumber("PID mast setpoint", mastDistance);
-    SmartDashboard.putNumber("PID mast ERROR", mastError);
+    mastError = Math.abs(mastDistance - mast.getMastEncoder());
   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.mastStop();
+    mast.mastStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return climber.mastLimitTriggered();
+    // return mast.mastLimitTriggered();
 
-    if ((mastDistance > 0) && !climber.isMExtendLimit()) {
+    if ((mastDistance > 0) && mast.isMExtendLimit()) {
       return true;
-    } else if ((mastDistance < 0) && !climber.isMReturnLimit()) {
+    } else if ((mastDistance < 0) && mast.isMReturnLimit()) {
+      mast.resetMastEncoder();
       return true;
     } else {
       return false;

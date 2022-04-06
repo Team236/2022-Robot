@@ -6,21 +6,21 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Mast;
 
 public class MastSetHeight extends CommandBase {
-  private Climber climber;
+  private Mast mast;
   private double mastHeight;
   private double speed;
   private double encoder;
 
   /** Creates a new MastSetHeight. */
-  public MastSetHeight(Climber climber, double mastHeight, double speed) {
+  public MastSetHeight(Mast mast, double mastHeight, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.climber = climber;
+    this.mast = mast;
     this.mastHeight = mastHeight;
     this.speed = speed;
-    addRequirements(climber);
+    addRequirements(mast);
   }
 
   // Called when the command is initially scheduled.
@@ -30,16 +30,14 @@ public class MastSetHeight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setMastSpeed(speed);
-    SmartDashboard.putNumber("set height mast encoder", climber.getMastEncoder());
-    SmartDashboard.putNumber("set height", mastHeight);
-    encoder = climber.getMastEncoder();
+    mast.setMastSpeed(speed);
+    encoder = mast.getMastEncoder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.mastStop();
+    mast.mastStop();
   }
 
   // Returns true when the command should end.
@@ -47,9 +45,10 @@ public class MastSetHeight extends CommandBase {
   public boolean isFinished() {
     if (encoder == mastHeight) {
       return true;
-    } else if ((speed > 0) && !climber.isMExtendLimit()) {
+    } else if ((speed > 0) && !mast.isMExtendLimit()) {
       return true;
-    } else if ((speed < 0) && !climber.isMReturnLimit()) {
+    } else if ((speed < 0) && !mast.isMReturnLimit()) {
+      mast.resetMastEncoder();
       return true;
     } else {
       return false;

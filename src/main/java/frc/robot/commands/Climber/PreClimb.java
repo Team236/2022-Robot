@@ -5,21 +5,21 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.Climber;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Mast;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ClimbSequence extends SequentialCommandGroup {
+public class PreClimb extends SequentialCommandGroup {
   /** Creates a new ClimbSequence. */
-  public ClimbSequence(Climber climber) {
+  public PreClimb(Mast mast, Arm arm) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MastPID(climber, -6, 1).withTimeout(3),
-      new ArmPID(climber, -6, 1).withTimeout(3),
-      new ArmPID(climber, 32, 1).withTimeout(6),
-      new ArmPID(climber, -4, 1).withTimeout(5)
+      new ArmPID(arm, ClimberConstants.ARM_TO_CLIMB, 1).withTimeout(3),
+      new MastPID(mast, ClimberConstants.MAST_UP, 1).withTimeout(3)
     );
   }
 }
