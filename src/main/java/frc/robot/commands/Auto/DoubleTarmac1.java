@@ -10,8 +10,8 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodRetract;
-import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
+import frc.robot.commands.Intake.NewIntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
@@ -32,7 +32,7 @@ public class DoubleTarmac1 extends SequentialCommandGroup {
         new IntakeExtend(intake).withTimeout(0.5),
         parallel(
           // drive to ball while intaking and extending hood
-          new AutoIntake(intake),
+          new NewIntakeForward(intake),
           new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
           new HoodRetract(hood)
         ).withTimeout(1.5),

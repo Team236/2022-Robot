@@ -12,6 +12,7 @@ import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodRetract;
 import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
+import frc.robot.commands.Intake.NewIntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
@@ -29,23 +30,24 @@ public class TriplePosition1 extends SequentialCommandGroup {
     addCommands(
       new IntakeExtend(intake).withTimeout(0.5),
       parallel(
-        new AutoIntake(intake),
+        new NewIntakeForward(intake),
         new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
         new HoodRetract(hood)
       ).withTimeout(1.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(2.2),
       parallel(
-        new WPI_Turn_PID(drive, 101), // 98 without climber, 102 with climber
+        new WPI_Turn_PID(drive, 99), // 98 without climber, 102 with climber
         new IntakeExtend(intake)
       ).withTimeout(1),
       parallel(
         new AutoIntake(intake),
         sequence(
           new WPI_PID(drive, 95).withTimeout(1.5),
-          new WPI_Turn_PID(drive, -76).withTimeout(1)
+          new WPI_Turn_PID(drive, -72).withTimeout(1)
         )
       ).withTimeout(2.5),
-      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP)
+      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(2.5),
+      new IntakeExtend(intake).withTimeout(1)
     );
   }
 }

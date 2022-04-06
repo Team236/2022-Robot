@@ -7,12 +7,10 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodRetract;
-import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.NewIntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
@@ -30,9 +28,11 @@ public class QuadruplePosition1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeExtend(intake).withTimeout(0.5),
       parallel(
-        new AutoIntake(intake),
+        sequence(      
+          new IntakeExtend(intake).withTimeout(0.5),
+          new NewIntakeForward(intake)
+        ),
         new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
         new HoodRetract(hood)
       ).withTimeout(1.5),
@@ -40,12 +40,12 @@ public class QuadruplePosition1 extends SequentialCommandGroup {
       new WPI_Turn_PID(drive, 103).withTimeout(1),
       new IntakeExtend(intake).withTimeout(0.5),
       parallel(
-        new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED),
+        new NewIntakeForward(intake),
         sequence(
           new WPI_PID(drive, 100).withTimeout(1.5),
           new WPI_PID(drive, 70).withTimeout(1.2),
-          new WPI_Turn_PID(drive, -63).withTimeout(1),
-          new WPI_PID(drive, 103).withTimeout(2)
+          new WPI_Turn_PID(drive, -50).withTimeout(1),
+          new WPI_PID(drive, 100).withTimeout(2)
         )
       ).withTimeout(6),
       parallel(

@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
-import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.commands.Intake.IntakeExtend;
+import frc.robot.commands.Intake.NewIntakeForward;
 import frc.robot.commands.Shooter.FeedAndShoot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
@@ -31,7 +31,7 @@ public class ShootMoveShoot extends SequentialCommandGroup {
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
       new IntakeExtend(intake).withTimeout(1),
       parallel(
-        new AutoIntake(intake),
+        new NewIntakeForward(intake),
         new WPI_PID(drive, DriveConstants.BALL_TO_LINE)
       ).withTimeout(4),
       new WaitCommand(0.5),

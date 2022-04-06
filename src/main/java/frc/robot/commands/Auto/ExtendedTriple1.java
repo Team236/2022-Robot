@@ -6,7 +6,6 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Drive.WPI_PID;
 import frc.robot.commands.Drive.WPI_Turn_PID;
@@ -31,7 +30,7 @@ public class ExtendedTriple1 extends SequentialCommandGroup {
     addCommands(
       new IntakeExtend(intake).withTimeout(0.5),
       parallel(
-        new AutoIntake(intake),
+        new NewIntakeForward(intake),
         new WPI_PID(drive, DriveConstants.TARMAC_TO_BALL_SHORT),
         new HoodRetract(hood)
       ).withTimeout(1.5),
@@ -44,7 +43,7 @@ public class ExtendedTriple1 extends SequentialCommandGroup {
         new AutoIntake(intake),
         sequence(
           new WPI_PID(drive, 95).withTimeout(1.5),
-          new WPI_Turn_PID(drive, -76).withTimeout(1)
+          new WPI_Turn_PID(drive, -72).withTimeout(1)
         )
       ).withTimeout(2.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(2.2),
@@ -53,8 +52,8 @@ public class ExtendedTriple1 extends SequentialCommandGroup {
         new WPI_Turn_PID(drive, 40)
       ).withTimeout(1),
       parallel(
-        new NewIntakeForward(intake, IntakeConstants.FORWARD_SPEED, IntakeConstants.FIRST_FEED_SPEED),
-        new WPI_PID(drive, 100)
+        new NewIntakeForward(intake),
+        new WPI_PID(drive, 120)
       )
     );
   }
