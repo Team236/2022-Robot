@@ -112,7 +112,7 @@ public final class Constants {
         // PID
         public static double kP = 0.01; //ratio = 1.209
         public static double kPLeft = 0.0107; // side with climber
-        public static double kPRight = 0.0096;
+        public static double kPRight = 0.0107; //0.0096;
         public static double turnkP = 0.016;
         public static double kPTurnL = 0.018; //left turn kP from 0.016 to 0.018
         public static double kPTurnR = 0.018;
@@ -223,7 +223,7 @@ public final class Constants {
         public static final double ARM_EX_SPEED = 0.6;
         public static final double ARM_RE_SPEED = 0.6;
 
-        public static double kParm = 0.02;
+        public static double kParm = 0.025;
         public static double kIarm = 0;
         public static double kDarm = 0;
         public static double kFarm = 0; // mooooooooo
@@ -233,8 +233,8 @@ public final class Constants {
         public static double kDmast = 0;
         public static double kFmast = 0;
 
-        public static double armREV_TO_IN = 1.64;
-        public static double armIN_TO_REV = 0.6097;
+        public static double armREV_TO_IN = 0.1968504; //1.64;
+        public static double armIN_TO_REV = 5.08; //0.6097;
 
         public static double mastREV_TO_IN = 0.5;
         public static double mastIN_TO_REV = 2;
@@ -246,15 +246,20 @@ public final class Constants {
         public static final double armDISTANCE = 18;
 
         public static final double mastMARGIN = 2;
-        public static final double MAST_EXT_RET_DIST = 50;
 
         public static final int DIO_MAST_RETURN = 3;
         public static final int DIO_MAST_EXTEND = 4;
 
-        public static final int DIO_ARM_RETRACT = 1;
-        public static final int DIO_ARM_EXTEND = 2;
+        public static final int DIO_ARM_EXTEND = 1;
+        public static final int DIO_ARM_RETRACT = 2;
 
         public static final int CURRENT_LIMIT_CLIMB = 40;
+
+        public static final double PIT_MAST = 17.5;
+        public static final double STOWE_ARM = -126;
+        public static final double MAST_UP = 180;
+        public static final double CLIMB_UP = -180; //may need to be greater so that metal hooks lock into place
+        public static final double ARM_TO_CLIMB = -22;
 
     }
 
