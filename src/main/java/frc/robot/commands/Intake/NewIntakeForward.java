@@ -5,18 +5,16 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class NewIntakeForward extends CommandBase {
 
   private Intake intake;
-  private double intakeSpeed, feedSpeed;
   
   /** Creates a new NewIntakeForward. */
-  public NewIntakeForward(Intake intake, double intakeSpeed, double feedSpeed) {
+  public NewIntakeForward(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.intakeSpeed = intakeSpeed;
-    this.feedSpeed = feedSpeed;
     this.intake = intake;
     addRequirements(intake);
   }
@@ -32,20 +30,12 @@ public class NewIntakeForward extends CommandBase {
   public void execute() {
 
     if (intake.isBallInSpoon()) {
-      intake.setIntakeSpeed(intakeSpeed);
+      intake.setIntakeSpeed(IntakeConstants.FORWARD_SPEED);
       intake.setFirstFeedSpeed(0);
     } else {
-      intake.setIntakeSpeed(intakeSpeed);
-      intake.setFirstFeedSpeed(feedSpeed);
+      intake.setIntakeSpeed(IntakeConstants.FORWARD_SPEED);
+      intake.setFirstFeedSpeed(IntakeConstants.FIRST_FEED_SPEED);
     }
-
-    // if (intake.getFeederCount() == 1) {
-    //   intake.setIntakeSpeed(intakeSpeed);
-    //   intake.setFirstFeedSpeed(0);
-    // } else {
-    //   intake.setIntakeSpeed(intakeSpeed);
-    //   intake.setFirstFeedSpeed(feedSpeed);
-    // }
 
   }
 
@@ -72,13 +62,5 @@ public class NewIntakeForward extends CommandBase {
     } else {
       return false;
     }
-    
-    // code using on saturday 3/260
-    // if ((intake.isBallInSpoon()) && (intake.getIntakeCount() == 2)) {
-    //   intake.retract();
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 }
