@@ -199,8 +199,8 @@ public final class Constants {
         public static final double TARMAC_BOT_LONG = (3520 * 32) / 18; //2261; // wheel speed = 4020;
 
         // ***increase top and decrease bottom for more height and less depth
-        public static final double LAUNCH_PAD_TOP = (5400 * 18) / 32; //6050
-        public static final double LAUNCH_PAD_BOT = (3000 * 32) / 18; //2850
+        public static final double LAUNCH_PAD_TOP = (5200 * 18) / 32; //5400
+        public static final double LAUNCH_PAD_BOT = (2800 * 32) / 18; //3000
 // good launch pad is 5400 and 3000
     }
     public static class IntakeConstants {
