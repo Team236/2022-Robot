@@ -27,14 +27,12 @@ import frc.robot.commands.Auto.ExtendedTriple1;
 import frc.robot.commands.Auto.QuadruplePosition1;
 import frc.robot.commands.Climber.ArmPID;
 import frc.robot.commands.Climber.ArmWithAxis;
-import frc.robot.commands.Climber.PreClimb;
 import frc.robot.commands.Climber.MastPID;
 import frc.robot.commands.Climber.MastSetHeight;
 import frc.robot.commands.Climber.MastWithAxis;
 import frc.robot.commands.Drive.DashboardPID;
 import frc.robot.commands.Drive.DriveWithJoysticks;
 import frc.robot.commands.Drive.WPI_PID;
-import frc.robot.commands.Drive.TrackBall;
 import frc.robot.commands.Drive.WPI_Turn_PID;
 import frc.robot.commands.Hood.HoodExtendAndRetract;
 import frc.robot.commands.Intake.IntakeExtendAndRetract;
@@ -74,7 +72,7 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final Hood hood = new Hood();
     private final Mast mast = new Mast();
-    private final Arm arm = new Arm();
+    // private final Arm arm = new Arm();
 
   // **COMMANDS**
     // *AUTO
@@ -108,7 +106,7 @@ public class RobotContainer {
     private final AnglewithLL anglewithLL = new AnglewithLL(drive);
     private final DistancewithLL distancewithLL = new DistancewithLL(drive);
     private final AngleAndDistLL angleAndDistLL = new AngleAndDistLL(drive);
-    private final TrackBall trackBall = new TrackBall(drive);
+    // private final TrackBall trackBall = new TrackBall(drive);
     // *HOOD
     private final HoodExtendAndRetract hoodExtendAndRetract = new HoodExtendAndRetract(hood);
     // *INTAKE
@@ -120,7 +118,7 @@ public class RobotContainer {
     private final SetFeedSpeed reverseFeed = new SetFeedSpeed(intake, -IntakeConstants.FIRST_FEED_SPEED);
     // *CLIMBER
     private final MastWithAxis mastWithAxis = new MastWithAxis(mast, controller);
-    private final ArmWithAxis armWithAxis = new ArmWithAxis(arm, controller);
+    // private final ArmWithAxis armWithAxis = new ArmWithAxis(arm, controller);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -181,12 +179,8 @@ public class RobotContainer {
     JoystickButton extraR8 = new JoystickButton(rightStick, ControllerConstants.Thrustmaster.RIGHT_BASE_8);
 
     // ASSIGN BUTTONS TO COMMANDS
-
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
-    // arm -5.6 to climb, arm -109 to stowe 
-    // climb sequence: arm in good direction
-    // b.whileActiveOnce(new ArmPID(arm, ClimberConstants.ARM_TO_CLIMB, 1));
     a.whileActiveOnce(new MastPID(mast, -140, 1)); //retracts climber to climb on mid rung
     y.whileActiveOnce(new MastPID(mast, 169.5, 1)); //raises climber for mid rung
     x.whileActiveOnce(new MastPID(mast, ClimberConstants.PIT_MAST, 1)); //pit button--preps climber for match
@@ -194,27 +188,25 @@ public class RobotContainer {
     rb.whenPressed(intakeExtendAndRetract);
     leftPress.whileHeld(anglewithLL);
     rightPress.whileHeld(distancewithLL);
-    back.whileHeld(armWithAxis); // hold down back while using right joystick on controller
     start.whileHeld(mastWithAxis); // hold down start while using left joystick on controller
 
     // *LEFT STICK
     leftTrigger.whileHeld(feedAndShootTarmac);
     leftMiddle.whileHeld(feedAndShootSafe);
-    leftStickLeft.whileHeld(trackBall);
+    // leftStickLeft.whileHeld(trackBall);
     leftStickRight.whileHeld(feedAndShootLow);
     extraL1.whileHeld(new WPI_PID(drive, 50));
     extraL2.whileHeld(new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP));
-    extraL5.whileHeld(firstFeed);
     extraL8.whenPressed(hoodExtendAndRetract);
+    
     // *RIGHT STICK
     rightTrigger.whileActiveOnce(newIntakeForward);
     rightMiddle.whileActiveOnce(intakeReverse);
     rightStickLeft.whileActiveOnce(new WPI_Turn_PID(drive, 169)); //turns clockwise/to the left
     rightStickRight.whileActiveOnce(new WPI_Turn_PID(drive, 91));
     extraR1.whileHeld(reverseFeed);
+    extraR2.whileHeld(firstFeed);
     extraR4.whenPressed(intakeExtendAndRetract);
-    // extraR5.whileHeld(new ArmPID(arm, -21.7, 1)); //to climb position
-    // extraR6.whileHeld(new ArmPID(arm, -126, 1)); //to stowe position
     extraR7.whileHeld(anglewithLL);
     extraR8.whileHeld(distancewithLL);
   }
