@@ -42,8 +42,8 @@ public class TriplePosition1 extends SequentialCommandGroup {
       parallel(
         new AutoIntake(intake),
         sequence(
-          new WPI_PID(drive, 95).withTimeout(1.5),
-          new WPI_Turn_PID(drive, -72).withTimeout(1)
+          new WPI_PID(drive, 99).withTimeout(1.5),
+          new WPI_Turn_PID(drive, -66).withTimeout(1)
         )
       ).withTimeout(2.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(2.5),

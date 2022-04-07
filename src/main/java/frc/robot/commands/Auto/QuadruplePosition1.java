@@ -38,9 +38,11 @@ public class QuadruplePosition1 extends SequentialCommandGroup {
       ).withTimeout(1.5),
       new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(1.8),
       new WPI_Turn_PID(drive, 103).withTimeout(1),
-      new IntakeExtend(intake).withTimeout(0.5),
       parallel(
-        new NewIntakeForward(intake),
+        sequence(
+          new IntakeExtend(intake).withTimeout(0.5),
+          new NewIntakeForward(intake)
+        ),
         sequence(
           new WPI_PID(drive, 100).withTimeout(1.5),
           new WPI_PID(drive, 70).withTimeout(1.2),
