@@ -41,7 +41,7 @@ public AnglewithLL(Drive drive2) {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("pipeline").setNumber(6);
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("pipeline").setNumber(0);
 
   }
   // Called every time the scheduler runs while the command is scheduled.

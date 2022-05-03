@@ -181,10 +181,10 @@ public class RobotContainer {
     // ASSIGN BUTTONS TO COMMANDS
     // **if whenPressed is used for PID commands, you cannot drive with joysticks after!!
     // *CONTROLLER
-    a.whileActiveOnce(new MastPID(mast, -140, 1)); //retracts climber to climb on mid rung
+    a.whileActiveOnce(new MastPID(mast, -120, 1)); //retracts climber to climb on mid rung
     y.whileActiveOnce(new MastPID(mast, 169.5, 1)); //raises climber for mid rung
     x.whileActiveOnce(new MastPID(mast, ClimberConstants.PIT_MAST, 1)); //pit button--preps climber for match
-    lb.whenPressed(hoodExtendAndRetract);
+    // lb.whenPressed(hoodExtendAndRetract);
     rb.whenPressed(intakeExtendAndRetract);
     leftPress.whileHeld(anglewithLL);
     rightPress.whileHeld(distancewithLL);
@@ -193,8 +193,8 @@ public class RobotContainer {
     // *LEFT STICK
     leftTrigger.whileHeld(feedAndShootTarmac);
     leftMiddle.whileHeld(feedAndShootSafe);
-    // leftStickLeft.whileHeld(trackBall);
     leftStickRight.whileHeld(feedAndShootLow);
+    leftStickLeft.whenPressed(intakeExtendAndRetract);
     extraL1.whileHeld(new WPI_PID(drive, 50));
     extraL2.whileHeld(new Shoot(shooter, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP));
     extraL8.whenPressed(hoodExtendAndRetract);

@@ -46,7 +46,10 @@ public class ExtendedTriple1 extends SequentialCommandGroup {
           new WPI_Turn_PID(drive, -66).withTimeout(1)
         )
       ).withTimeout(2.5),
-      new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP).withTimeout(2.2),
+      parallel(
+        new FeedAndShoot(intake, shooter, hood, ShooterConstants.TARMAC_BOT, ShooterConstants.TARMAC_TOP),
+        new WPI_PID(drive, -5)
+      ).withTimeout(2.2),
       parallel(
         new IntakeExtend(intake),
         new WPI_Turn_PID(drive, 40)

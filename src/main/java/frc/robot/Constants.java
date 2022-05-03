@@ -167,8 +167,8 @@ public final class Constants {
         public static final double TOP_BASKETBALL = (6000 * 18) / 32;
         public static final double BOT_BASKETBALL = (3850 * 32) / 18;
 
-        public static final double LOW_HUB_TOP = (3400 * 18) / 32;
-        public static final double LOW_HUB_BOT = (1700 * 32) / 18;
+        public static final double LOW_HUB_TOP = (2500 * 18) / 32;
+        public static final double LOW_HUB_BOT = (1000 * 32) / 18;
 // 4500 and 2600 was 
 // last at 4600 and 2200
         // **** waterbury tarmac shot: rollers should be at top:3650 and bot: 3466 ****

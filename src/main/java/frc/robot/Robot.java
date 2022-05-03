@@ -41,17 +41,15 @@ public class Robot extends TimedRobot {
 
     compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
     compressor.enableDigital();
-    // SmartDashboard.putBoolean("pressureSwitch", compressor.getPressureSwitchValue());
-    // SmartDashboard.putNumber("compressor current", compressor.getCurrent());
     
     // USB camera
-    //   try {
-    //   usbCamera0 = CameraServer.startAutomaticCapture(0);
-    // } catch (Exception e) {
-    //   // System.out.println("camera capture failed");
-    //   // System.out.println(e.getStackTrace());
-    //   SmartDashboard.putString("camera capture failed", "failed");
-    // }
+      try {
+      usbCamera0 = CameraServer.startAutomaticCapture(0);
+    } catch (Exception e) {
+      // System.out.println("camera capture failed");
+      // System.out.println(e.getStackTrace());
+      SmartDashboard.putString("camera capture failed", "failed");
+    }
 
   }
 
